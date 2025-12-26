@@ -1,0 +1,4 @@
+﻿-- game.ServerScriptService.GamePlay.RollerCoaster.RollerCoasterTrackServerHandler
+-- game.ServerScriptService.ScriptAlias.RollerCoasterTrackServerHandler
+local RollerCoasterTrackServerHandler = require(game.ServerScriptService.GamePlay.RollerCoaster.RollerCoasterTrackServerHandler)
+return RollerCoasterTrackServerHandler

@@ -1,0 +1,4 @@
+﻿-- game.ReplicatedStorage.GamePlay.RollerCoaster.RollerCoasterGameManager
+-- game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager
+local RollerCoasterGameManager = require(game.ReplicatedStorage.GamePlay.RollerCoaster.RollerCoasterGameManager)
+return RollerCoasterGameManager

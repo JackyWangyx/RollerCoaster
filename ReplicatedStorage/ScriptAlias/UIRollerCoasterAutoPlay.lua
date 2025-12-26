@@ -1,0 +1,4 @@
+﻿-- game.ReplicatedStorage.GamePlay.RollerCoaster.AutoPlay.UIRollerCoasterAutoPlay
+-- game.ReplicatedStorage.ScriptAlias.UIRollerCoasterAutoPlay
+local UIRollerCoasterAutoPlay = require(game.ReplicatedStorage.GamePlay.RollerCoaster.AutoPlay.UIRollerCoasterAutoPlay)
+return UIRollerCoasterAutoPlay

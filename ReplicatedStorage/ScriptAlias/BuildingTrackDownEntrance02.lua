@@ -1,0 +1,4 @@
+﻿-- game.ReplicatedStorage.GamePlay.RollerCoaster.Building.DownEntrance.BuildingTrackDownEntrance02
+-- game.ReplicatedStorage.ScriptAlias.BuildingTrackDownEntrance02
+local BuildingTrackDownEntrance02 = require(game.ReplicatedStorage.GamePlay.RollerCoaster.Building.DownEntrance.BuildingTrackDownEntrance02)
+return BuildingTrackDownEntrance02

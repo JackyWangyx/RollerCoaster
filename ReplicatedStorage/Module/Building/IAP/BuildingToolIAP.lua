@@ -1,0 +1,62 @@
+﻿local ProximityArea = require(game.ReplicatedStorage.ScriptAlias.ProximityArea)
+local IAPClient = require(game.ReplicatedStorage.ScriptAlias.IAPClient)
+local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
+local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
+local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
+local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
+
+local Define = require(game.ReplicatedStorage.Define)
+
+local UpdatorManager = require(game.ReplicatedStorage.ScriptAlias.UpdatorManager)
+local RotationSpeed = 0
+
+local BuildingToolIAP = {}
+
+function BuildingToolIAP:Handle(buildingPart, triggerPart, toolID)
+	local building = Building.Proximity(buildingPart, Define.Message.BuyToolTip, function()
+		local toolData = ConfigManager:GetData("Tool", toolID)
+		local productKey = toolData.ProductKey
+		NetClient:Request("Tool", "CheckExist", { ID = toolID }, function(isExist)
+			if not isExist then
+				IAPClient:Purchase(productKey, function(success)
+					BuildingToolIAP:Refresh(buildingPart, triggerPart, toolID)
+				end)
+			end
+		end)
+	end)
+	
+	building.RefreshFunc = function()
+		NetClient:Request("Tool", "CheckExist", { ID = toolID }, function(result)
+			local uiCost = Util:GetChildByName(buildingPart, "UICost")
+			uiCost.Visible = not result
+		end)
+	end
+	
+	building:Refresh()
+
+	task.spawn(function()
+		BuildingToolIAP:ToolRotate(buildingPart)
+	end)
+end
+
+function BuildingToolIAP:ToolRotate(buildingPart)
+	local model = buildingPart:WaitForChild("ToolMesh")
+	BuildingToolIAP:WaitForModelWithBody(model)
+	if model and model:IsDescendantOf(workspace) and model.PrimaryPart and model.PrimaryPart.Parent then
+		UpdatorManager:RenderStepped(function(dt)
+			local delta = CFrame.Angles(0, math.rad(RotationSpeed * dt), 0)
+			model:SetPrimaryPartCFrame(model.PrimaryPart.CFrame * delta)
+		end)
+	end
+end
+
+function BuildingToolIAP:WaitForModelWithBody(model)
+	local body
+	repeat
+		body = model:FindFirstChild("Body")
+		task.wait()
+	until body and body:IsA("BasePart")
+	model.PrimaryPart = body
+end
+
+return BuildingToolIAP

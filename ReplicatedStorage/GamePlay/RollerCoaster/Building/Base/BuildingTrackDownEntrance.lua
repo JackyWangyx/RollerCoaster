@@ -1,0 +1,20 @@
+﻿local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
+local UIList = require(game.ReplicatedStorage.ScriptAlias.UIList)
+local UIInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
+local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
+local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
+local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
+
+local RollerCoasterGameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+
+local Define = require(game.ReplicatedStorage.Define)
+
+local BuildingTrackDownEntrance = {}
+
+function BuildingTrackDownEntrance:Handle(buildingPart, triggerPart, index)
+	local building = Building.Trigger(buildingPart, function()
+		RollerCoasterGameManager:Exit(index)
+	end)
+end
+
+return BuildingTrackDownEntrance
