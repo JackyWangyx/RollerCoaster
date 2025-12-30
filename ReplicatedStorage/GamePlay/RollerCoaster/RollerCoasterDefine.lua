@@ -2,11 +2,16 @@
 
 RollerCoasterDefine.TrackAngle = 30
 
+RollerCoasterDefine.Game = {
+	SlideAcceleration = 100,
+}
+
 RollerCoasterDefine.GamePhase = {
 	Idle = 1,
 	Up = 2,
 	ArriveEnd = 3,
 	Down = 4,
+	Busy = 10000,
 }
 
 RollerCoasterDefine.Event = {
@@ -14,7 +19,8 @@ RollerCoasterDefine.Event = {
 	ArriveEnd = "ArriveEnd",
 	Slide = "Slide",
 	Exit = "Exit",
-	GetWins = "GetWins",
+	
+	LogGameProperty = "LogGameProperty",
 }
 
 return RollerCoasterDefine

@@ -261,6 +261,7 @@ Define.Event = {
 	RefreshGameInfo = "RefreshGameInfo",
 	RefreshOfficalGroup = "RefreshOfficalGroup",
 	RefreshTheme = "RefreshTheme",
+	RefreshTrack = "RefreshTrack",
 	
 	-- Click Game
 	ClickGameStart = "",
@@ -421,7 +422,7 @@ Define.RankList = {
 }
 
 Define.PlayerProperty = {
-	SPEED = "SPEED",
+	SPEED = "Speed",
 	MAX_SPEED_FACTOR = "MaxSpeedFactor",
 	BASE_POWER = "BasePower",
 	TRAINING_POWER = "TrainingPower",

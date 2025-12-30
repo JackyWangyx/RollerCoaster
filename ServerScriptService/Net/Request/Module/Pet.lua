@@ -25,7 +25,7 @@ local PetDataTemplate = {
 		PackageAdditional = 0,		-- 额外背包容量，特殊方式获得
 		EquipLevel = 1,				-- 装备栏位，按表格提供容量
 		EquipAdditional = 0,		-- 额外装备容量，特殊方式获得
-		MaxPowerFacotr = 0,			-- 当前背包内宠物的最大数值
+		MaxCoinFacotr = 0,			-- 当前背包内宠物的最大数值
 	}
 }
 
@@ -55,13 +55,13 @@ end
 
 function Pet:RefreshPackageInfo(player)
 	local saveInfo = LoadInfo(player)
-	local maxPower = Pet:GetMaxPower(player)
-	saveInfo.MaxPowerFactor = maxPower
+	local maxCoinFactor = Pet:GetMaxCoinFactor(player)
+	saveInfo.MaxCoinFactor = maxCoinFactor
 end
 
-function Pet:GetMaxPower(player)
+function Pet:GetMaxCoinFactor(player)
 	local packageList = Pet:GetPackageList(player)
-	local maxPower = 0
+	local maxGetCoinFactor = 0
 	for _, petInfo in ipairs(packageList) do
 		local data = ConfigManager:GetData("Pet", petInfo.ID)
 		if data == nil then
@@ -69,15 +69,15 @@ function Pet:GetMaxPower(player)
 			continue
 		end
 		
-		local getPowerFactor = data.GetPowerFactor1 or 0
+		local getCoinFactor = data.GetCoinFactor1 or 0
 		local upgradeFactor = petInfo.UpgradeFactor or 1
-		local power = getPowerFactor * upgradeFactor
-		if power > maxPower then
-			maxPower = power
+		local coinFactor = getCoinFactor * upgradeFactor
+		if coinFactor > maxGetCoinFactor then
+			maxGetCoinFactor = coinFactor
 		end
 	end
 	
-	return maxPower
+	return maxGetCoinFactor
 end
 
 function Pet:GetPetInfo(player, param)

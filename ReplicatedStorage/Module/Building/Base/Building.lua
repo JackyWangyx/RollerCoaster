@@ -130,14 +130,20 @@ function Building:RefreshTheme()
 		self.RendererList = self.RendererTrans:GetChildren()
 	end
 	
-	if self.RendererList then
+	if self.RendererList and #self.RendererList >= 1 then
+		local find = false
 		for _, child in ipairs(self.RendererList) do
 			local isMatch = (child.Name == self.ThemeKey)
 			if isMatch then
 				Util:ActiveObject(child)
+				find = true
 			else
 				Util:DeActiveObject(child)
 			end
+		end
+		
+		if not find then
+			Util:ActiveObject(self.RendererList[1])
 		end
 	end
 end

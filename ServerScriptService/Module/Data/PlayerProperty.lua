@@ -17,7 +17,7 @@ PlayerProperty.Define = require(game.ReplicatedStorage.Define).PlayerProperty
 -- 玩家默认属性
 local DefaultPlayerSaveProperty = {
 	-- 数值
-	Speed = 10,
+	Speed = 15,
 	MaxSpeedFactor = 1,		-- 最大速度加成倍率，作用于 由 Power 计算得出 MaxSpeed
 	BasePower = 100,		-- 基础 Power
 	TrainingPower = 0,		-- 训练 Power
@@ -90,7 +90,7 @@ local OneProperty = {
 }
 
 PlayerProperty.PropertyKeyList = {
-	PlayerProperty.SPEED,
+	PlayerProperty.Define.SPEED,
 	PlayerProperty.Define.MAX_SPEED_FACTOR,
 	PlayerProperty.Define.BASE_POWER,
 	PlayerProperty.Define.TRAINING_POWER,
@@ -181,18 +181,18 @@ function PlayerProperty:CollectAllProperties(player)
 	local petRequest = NetServer:RequireModule("Pet")
 	do
 		local petProperty = {}
-		local maxPower = petRequest:GetMaxPower(player)
-		petProperty["GetPowerFactor1"] = 0
+		local maxPower = petRequest:GetMaxCoinFactor(player)
+		petProperty["GetCoinFactor1"] = 0
 		for _, petInfo in ipairs(petRequest:GetEquipList(player)) do
 			local petData = ConfigManager:GetData("Pet", petInfo.ID)
 			local power = 0
-			if petData.MaxExistPowerFactor > 0 then
-				power = petData.MaxExistPowerFactor * maxPower * petInfo.UpgradeFactor
+			if petData.MaxExistCoinFactor > 0 then
+				power = petData.MaxExistCoinFactor * maxPower * petInfo.UpgradeFactor
 			else
-				power = petData.GetPowerFactor1 * petInfo.UpgradeFactor
+				power = petData.GetCoinFactor1 * petInfo.UpgradeFactor
 			end
 			
-			petProperty["GetPowerFactor1"] += power
+			petProperty["GetCoinFactor1"] += power
 		end
 		collect("🐰Pet", petProperty)
 	end

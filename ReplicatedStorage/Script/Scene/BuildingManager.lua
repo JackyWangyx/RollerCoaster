@@ -39,7 +39,9 @@ function BuildingManager:OnBuildingAdded(buildingPart)
 	if buildingScriptFile then
 		local buildingScript = require(buildingScriptFile)
 		local initFunc = buildingScript["Init"]
-		initFunc(buildingScript, buildingPart, triggerPart)
+		if initFunc then
+			initFunc(buildingScript, buildingPart, triggerPart)
+		end
 	end
 end
 

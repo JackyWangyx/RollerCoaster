@@ -17,6 +17,7 @@ RollerCoasterGameLoop.TrackIndex = -1
 RollerCoasterGameLoop.UpTrackRoute = nil
 RollerCoasterGameLoop.DownTrackRoute = nil
 
+RollerCoasterGameLoop.GameInitParam = nil
 RollerCoasterGameLoop.UpdateInfo = {}
 
 function RollerCoasterGameLoop:Init()
@@ -24,34 +25,44 @@ function RollerCoasterGameLoop:Init()
 		RollerCoasterGameLoop:Update(deltaTime)
 	end)
 	
-	EventManager:Listen(RollerCoasterDefine.Event.Enter, function(param)
-		RollerCoasterGameLoop:EnterUp(param)
+	EventManager:Listen(RollerCoasterDefine.Event.Enter, function(gameInitParam)
+		RollerCoasterGameLoop:EnterUp(gameInitParam)
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.ArriveEnd, function()
-		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.ArriveEnd
+		RollerCoasterGameLoop:EnterTop()
 	end)
 	
-	EventManager:Listen(RollerCoasterDefine.Event.Slide, function(param)
-		RollerCoasterGameLoop:EnterDown(param)
+	EventManager:Listen(RollerCoasterDefine.Event.Slide, function()
+		RollerCoasterGameLoop:EnterDown()
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.Exit, function()
-		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
+		RollerCoasterGameLoop:EnterFinish()
 	end)
+	
+	EventManager:Listen(RollerCoasterDefine.Event.LogGameProperty, function()
+		RollerCoasterGameLoop:LogGameProperty()
+	end)
+end
+
+function RollerCoasterGameLoop:LogGameProperty()
+	print(RollerCoasterGameLoop.GameInitParam, RollerCoasterGameLoop.UpdateInfo)
 end
 
 ---------------------------------------------------------------------------------------------------------
 -- Phase
 
-function RollerCoasterGameLoop:EnterUp(param)
+function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Up
+	RollerCoasterGameLoop.GameInitParam = gameInitParam
 
 	-- Create Track
-	RollerCoasterGameLoop.TrackIndex = param.Index
+	RollerCoasterGameLoop.TrackIndex = gameInitParam.TrackIndex
+	
 	local trackRoot = SceneManager.LevelRoot.Game.Track:FindFirstChild("Track_".. string.format("%02d", RollerCoasterGameLoop.TrackIndex))
 	local upSegmentList = {}
-	for _, segmentName in ipairs(param.UpSegmentNameList) do
+	for _, segmentName in ipairs(gameInitParam.UpSegmentNameList) do
 		local segment = trackRoot.Up:FindFirstChild(segmentName)
 		table.insert(upSegmentList, segment)
 	end
@@ -59,7 +70,7 @@ function RollerCoasterGameLoop:EnterUp(param)
 	RollerCoasterGameLoop.UpTrackRoute = TrackRoute.new(upSegmentList)
 	
 	local downSegmentList = {}
-	for _, segmentName in ipairs(param.DownSegmentNameList) do
+	for _, segmentName in ipairs(gameInitParam.DownSegmentNameList) do
 		local segment = trackRoot.Down:FindFirstChild(segmentName)
 		table.insert(downSegmentList, segment)
 	end
@@ -69,19 +80,31 @@ function RollerCoasterGameLoop:EnterUp(param)
 	-- Init Status
 	local player = game.Players.LocalPlayer
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	PlayerManager:DisablePhysic(player)
 	PlayerManager:DisableControl(player)
-	PlayerManager:EnableAnchored(player)
 	
 	RollerCoasterGameLoop.UpdateInfo = {
 		Player = player,
 		RootPart = rootPart,
-		MoveSpeed = 100,
+		MoveSpeed = gameInitParam.Speed,
 		MoveDistance = 0,
+		ArriveDistance = 0,
 		MoveAcceleration = 0,
 	}
 	
 	RollerCoasterGameLoop:SetPlayerPosByDistance(RollerCoasterGameLoop.UpTrackRoute, 0)
+end
+
+function RollerCoasterGameLoop:EnterTop()
+	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.ArriveEnd
+	local updateInfo = RollerCoasterGameLoop.UpdateInfo
+	
+	local player = game.Players.LocalPlayer
+	local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+	gameManager:GetWins(player)	
+	
+	task.wait()
+	-- 先自动下滑
+	gameManager:Slide(player)	
 end
 
 function RollerCoasterGameLoop:EnterDown()
@@ -91,20 +114,17 @@ function RollerCoasterGameLoop:EnterDown()
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	local startDistance = RollerCoasterGameLoop.UpdateInfo.MoveDistance
 	startDistance = RollerCoasterGameLoop.DownTrackRoute:GetNearestPathDistance(rootPart.Position)
-	RollerCoasterGameLoop.UpdateInfo = {
-		Player = player,
-		RootPart = rootPart,
-		MoveSpeed = 0,
-		MoveAcceleration = 100,
-		MoveDistance = startDistance -- RollerCoasterGameLoop.DownTrackRoute.Length,
-	}
+		
+	local updateInfo = RollerCoasterGameLoop.UpdateInfo
+	updateInfo.MoveSpeed = 0
+	updateInfo.MoveAcceleration = RollerCoasterDefine.Game.SlideAcceleration
+	updateInfo.MoveDistance = startDistance
 end
 
 function RollerCoasterGameLoop:EnterFinish()
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
 	
 	local player = game.Players.LocalPlayer
-	PlayerManager:EnablePhysic(player)
 	PlayerManager:EnableControl(player)
 end
 
@@ -137,12 +157,32 @@ end
 
 function RollerCoasterGameLoop:UpdateUp(deltaTime)
 	local upTrackRoute = RollerCoasterGameLoop.UpTrackRoute
+	local downTrackRoute = RollerCoasterGameLoop.DownTrackRoute
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
 	updateInfo.MoveDistance = updateInfo.MoveDistance + deltaTime * updateInfo.MoveSpeed
+	updateInfo.ArriveDistance = updateInfo.MoveDistance
+	
 	RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
 	
-	if updateInfo.MoveDistance >= upTrackRoute.Length then
-		RollerCoasterGameLoop:EnterDown()
+	if updateInfo.MoveDistance >= upTrackRoute.Length and updateInfo.MoveDistance < downTrackRoute.Length then
+		-- 未到达顶端
+		updateInfo.MoveDistance = upTrackRoute.Length
+		updateInfo.ArriveDistance = updateInfo.MoveDistance
+		
+		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
+		local player = game.Players.LocalPlayer
+		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+		gameManager:Slide(player)
+		
+	elseif updateInfo.MoveDistance >= downTrackRoute.Length then
+		-- 到达顶端
+		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
+		updateInfo.MoveDistance = downTrackRoute.Length
+		updateInfo.ArriveDistance = updateInfo.MoveDistance
+		
+		local player = game.Players.LocalPlayer
+		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+		gameManager:ArriveEnd(player)	
 	end
 end
 
@@ -164,12 +204,17 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 		local newCFrame = CFrame.new(Vector3.new(0, 0, 0), direction)
 		rootPart.CFrame = CFrame.new(fromPos) * newCFrame
 		
+		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+		gameManager:GetCoin(player)
+		
 		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
 		UTween:PlayerPosition(player, fromPos, toPos, 1)
 			:SetEase(UTween.EaseType.OutQuart)
 			:SetOnComplete(function()
-				RollerCoasterGameLoop:EnterFinish()
 			end)
+		
+		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+		gameManager:Exit(player)
 	end
 end
 

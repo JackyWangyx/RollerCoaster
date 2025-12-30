@@ -26,17 +26,17 @@ function PetUtil:ProcessPetInfo(info)
 	info.Icon = data.Icon
 	info.Rarity = data.Rarity
 
-	local power = 0
-	if data.MaxExistPowerFactor > 0 then
-		power = data.MaxExistPowerFactor * info.UpgradeFactor * MaxPower
-		local displayValue = (data.MaxExistPowerFactor * info.UpgradeFactor) * 100
-		info.DisplayGetPowerFactor = ""..string.format("%.0f", displayValue).."%"
+	local getCoinFactor = 0
+	if data.MaxExistCoinFactor > 0 then
+		getCoinFactor = data.MaxExistCoinFactor * info.UpgradeFactor * MaxPower
+		local displayValue = (data.MaxExistCoinFactor * info.UpgradeFactor) * 100
+		info.DisplayGetCoinFactor = ""..string.format("%.0f", displayValue).."%"
 	else
-		power = data.GetPowerFactor1 * info.UpgradeFactor
-		info.DisplayGetPowerFactor = ""..string.format("%.2f", power).."X"
+		getCoinFactor = data.GetCoinFactor1 * info.UpgradeFactor
+		info.DisplayGetCoinFactor = ""..string.format("%.2f", getCoinFactor).."X"
 	end
 	
-	info.GetPowerFactor1 = power
+	info.GetCoinFactor1 = getCoinFactor
 	info.IsSelect = false
 
 	return info
@@ -45,7 +45,7 @@ end
 function PetUtil:GetSorttedPackageList(callback)
 	NetClient:RequestQueue({
 		{ Module = "Pet", Action = "GetPackageList" },
-		{ Module = "Pet", Action = "GetMaxPower" },
+		{ Module = "Pet", Action = "GetMaxCoinFactor" },
 	}, function(result)
 		local infoList = result[1]
 		MaxPower = result[2]
@@ -66,7 +66,7 @@ end
 function PetUtil:Sort(infoList)
 	infoList = Util:ListSort(infoList, {
 		--function(info) return info.IsEquip and -1 or 1 end,
-		function(info) return -info.GetPowerFactor1 end,
+		function(info) return -info.GetCoinFactor1 end,
 		function(info) return -info.Rarity end,
 		function(info) return -info.ID end,
 	})

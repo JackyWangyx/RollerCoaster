@@ -209,11 +209,11 @@ function UIPetPack:Button_EquipBest()
 	for _, info in pairs(infoList) do
 		local data = ConfigManager:GetData("Pet", info.ID)
 		local upgradehData = ConfigManager:SearchData("PetUpgrade", "PetID", info.ID, "Level", info.UpgradeLevel)
-		info.GetPowerFactor1 = data.GetPowerFactor1 * upgradehData.Factor
+		info.GetCoinFactor1 = data.GetCoinFactor1 * upgradehData.Factor
 	end
 
 	infoList = Util:ListSort(infoList, {
-		function(info) return -info.GetPowerFactor1 end
+		function(info) return -info.GetCoinFactor1 end
 	})
 
 	local equipInfoList = Util:ListFindMany(infoList, UIPetPack.EquipMax)

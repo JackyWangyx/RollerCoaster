@@ -25,19 +25,30 @@ function RollerCoasterGameManager:Enter(index)
 	NetClient:Request("RollerCoaster", "Enter", { Index = index })
 end
 
+function RollerCoasterGameManager:ArriveEnd(index)
+	NetClient:Request("RollerCoaster", "ArriveEnd")
+end
+
 function RollerCoasterGameManager:Slide(index)
-	if RollerCoasterGameLoop.GamePhase == RollerCoasterDefine.GamePhase.Up or 
-		RollerCoasterGameLoop.GamePhase == RollerCoasterDefine.GamePhase.ArriveEnd then
-		NetClient:Request("RollerCoaster", "Slide", { Index = index })
-	end
+	local param = {
+		ArriveDistance = RollerCoasterGameLoop.UpdateInfo.ArriveDistance
+	}
+	
+	NetClient:Request("RollerCoaster", "Slide", param)
 end
 
 function RollerCoasterGameManager:Exit(index)
-	NetClient:Request("RollerCoaster", "Exit", { Index = index })
+	NetClient:Request("RollerCoaster", "Exit")
 end
 
 function RollerCoasterGameManager:GetWins(index)
-	NetClient:Request("RollerCoaster", "GetWins", { Index = index })
+	if RollerCoasterGameLoop.GamePhase == RollerCoasterDefine.GamePhase.ArriveEnd then
+		NetClient:Request("RollerCoaster", "GetWins")
+	end
+end
+
+function RollerCoasterGameManager:GetCoin(index)
+	NetClient:Request("RollerCoaster", "GetCoin")
 end
 
 return RollerCoasterGameManager

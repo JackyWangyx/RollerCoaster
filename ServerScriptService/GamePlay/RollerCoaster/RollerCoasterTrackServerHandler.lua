@@ -3,6 +3,7 @@ local SceneManager = require(game.ReplicatedStorage.ScriptAlias.SceneManager)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
+local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 
@@ -33,6 +34,13 @@ function RollerCoasterTrackServerHandler:Init()
 		RollerCoasterTrackServerHandler:OnPlayerAdded(player, character)
 	end, function(player, character)
 		RollerCoasterTrackServerHandler:OnPlayerRemoved(player, character)
+	end)
+	
+	EventManager:Listen(EventManager.Define.RefreshTrack, function(param)
+		local player = param.Player
+		task.spawn(function()
+			RollerCoasterTrackServerHandler:RefreshTrack(player)
+		end)
 	end)
 end
 
@@ -100,16 +108,31 @@ function RollerCoasterTrackServerHandler:GetTrackByPlayer(player)
 	return nil
 end
 
+function RollerCoasterTrackServerHandler:RefreshTrack(player)
+	local trackInfo = RollerCoasterTrackServerHandler:GetTrackByPlayer(player)
+	local trackIndex = trackInfo.Index
+	local gameServerHandler = require(game.ServerScriptService.ScriptAlias.RollerCoasterGameServerHandler)
+	local playerCache = gameServerHandler:GetPlayerCache()
+	for player, playerInfo in pairs(playerCache) do
+		if playerInfo.TrackIndex == trackIndex then
+			gameServerHandler:Exit(player)
+		end
+	end
+	
+	RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
+	RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
+end
+
 function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 	if trackInfo.UpTrack then
 		RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
 	end
 	
 	local player = trackInfo.Player
-	local saveInfo = RollerCoasterRequest:GetInfo(player)
-	local rank = saveInfo.Rank
-	local trackLevel = saveInfo.TrackLevel
-	trackLevel = 30
+	local currentRank = RollerCoasterRequest:GetCurrentRank(player)
+	local rankInfo = RollerCoasterRequest:GetRankInfo(player, { Rank = currentRank })
+	local rank = currentRank
+	local trackLevel = rankInfo.TrackLevel
 	local position = trackInfo.Root.Position
 	
 	-- Up

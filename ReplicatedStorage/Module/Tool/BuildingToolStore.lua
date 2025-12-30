@@ -2,10 +2,10 @@
 local TriggerAreaOpenUI = require(game.ReplicatedStorage.ScriptAlias.TriggerAreaOpenUI)
 local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
 
-local BuildingPetUpgrade = {}
+local BuildingToolStore = {}
 
-function BuildingPetUpgrade:Init(buildingPart, triggerPart)
-	local building = Building.TriggerOpenUI(buildingPart, "PetUpgrade")
+function BuildingToolStore:Init(buildingPart, triggerPart)
+	local building = Building.TriggerOpenUI(buildingPart, "ToolStore")
 end
 
-return BuildingPetUpgrade
+return BuildingToolStore
