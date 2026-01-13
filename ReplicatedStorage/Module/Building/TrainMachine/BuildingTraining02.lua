@@ -2,8 +2,8 @@
 
 local BuildingTraining02= {}
 
-function BuildingTraining02:Init(buildingPart, triggerPart)
-	TrainingMachine:Handle(buildingPart, triggerPart, 2)
+function BuildingTraining02:Init(buildingPart, opts)
+	TrainingMachine:Handle(buildingPart, opts, 2)
 end
 
 return BuildingTraining02

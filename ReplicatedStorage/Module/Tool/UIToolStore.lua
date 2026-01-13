@@ -125,7 +125,7 @@ function UIToolStore:SelectItem(index)
 	
 	local infoNewbiePart = Util:GetChildByName(UIToolStore.InfoPart, "Info_CostNewbie")
 	if infoNewbiePart then
-		infoNewbiePart.Visible = data.ID == 16
+		infoNewbiePart.Visible = data.ID == 20
 	end	
 end
 

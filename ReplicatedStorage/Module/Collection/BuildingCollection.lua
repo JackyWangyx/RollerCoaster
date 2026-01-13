@@ -4,8 +4,8 @@ local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
 
 local BuildingCollection = {}
 
-function BuildingCollection:Init(buildingPart, triggerPart)
-	local building = Building.TriggerOpenUI(buildingPart, "Collection")
+function BuildingCollection:Init(buildingPart, opts)
+	local building = Building.TriggerOpenUI(buildingPart, opts, "Collection")
 end
 
 return BuildingCollection

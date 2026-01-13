@@ -4,9 +4,9 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingToolIAP04 = {}
 
-function BuildingToolIAP04:Init(buildingPart, triggerPart)
+function BuildingToolIAP04:Init(buildingPart, opts)
 	local toolID = 19
-	BuildingToolIAP:Handle(buildingPart, triggerPart, toolID)
+	BuildingToolIAP:Handle(buildingPart, opts, toolID)
 end
 
 return BuildingToolIAP04

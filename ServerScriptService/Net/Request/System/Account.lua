@@ -21,8 +21,8 @@ function Account:GetCoin(player)
 	local accountModule = LoadInfo(player)
 	local coin = accountModule.Coin 
 	if not coin then
-		coin = 0
-		accountModule.Coin = 0
+		coin = 700
+		accountModule.Coin = 700
 	end
 	
 	return coin

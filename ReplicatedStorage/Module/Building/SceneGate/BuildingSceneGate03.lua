@@ -2,8 +2,8 @@
 
 local BuildingSceneGate03 = {}
 
-function BuildingSceneGate03:Init(buildingPart, triggerPart)
-	SceneGate:Handle(buildingPart, triggerPart, 3)
+function BuildingSceneGate03:Init(buildingPart, opts)
+	SceneGate:Handle(buildingPart, opts, 3)
 end
 
 return BuildingSceneGate03

@@ -13,14 +13,14 @@ local RotationSpeed = 30
 
 local BuildingPartnerIAP = {}
 
-function BuildingPartnerIAP:Handle(buildingPart, triggerPart, partnerID)
-	local building = Building.Proximity(buildingPart, Define.Message.BuyPartnerTip, function()
+function BuildingPartnerIAP:Handle(buildingPart, opts, partnerID)
+	local building = Building.Proximity(buildingPart, opts, Define.Message.BuyPartnerTip, function()
 		local data = ConfigManager:GetData("Partner", partnerID)
 		local productKey = data.ProductKey
 		NetClient:Request("Partner", "CheckExist", { ID = partnerID }, function(isExist)
 			if not isExist then
 				IAPClient:Purchase(productKey, function(success)
-					BuildingPartnerIAP:Refresh(buildingPart, triggerPart, partnerID)
+					--BuildingPartnerIAP:Refresh(buildingPart, triggerPart, partnerID)
 				end)
 			end
 		end)
@@ -34,7 +34,9 @@ function BuildingPartnerIAP:Handle(buildingPart, triggerPart, partnerID)
 	building.RefreshFunc = function()
 		NetClient:Request("Partner", "CheckExist", { ID = partnerID }, function(result)
 			local uiCost = Util:GetChildByName(buildingPart, "UICost")
-			uiCost.Visible = not result
+			if uiCost then
+				uiCost.Visible = not result
+			end		
 		end)
 	end
 	

@@ -3,10 +3,15 @@ local UIInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local UpdatorManager = require(game.ReplicatedStorage.ScriptAlias.UpdatorManager)
+local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
+local UIList = require(game.ReplicatedStorage.ScriptAlias.UIList)
+local AttributeUtil = require(game.ReplicatedStorage.ScriptAlias.AttributeUtil)
 
 local RollerCoasterGameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 local RollerCoasterGameLoop = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameLoop)
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
+
+local Define = require(game.ReplicatedStorage.Define)
 
 local UIRollerCoasterGameInfo = {}
 
@@ -14,6 +19,8 @@ UIRollerCoasterGameInfo.UIRoot = nil
 
 UIRollerCoasterGameInfo.GameFrame = nil
 UIRollerCoasterGameInfo.PlayerGameFrame = nil
+UIRollerCoasterGameInfo.BottonRankTrans = nil
+UIRollerCoasterGameInfo.RankBar = nil
 UIRollerCoasterGameInfo.IsInGame = false
 
 function UIRollerCoasterGameInfo:Init(root)
@@ -22,6 +29,8 @@ function UIRollerCoasterGameInfo:Init(root)
 
 	UIRollerCoasterGameInfo.GameFrame = Util:GetChildByName(root, "GameFrame")
 	UIRollerCoasterGameInfo.PlayerGameFrame = Util:GetChildByName(root, "PlayerGameFrame")
+	UIRollerCoasterGameInfo.BottonRankTrans = Util:GetChildByName(UIRollerCoasterGameInfo.GameFrame, "BottonRankTrans", true)
+	UIRollerCoasterGameInfo.RankBar = Util:GetChildByName(UIRollerCoasterGameInfo.GameFrame, "RankBar", true)
 	
 	UIRollerCoasterGameInfo.PlayerGameFrame.Visible = false
 	
@@ -46,19 +55,18 @@ function UIRollerCoasterGameInfo:Init(root)
 	UIRollerCoasterGameInfo:Refresh()
 	
 	UpdatorManager:RenderStepped(function(deltaTime)
-		UIRollerCoasterGameInfo:RefreshInfo()
+		UIRollerCoasterGameInfo:Refresh()
 	end)
 end
 
-function UIRollerCoasterGameInfo:Refresh()
-
-end
-
-function UIRollerCoasterGameInfo:RefreshRank()
+function UIRollerCoasterGameInfo:Refresh()	
+	UIRollerCoasterGameInfo:RefreshPlayerInfo()
 	
+	local updateGameInfo = RollerCoasterGameManager.UpdateGameInfo
+	UIRollerCoasterGameInfo:RefreshBottonRank(updateGameInfo)
 end
 
-function UIRollerCoasterGameInfo:RefreshInfo()
+function UIRollerCoasterGameInfo:RefreshPlayerInfo()
 	if not UIRollerCoasterGameInfo.IsInGame then return end
 	
 	local gameInitParam = RollerCoasterGameLoop.GameInitParam
@@ -73,7 +81,56 @@ function UIRollerCoasterGameInfo:RefreshInfo()
 	UIInfo:SetInfo(UIRollerCoasterGameInfo.PlayerGameFrame, info)
 end
 
--- Game
+-- Rank
+
+function UIRollerCoasterGameInfo:RefreshBottonRank(updateGameInfo)
+	local rankList = UIRollerCoasterGameInfo:GetRankList(updateGameInfo)
+	local itemList = UIList:LoadWithInfo(UIRollerCoasterGameInfo.BottonRankTrans, "UIBottonRankItem", rankList)
+	UIList:HadnlePlayerHeadIconAsync(itemList)
+
+	for _, item in ipairs(itemList) do
+		local progress = AttributeUtil:GetInfoValue(item, "Progress")
+		local bar = UIRollerCoasterGameInfo.RankBar
+		UIRollerCoasterGameInfo:UpdateRankPointer(bar, item, progress)
+	end
+end
+
+function UIRollerCoasterGameInfo:UpdateRankPointer(progressBar, pointer, percent)
+	if not progressBar then return end
+	percent = math.clamp(percent, 0, 1)
+	local barAbsPos = progressBar.AbsolutePosition
+	local barAbsSize = progressBar.AbsoluteSize
+	local pointerSize = pointer.AbsoluteSize
+	local targetAbsY = barAbsPos.Y + (barAbsSize.Y * percent) - (pointerSize.Y / 2)
+	local targetAbsX = barAbsPos.X + (barAbsSize.X / 2) - (pointerSize.X / 2) 
+	if pointer.Parent then
+		local parentAbsPos = pointer.Parent.AbsolutePosition
+		local relativeX = targetAbsX - parentAbsPos.X
+		local relativeY = targetAbsY - parentAbsPos.Y
+		pointer.Position = UDim2.new(0, relativeX, 0, relativeY)
+	end
+end
+
+function UIRollerCoasterGameInfo:GetRankList(updateGameInfo)
+	local result = {}
+	local player = game.Players.LocalPlayer
+	for _, playerInfo in ipairs(updateGameInfo) do
+		local playerID = playerInfo.PlayerID 
+		local player = PlayerManager:GetPlayerById(playerID)
+		local rankInfo = {
+			UserID = playerID,
+			Distance = playerInfo.Distance,
+			Progress = 1 - playerInfo.Progress,
+			IsSelf = playerID == player.UserId,
+		}
+
+		table.insert(result, rankInfo)
+	end
+
+	return result
+end
+
+-- Button
 
 function UIRollerCoasterGameInfo:Button_Glide()
 	RollerCoasterGameManager:Slide()

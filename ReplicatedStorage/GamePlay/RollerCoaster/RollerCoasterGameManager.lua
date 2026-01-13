@@ -12,10 +12,13 @@ local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoa
 local RollerCoasterGameManager = {}
 
 RollerCoasterGameManager.GameRoot = nil
+RollerCoasterGameManager.UpdateGameInfo = nil
 
 function RollerCoasterGameManager:Init()
 	RollerCoasterGameLoop:Init()
 	RollerCoasterAutoPlay:Init()
+	
+	
 end
 
 ----------------------------------------------------------------------------------------------------------
@@ -49,6 +52,13 @@ end
 
 function RollerCoasterGameManager:GetCoin(index)
 	NetClient:Request("RollerCoaster", "GetCoin")
+end
+
+----------------------------------------------------------------------------------------------------------
+-- On Server Event
+
+function RollerCoasterGameManager:OnUpdateGameInfo(broadcastInfo)
+	RollerCoasterGameManager.UpdateGameInfo = broadcastInfo
 end
 
 return RollerCoasterGameManager

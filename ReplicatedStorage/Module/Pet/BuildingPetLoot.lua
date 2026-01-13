@@ -7,8 +7,8 @@ local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
 
 local BuildingPetLoot = {}
 
-function BuildingPetLoot:Handle(buildingPart, triggerPart, lootKey, eggPrefab)
-	local building = Building.TriggerOpenUI(buildingPart, "UIPetLoot", {
+function BuildingPetLoot:Handle(buildingPart, opts, lootKey, eggPrefab)
+	local building = Building.TriggerOpenUI(buildingPart, opts, "UIPetLoot", {
 		LootKey = lootKey,
 		EggPrefab = eggPrefab,
 	})

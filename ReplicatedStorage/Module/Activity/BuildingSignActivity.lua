@@ -7,8 +7,8 @@ local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
 
 local BuildingSignActivity = {}
 
-function BuildingSignActivity:Handle(buildingPart, triggerPart, activityKey)
-	local building = Building.TriggerOpenUI(buildingPart, "Open Activity Page", "UISignActivity", {
+function BuildingSignActivity:Handle(buildingPart, opts, activityKey)
+	local building = Building.TriggerOpenUI(buildingPart, opts, "Open Activity Page", "UISignActivity", {
 		ActivityKey = activityKey,
 	})
 end

@@ -12,14 +12,14 @@ local RotationSpeed = 0
 
 local BuildingToolIAP = {}
 
-function BuildingToolIAP:Handle(buildingPart, triggerPart, toolID)
-	local building = Building.Proximity(buildingPart, Define.Message.BuyToolTip, function()
+function BuildingToolIAP:Handle(buildingPart, opts, toolID)
+	local building = Building.Proximity(buildingPart, opts, Define.Message.BuyToolTip, function()
 		local toolData = ConfigManager:GetData("Tool", toolID)
 		local productKey = toolData.ProductKey
 		NetClient:Request("Tool", "CheckExist", { ID = toolID }, function(isExist)
 			if not isExist then
 				IAPClient:Purchase(productKey, function(success)
-					BuildingToolIAP:Refresh(buildingPart, triggerPart, toolID)
+					--BuildingToolIAP:Refresh(buildingPart, toolID)
 				end)
 			end
 		end)
@@ -40,7 +40,7 @@ function BuildingToolIAP:Handle(buildingPart, triggerPart, toolID)
 end
 
 function BuildingToolIAP:ToolRotate(buildingPart)
-	local model = buildingPart:WaitForChild("ToolMesh")
+	local model = buildingPart:FindFirstChild("ToolMesh")
 	BuildingToolIAP:WaitForModelWithBody(model)
 	if model and model:IsDescendantOf(workspace) and model.PrimaryPart and model.PrimaryPart.Parent then
 		UpdatorManager:RenderStepped(function(dt)
@@ -51,6 +51,7 @@ function BuildingToolIAP:ToolRotate(buildingPart)
 end
 
 function BuildingToolIAP:WaitForModelWithBody(model)
+	if not model then return end
 	local body
 	repeat
 		body = model:FindFirstChild("Body")

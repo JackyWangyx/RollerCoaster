@@ -2,8 +2,8 @@
 
 local BuildingPetLootNormal = {}
 
-function BuildingPetLootNormal:Init(buildingPart, triggerPart)
-	BuildingPetLoot:Handle(buildingPart, triggerPart, "PetLoot1", "Egg/Egg1225")
+function BuildingPetLootNormal:Init(buildingPart, opts)
+	BuildingPetLoot:Handle(buildingPart, opts, "PetLoot1", "Egg/Egg1225")
 end
 
 return BuildingPetLootNormal

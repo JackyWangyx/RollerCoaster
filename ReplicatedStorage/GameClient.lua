@@ -41,6 +41,7 @@ function GameClient:Init()
 	
 	GameClient:RegisterLoadProcess("Resources Manager", require(game.ReplicatedStorage.ScriptAlias.ResourcesManager))
 	GameClient:RegisterLoadProcess("Scene Manager", require(game.ReplicatedStorage.ScriptAlias.SceneManager))
+	GameClient:RegisterLoadProcess("Scene Area Manager", require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager))
 	GameClient:RegisterLoadProcess("IAP Client",  require(game.ReplicatedStorage.ScriptAlias.IAPClient))
 	GameClient:RegisterLoadProcess("Trade Client", require(game.ReplicatedStorage.ScriptAlias.TradeClient))
 	GameClient:RegisterLoadProcess("Friend Manager", require(game.ReplicatedStorage.ScriptAlias.FriendManager))
@@ -102,7 +103,7 @@ function GameClient:StartLoading()
 		local success = GameClient:LoadProcess(module)
 		
 		if not success then
-			LogUtil:Warn("[Client] Load Failed!", module)
+			LogUtil:Warn("[Client] Load Failed!", name, module)
 			return false
 		end
 		

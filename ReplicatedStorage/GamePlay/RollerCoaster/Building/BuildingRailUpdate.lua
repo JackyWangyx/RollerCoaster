@@ -9,8 +9,8 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingRailUpdate = {}
 
-function BuildingRailUpdate:Init(buildingPart, triggerPart)
-	local building = Building.TriggerOpenUI(buildingPart, "RailUpdate")
+function BuildingRailUpdate:Init(buildingPart, opts)
+	local building = Building.TriggerOpenUI(buildingPart, opts, "RailUpdate")
 end
 
 return BuildingRailUpdate

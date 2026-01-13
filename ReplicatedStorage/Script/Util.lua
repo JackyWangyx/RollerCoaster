@@ -978,8 +978,6 @@ function Util:SpawnFx(fxPrefab, pos, destroyTime)
 	end)	
 end
 
-
-
 function Util:SpawnFxEmit(fxPrefab, pos, rate, destroyTime)
 	local fx = fxPrefab:Clone()
 	fx.Position = pos

@@ -1,7 +1,7 @@
 ﻿local Define = {}
 
 Define.Version = "2025.12.03.2"
-Define.Project = "DogRace"
+Define.Project = "RollerCoaster"
 
 Define.Test = {
 	TestBuild = false,
@@ -28,6 +28,11 @@ Define.Test = {
 	
 	EnableSelfTrade = false, -- 允许和自己交易
 	EnablePropertyLog = false, -- 打印分类属性列表
+}
+
+Define.DataSourceMode = {
+	Default = 1,
+	Theme = 2,
 }
 
 Define.Activity = {
@@ -80,7 +85,7 @@ Define.Game = {
 	OfficalGroupID = 765477086,
 	--OfficalGroupID = 557943437, ---devtest
 	LevelCount = 2,
-	TrackCount =  20,
+	TrackCount =  5,
 	ViewSizeBefore = 3000,
 	ViewSizeAfter = 3000,
 	MineSize = 1,
@@ -236,7 +241,7 @@ Define.Message = {
 	RedeemFail = "Code already redeemed",
 	
 	-- Invite
-	InvitePrompt = "⚡ +10% Power Per Onlie Firend!", -- ⚡💰🪙
+	InvitePrompt = "⚡ +10% Speed Per Onlie Firend!", -- ⚡💰🪙
 	
 	-- Like
 	NotInGroup = "👍 Like, favorite, and join our group to unlock!",
@@ -262,6 +267,7 @@ Define.Event = {
 	RefreshOfficalGroup = "RefreshOfficalGroup",
 	RefreshTheme = "RefreshTheme",
 	RefreshTrack = "RefreshTrack",
+	RefreshArea = "RefreshArea",
 	
 	-- Click Game
 	ClickGameStart = "",

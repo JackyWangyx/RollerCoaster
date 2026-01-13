@@ -20,6 +20,7 @@ local IAPServer = require(game.ServerScriptService.ScriptAlias.IAPServer)
 local GameRank = require(game.ServerScriptService.ScriptAlias.GameRank)
 local QuestManager = require(game.ServerScriptService.ScriptAlias.QuestManager)
 local TradeServer = require(game.ServerScriptService.ScriptAlias.TradeServer)
+local SceneAreaServerHandler = require(game.ServerScriptService.ScriptAlias.SceneAreaServerHandler)
 local PetServerHandler = require(game.ServerScriptService.ScriptAlias.PetServerHandler)
 local ToolServerHandler = require(game.ServerScriptService.ScriptAlias.ToolServerHandler)
 local PartnerServerHandler = require(game.ServerScriptService.ScriptAlias.PartnerServerHandler)
@@ -79,6 +80,7 @@ local function Init()
 	
 	--RunnerGameHandler:Init()
 	
+	SceneAreaServerHandler:Init()
 	require(game.ServerScriptService.ScriptAlias.RollerCoasterServer):Init()
 
 	-- Misc

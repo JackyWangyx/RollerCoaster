@@ -16,8 +16,8 @@ local SceneGate = {}
 
 local IsWorking = false
 
-function SceneGate:Handle(buildingPart, triggerPart, index)
-	local building = Building.Trigger(buildingPart, function()
+function SceneGate:Handle(buildingPart, opts, index)
+	local building = Building.Trigger(buildingPart, opts, function()
 		local data = ConfigManager:GetData("Level", index)
 		if IsWorking then 
 			UIManager:ShowMessage(Define.Message.Teleporting)
@@ -53,10 +53,6 @@ function SceneGate:Handle(buildingPart, triggerPart, index)
 	end
 	
 	building:Refresh()
-end
-
-function SceneGate:Refresh(buildingPart, triggerPart, index)
-	
 end
 
 return SceneGate

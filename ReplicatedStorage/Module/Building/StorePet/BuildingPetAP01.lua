@@ -4,9 +4,9 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingPetAP01 = {}
 
-function BuildingPetAP01:Init(buildingPart, triggerPart)
+function BuildingPetAP01:Init(buildingPart, opts)
 	local petID = 1
-	BuildingPetIAP:Handle(buildingPart, triggerPart, petID)
+	BuildingPetIAP:Handle(buildingPart, opts, petID)
 end
 
 return BuildingPetAP01

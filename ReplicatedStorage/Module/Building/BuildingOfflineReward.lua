@@ -11,9 +11,9 @@ local BuildingOfflineReward = {}
 
 local Info = nil
 
-function BuildingOfflineReward:Init(buildingPart, triggerPart)
+function BuildingOfflineReward:Init(buildingPart, opts)
 	local function refreshFunc()
-		BuildingOfflineReward:Refresh(buildingPart, triggerPart)
+		BuildingOfflineReward:Refresh(buildingPart)
 	end
 	
 	BuildingOfflineReward:RefreshInfo(function()
@@ -24,7 +24,7 @@ function BuildingOfflineReward:Init(buildingPart, triggerPart)
 		end
 	end)
 	
-	local building = Building.Trigger(buildingPart, function()
+	local building = Building.Trigger(buildingPart, opts, function()
 		if not Info then return end
 		if Info.RewardCoin <= 0 then return end
 		NetClient:Request("OfflineReward", "GetReward", function()
@@ -40,7 +40,7 @@ function BuildingOfflineReward:RefreshInfo(onDone)
 	end)
 end
 
-function BuildingOfflineReward:Refresh(buildingPart, triggerPart)
+function BuildingOfflineReward:Refresh(buildingPart)
 	UIInfo:SetInfo(buildingPart, Info)
 end
 

@@ -1,7 +1,9 @@
 ﻿local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
+local UpdatorManager = require(game.ReplicatedStorage.ScriptAlias.UpdatorManager)
 
+local NetServer = require(game.ServerScriptService.ScriptAlias.NetServer)
 local RollerCoasterRequest = require(game.ServerScriptService.ScriptAlias.RollerCoaster)
 local PlayerProperty = require(game.ServerScriptService.ScriptAlias.PlayerProperty)
 
@@ -20,6 +22,10 @@ function RollerCoasterGameServerHandler:Init()
 	end, function(player, character)
 		RollerCoasterGameServerHandler:OnPlayerRemoved(player, character)
 	end)
+	
+	UpdatorManager:Heartbeat(function(deltaTime)
+		RollerCoasterGameServerHandler:Update(deltaTime)
+	end)
 end
 
 function RollerCoasterGameServerHandler:OnPlayerAdded(player, character)
@@ -34,6 +40,56 @@ end
 
 function RollerCoasterGameServerHandler:GetPlayerCache()
 	return PlayerCache
+end
+
+function RollerCoasterGameServerHandler:Update(deltaTime)
+	local playerList = table.clone(PlayerCache)
+	for player, playerInfo in pairs(playerList) do
+		if playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Up then
+			playerInfo.CurrentDistance += playerInfo.MoveSpeed * deltaTime
+			if playerInfo.CurrentDistance > playerInfo.TrackInfo.UpTrack.Length then
+				playerInfo.CurrentDistance = playerInfo.TrackInfo.UpTrack.Length
+			end
+		elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then
+			playerInfo.MoveSpeed += playerInfo.SlideAcceleration * deltaTime
+			playerInfo.CurrentDistance -= playerInfo.MoveSpeed * deltaTime
+			if playerInfo.CurrentDistance < 0 then
+				playerInfo.CurrentDistance = 0
+			end
+		end
+	end
+	
+	local brocadcastInfo = {}
+	
+	local onlinePlayerList = game.Players:GetPlayers()
+	for index, player in pairs(onlinePlayerList) do
+		local playerID = player.UserId
+		local playerInfo = playerList[player]
+		if playerInfo then
+			local distance = math.round(playerInfo.CurrentDistance)
+			local length = math.round(playerInfo.Length)
+			local progress = math.clamp(distance / length, 0, 1)
+			local info = {
+				PlayerID = playerID,
+				Distance = distance,
+				Progress = progress,
+				Length = length,
+			}
+
+			table.insert(brocadcastInfo, info)
+		else
+			local info = {
+				PlayerID = playerID,
+				Distance = 0,
+				Progress = 0,
+				Length = 0,
+			}
+
+			table.insert(brocadcastInfo, info)
+		end
+	end
+	
+	NetServer:BroadcastAll("RollerCoaster", "UpdateGameInfo", brocadcastInfo)
 end
 
 function RollerCoasterGameServerHandler:Enter(player, param)
@@ -67,16 +123,27 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 	local rewardCoinPerMeter = getCoinFactor * rankData.RewardCoin
 	gameInitParam.RewardCoinPerMeter = rewardCoinPerMeter
 	
+	local toolRequest = require(game.ServerScriptService.ScriptAlias.Tool)
+	local toolInfo = toolRequest:GetEquip(player)
+	local toolData = ConfigManager:GetData("Tool", toolInfo.ID)
+	local moveHeight = toolData.GameHeight
+	gameInitParam.MoveHeight = moveHeight
+	
 	local playerInfo = {
 		Player = player,
 		TrackIndex = param.Index,
 		Rank = currentRank,
 		TrackLevel = rankInfo.TrackLevel,
+		TrackInfo = trackInfo,
+		Length = trackInfo.DownTrack.Length,
 		RankInfo = rankInfo,
 		RankData = rankData,
 		ArrvieDistance = 0,
+		CurrentDistance = 0,
 		RewardCoinPerMeter = rewardCoinPerMeter,
-		
+		MoveSpeed = gameInitParam.Speed,
+		SlideAcceleration = RollerCoasterDefine.Game.SlideAcceleration,
+		GamePhase = RollerCoasterDefine.GamePhase.Up,
 		AttachPart = {},
 	}
 	
@@ -112,6 +179,7 @@ end
 function RollerCoasterGameServerHandler:ArriveEnd(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
+	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.ArriveEnd
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.ArriveEnd)
 	return true
 end
@@ -121,6 +189,8 @@ function RollerCoasterGameServerHandler:Slide(player, param)
 	if not playerInfo then return false end
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	playerInfo.ArriveDistance = param.ArriveDistance
+	playerInfo.MoveSpeed = 0
+	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Down
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Slide)
 	return true
 end
@@ -129,14 +199,15 @@ function RollerCoasterGameServerHandler:Exit(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
 	
+	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Idle
 	local attachList = table.clone(playerInfo.AttachPart)
-	task.delay(1, function()
+	--task.delay(1, function()
 		for _, part in ipairs(attachList) do
 			part:Destroy()
 		end
 		
 		PlayerManager:EnablePhysic(player)
-	end)
+	--end)
 
 	PlayerCache[player] = nil
 	

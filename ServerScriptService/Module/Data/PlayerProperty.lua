@@ -17,7 +17,7 @@ PlayerProperty.Define = require(game.ReplicatedStorage.Define).PlayerProperty
 -- 玩家默认属性
 local DefaultPlayerSaveProperty = {
 	-- 数值
-	Speed = 15,
+	Speed = 14,
 	MaxSpeedFactor = 1,		-- 最大速度加成倍率，作用于 由 Power 计算得出 MaxSpeed
 	BasePower = 100,		-- 基础 Power
 	TrainingPower = 0,		-- 训练 Power

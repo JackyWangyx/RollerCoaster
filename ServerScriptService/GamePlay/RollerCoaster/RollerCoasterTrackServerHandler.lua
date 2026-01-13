@@ -5,6 +5,7 @@ local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesMan
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 
+local SceneAreaServerHandler = require(game.ServerScriptService.ScriptAlias.SceneAreaServerHandler)
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 
 local RollerCoasterRequest = nil
@@ -16,24 +17,18 @@ local RollerCoasterTrackServerHandler = {}
 
 RollerCoasterTrackServerHandler.TrackPointList = {}
 RollerCoasterTrackServerHandler.TrackList = {}
-RollerCoasterTrackServerHandler.TrackCount = 0
 
 function RollerCoasterTrackServerHandler:Init()
 	RollerCoasterRequest = require(game.ServerScriptService.ScriptAlias.RollerCoaster)
 	
-	RollerCoasterTrackServerHandler.LevelRoot = SceneManager.LevelRoot
-	local trackPointRoot = SceneManager.LevelRoot.Game.Track
-	local trackPointList = trackPointRoot:GetDescendants()
-	trackPointList = Util:ListSortByPartName(trackPointList)
-	RollerCoasterTrackServerHandler.TrackPointList = trackPointList
-	RollerCoasterTrackServerHandler.TrackCount = #trackPointList
+	RollerCoasterTrackServerHandler:InitTrack(SceneAreaServerHandler.AreaPointList)
 	
-	RollerCoasterTrackServerHandler:InitTrack(trackPointList)
+	table.insert(SceneAreaServerHandler.OnCreateArea, function(player, areaInfo)
+		RollerCoasterTrackServerHandler:OnPlayerAdded(player, areaInfo)
+	end)
 	
-	PlayerManager:HandleCharacterAddRemove(function(player, character)
-		RollerCoasterTrackServerHandler:OnPlayerAdded(player, character)
-	end, function(player, character)
-		RollerCoasterTrackServerHandler:OnPlayerRemoved(player, character)
+	table.insert(SceneAreaServerHandler.OnClearArea, function(player, areaInfo)
+		RollerCoasterTrackServerHandler:OnPlayerRemoved(player, areaInfo)
 	end)
 	
 	EventManager:Listen(EventManager.Define.RefreshTrack, function(param)
@@ -45,8 +40,8 @@ function RollerCoasterTrackServerHandler:Init()
 end
 
 function RollerCoasterTrackServerHandler:InitTrack(trackPointList)
-	for index = 1, RollerCoasterTrackServerHandler.TrackCount do
-		local trackPoint = RollerCoasterTrackServerHandler.TrackPointList[index]
+	for index = 1, SceneAreaServerHandler.AreaCount do
+		local trackPoint = SceneAreaServerHandler.AreaPointList[index].Track
 		
 		local upFoloder = Instance.new("Folder")
 		upFoloder.Name = "Up"
@@ -61,47 +56,36 @@ function RollerCoasterTrackServerHandler:InitTrack(trackPointList)
 			Player = nil,
 			Root = trackPoint,
 			UpTrack = nil,
-			DownTrack = nil
+			DownTrack = nil,
 		}
 		
-		table.insert(RollerCoasterTrackServerHandler.TrackList, trackInfo)
+		local areaInfo = SceneAreaServerHandler.AreaInfoList[index]
+		areaInfo.TrackInfo = trackInfo
 	end
 end
 
-function RollerCoasterTrackServerHandler:OnPlayerAdded(player, character)
-	local trackInfo = RollerCoasterTrackServerHandler:GetEmptyTrack()
-	if trackInfo then
+function RollerCoasterTrackServerHandler:OnPlayerAdded(player, areaInfo)
+	local trackInfo = areaInfo.TrackInfo
+	task.spawn(function()
 		trackInfo.Player = player
 		RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
-	end
+	end)	
 end
 
-function RollerCoasterTrackServerHandler:OnPlayerRemoved(player, character)
-	local trackInfo = RollerCoasterTrackServerHandler:GetTrackByPlayer(player)
-	if trackInfo then
-		trackInfo.Player = nil
-		RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
-	end
-end
-
-function RollerCoasterTrackServerHandler:GetEmptyTrack()
-	for index, trackInfo in ipairs(RollerCoasterTrackServerHandler.TrackList) do
-		if trackInfo.Player == nil then
-			return trackInfo
-		end
-	end
-	
-	return nil
+function RollerCoasterTrackServerHandler:OnPlayerRemoved(player, areaInfo)
+	local trackInfo = areaInfo.TrackInfo
+	trackInfo.Player = nil
+	RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
 end
 
 function RollerCoasterTrackServerHandler:GetTrackByIndex(index)
-	return RollerCoasterTrackServerHandler.TrackList[index]
+	return SceneAreaServerHandler.AreaInfoList[index].TrackInfo
 end
 
 function RollerCoasterTrackServerHandler:GetTrackByPlayer(player)
-	for index, trackInfo in ipairs(RollerCoasterTrackServerHandler.TrackList) do
-		if trackInfo.Player == player then
-			return trackInfo
+	for index, areaInfo in ipairs(SceneAreaServerHandler.AreaInfoList) do
+		if areaInfo.TrackInfo.Player == player then
+			return areaInfo.TrackInfo
 		end
 	end
 
@@ -159,6 +143,7 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 	trackInfo.UpTrack = upTrack
 
 	-- Down
+	
 	local downTrackInfo = {
 		Name = "Down",
 		PrefabList = {},
@@ -166,7 +151,7 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 		StartOffset = position + Vector3.new(-20, 0, 0),
 		Root = trackInfo.Root.Down,
 	}
-	
+
 	local downTrackDataList = ConfigManager:SearchAllData("Track", "Rank", rank, "Direction", "Down")
 	for index = 1, #downTrackDataList do
 		local data = downTrackDataList[index]
@@ -184,12 +169,12 @@ end
 
 function RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
 	if trackInfo.UpTrack then
-		TrackCreator:Clear( trackInfo.UpTrack)
+		TrackCreator:Clear(trackInfo.UpTrack)
 		trackInfo.UpTrack = nil
 	end
 	
 	if trackInfo.DownTrack then
-		TrackCreator:Clear( trackInfo.DownTrack)
+		TrackCreator:Clear(trackInfo.DownTrack)
 		trackInfo.DownTrack = nil
 	end	
 end

@@ -9,8 +9,8 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingRank = {}
 
-function BuildingRank:Handle(buildingPart, rankKey)
-	local building = Building.Normal(buildingPart)
+function BuildingRank:Handle(buildingPart, opts, rankKey)
+	local building = Building.Normal(buildingPart, opts)
 	building.RefreshFunc = function()
 		NetClient:Request("Rank", "GetRankList", { RankKey = rankKey }, function(rankList)
 			UIList:LoadWithInfo(buildingPart, "UIRankItem", rankList)

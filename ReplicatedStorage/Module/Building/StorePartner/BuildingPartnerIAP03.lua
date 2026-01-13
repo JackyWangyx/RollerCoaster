@@ -4,9 +4,9 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingPartnerIAP03 = {}
 
-function BuildingPartnerIAP03:Init(buildingPart, triggerPart)
+function BuildingPartnerIAP03:Init(buildingPart, opts)
 	local partnerID = 14
-	BuildingPartnerIAP:Handle(buildingPart, triggerPart, partnerID)
+	BuildingPartnerIAP:Handle(buildingPart, opts, partnerID)
 end
 
 return BuildingPartnerIAP03

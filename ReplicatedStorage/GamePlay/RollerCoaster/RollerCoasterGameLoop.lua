@@ -5,6 +5,7 @@ local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local UpdateManager = require(game.ReplicatedStorage.ScriptAlias.UpdatorManager)
 local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 local UTween = require(game.ReplicatedStorage.ScriptAlias.UTween)
+local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 
 local TrackCreator = require(game.ReplicatedStorage.ScriptAlias.TrackCreator)
 local TrackRoute = require(game.ReplicatedStorage.ScriptAlias.TrackRoute)
@@ -19,6 +20,7 @@ RollerCoasterGameLoop.DownTrackRoute = nil
 
 RollerCoasterGameLoop.GameInitParam = nil
 RollerCoasterGameLoop.UpdateInfo = {}
+RollerCoasterGameLoop.IsCompleteGame = false
 
 function RollerCoasterGameLoop:Init()
 	UpdateManager:Heartbeat(function(deltaTime)
@@ -56,11 +58,12 @@ end
 function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Up
 	RollerCoasterGameLoop.GameInitParam = gameInitParam
+	RollerCoasterGameLoop.IsCompleteGame = false
 
 	-- Create Track
 	RollerCoasterGameLoop.TrackIndex = gameInitParam.TrackIndex
 	
-	local trackRoot = SceneManager.LevelRoot.Game.Track:FindFirstChild("Track_".. string.format("%02d", RollerCoasterGameLoop.TrackIndex))
+	local trackRoot = SceneManager.AreaList[RollerCoasterGameLoop.TrackIndex].Track
 	local upSegmentList = {}
 	for _, segmentName in ipairs(gameInitParam.UpSegmentNameList) do
 		local segment = trackRoot.Up:FindFirstChild(segmentName)
@@ -142,7 +145,7 @@ function RollerCoasterGameLoop:SetPlayerPosByDistance(trackRoute, distance, face
 	end
 
 	local rootPart = RollerCoasterGameLoop.UpdateInfo.RootPart
-	local offsetY = 5
+	local offsetY = RollerCoasterGameLoop.GameInitParam.MoveHeight
 	local newPos = pos + (rot.UpVector * offsetY)
 	rootPart.CFrame = CFrame.new(newPos) * rot
 end
@@ -191,30 +194,54 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
 	updateInfo.MoveSpeed = updateInfo.MoveSpeed + deltaTime * updateInfo.MoveAcceleration
 	updateInfo.MoveDistance = updateInfo.MoveDistance - deltaTime * updateInfo.MoveSpeed
+	if updateInfo.MoveDistance < 0 then
+		updateInfo.MoveDistance = 0
+	end
+	
 	RollerCoasterGameLoop:SetPlayerPosByDistance(downTrackRoute, updateInfo.MoveDistance, true)
 	
 	if updateInfo.MoveDistance <= 0 then
+		RollerCoasterGameLoop.IsCompleteGame = true
 		local player = game.Players.LocalPlayer
-		local rootPart = PlayerManager:GetHumanoidRootPart(player)
-		local fromPos = Vector3.new(rootPart.Position.X, 5, rootPart.Position.Z)
-		local lookVector = rootPart.CFrame.LookVector
-		local horizontalForward = Vector3.new(lookVector.X, 0, lookVector.Z).Unit * 35
-		local toPos = fromPos + horizontalForward
-		local direction = (toPos - fromPos).Unit
-		local newCFrame = CFrame.new(Vector3.new(0, 0, 0), direction)
-		rootPart.CFrame = CFrame.new(fromPos) * newCFrame
-		
 		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 		gameManager:GetCoin(player)
 		
 		RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
-		UTween:PlayerPosition(player, fromPos, toPos, 1)
-			:SetEase(UTween.EaseType.OutQuart)
-			:SetOnComplete(function()
-			end)
 		
 		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 		gameManager:Exit(player)
+		
+		local player = game.Players.LocalPlayer
+		PlayerManager:EnablePhysic(player)
+		local rootPart = PlayerManager:GetHumanoidRootPart(player)
+		if player and rootPart then
+			local character = player.Character
+			for _, part in pairs(character:GetChildren()) do
+				if part:IsA("BasePart") then
+					part.AssemblyLinearVelocity = Vector3.zero
+					part.AssemblyAngularVelocity = Vector3.zero
+				end
+			end
+
+			local fromPos = rootPart.CFrame.Position
+			local lookVector = rootPart.CFrame.LookVector
+			local horizontalForward = Vector3.new(lookVector.X, 0.3, lookVector.Z).Unit * 35
+			local toPos = fromPos + horizontalForward
+			local direction = (toPos - fromPos).Unit
+			local newCFrame = CFrame.new(Vector3.zero, direction)
+			rootPart.CFrame = CFrame.new(fromPos) * newCFrame
+			
+			rootPart.AssemblyLinearVelocity = direction * 150
+			rootPart.AssemblyAngularVelocity = Vector3.zero
+		
+			task.delay(0.65, function()
+				local fxPrefab = ResourcesManager:Load("Fx/Fx_PlayerDrop")
+				Util:SpawnFxEmit(fxPrefab, rootPart.CFrame.Position, 20, 2)
+				
+				rootPart.AssemblyLinearVelocity = Vector3.zero
+				rootPart.AssemblyAngularVelocity = Vector3.zero
+			end)
+		end
 	end
 end
 

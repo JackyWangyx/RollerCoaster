@@ -10,6 +10,7 @@ local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local UIConditionChecker = require(game.ReplicatedStorage.ScriptAlias.UIConditionChecker)
 local ConditionUtil = require(game.ReplicatedStorage.ScriptAlias.ConditionUtil)
 local TweenUtil = require(game.ReplicatedStorage.ScriptAlias.TweenUtil)
+local UIAccountTip = require(game.ReplicatedStorage.ScriptAlias.UIAccountTip)
 
 local UIGamePassState = require(game.ReplicatedStorage.ScriptAlias.UIGamePassState)
 local UIPropStateList = require(game.ReplicatedStorage.ScriptAlias.UIPropStateList)
@@ -28,13 +29,6 @@ local UIMain = {}
 UIMain.UIRoot = nil
 UIMain.MainFrame = nil
 
-UIMain.UICoinTarget = nil
-UIMain.UIGetCoinTip = nil
-UIMain.UIWinsTarget = nil
-UIMain.UIGetWinsTip = nil
-UIMain.UIPowerTarget = nil
-UIMain.UIGetPowerTip = nil
-
 UIMain.NotifyRebirth = nil
 UIMain.TradeConditon = nil
 
@@ -50,33 +44,6 @@ function UIMain:Init(root)
 	UIRollerCoasterGameInfo:Init(root)
 	UIAnimalEquip:Init(root)
 	UIBuffInfo:Init(root)
-
-	UIMain.UICoinTarget = Util:GetChildByName(UIMain.UIRoot, "UICoinTarget", true, childList)
-	UIMain.UIGetCoinTip = Util:GetChildByName(UIMain.UIRoot, "UIGetCoinTip", true, childList)
-	if UIMain.UIGetCoinTip then
-		UIMain.UIGetCoinTip.Visible = false
-		EventManager:Listen(EventManager.Define.GetCoin, function(value)
-			UIMain:OnGetCoin(value)
-		end)
-	end
-	
-	UIMain.UIWinsTarget = Util:GetChildByName(UIMain.UIRoot, "UIWinsTarget", true, childList)
-	UIMain.UIGetWinsTip = Util:GetChildByName(UIMain.UIRoot, "UIGetWinsTip", true, childList)
-	if UIMain.UIGetWinsTip then
-		UIMain.UIGetWinsTip.Visible = false
-		EventManager:Listen(EventManager.Define.GetWins, function(value)
-			UIMain:OnGetWins(value)
-		end)
-	end
-
-	UIMain.UIPowerTarget = Util:GetChildByName(UIMain.UIRoot, "UIPowerTarget", true, childList)
-	UIMain.UIGetPowerTip = Util:GetChildByName(UIMain.UIRoot, "UIGetPowerTip", true, childList)
-	if UIMain.UIGetPowerTip then
-		UIMain.UIGetPowerTip.Visible = false
-		EventManager:Listen(EventManager.Define.GetPower, function(value)
-			UIMain:OnGetPower(value)
-		end)
-	end
 	
 	UIMain.UIPropBuffFrame = Util:GetChildByName(UIMain.UIRoot, "UIPropBuffFrame", true, childList)
 	UIPropStateList:Init(UIMain.UIPropBuffFrame)
@@ -87,6 +54,8 @@ function UIMain:Init(root)
 	if UIMain.TradeConditon then
 		UIConditionChecker:Handle(UIMain.TradeConditon, UIConditionChecker.Define.TradeUnlock, nil, nil, EventManager.Define.RefreshRebirth)
 	end
+	
+	UIAccountTip:Init(root)
 	
 	EventManager:Listen(EventManager.Define.PetLootStart, function()
 		UIMain.MainFrame.Visible = false
@@ -120,24 +89,6 @@ end
 
 function UIMain:OnHide()
 
-end
-
-function UIMain:OnGetCoin(value)
-	if UIMain.UIGetCoinTip then
-		TweenUtil:UIFlyToTarget(UIMain.UIGetCoinTip, UIMain.UICoinTarget, value)
-	end
-end
-
-function UIMain:OnGetWins(value)
-	if UIMain.UIGetWinsTip then
-		TweenUtil:UIFlyToTarget(UIMain.UIGetWinsTip, UIMain.UIWinsTarget, value)
-	end
-end
-
-function UIMain:OnGetPower(value)
-	if UIMain.UIGetPowerTip then
-		TweenUtil:UIFlyToTarget(UIMain.UIGetPowerTip, UIMain.UIPowerTarget, value)
-	end
 end
 
 function UIMain:HideButton()

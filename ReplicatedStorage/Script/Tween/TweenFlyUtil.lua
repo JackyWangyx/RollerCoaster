@@ -1,34 +1,43 @@
 ﻿local TweenService = game:GetService("TweenService")
-
+local Workspace = game:GetService("Workspace")
+local ObjectPool = require(game.ReplicatedStorage.ScriptAlias.ObjectPool)
 local TweenFlyUtil = {}
+
+-- ========================================================
+-- 1. 辅助函数
+-- ========================================================
+-- 依然保留屏幕缩放计算，仅用于控制“爆炸半径”，保证在不同屏幕上炸开的距离合适
+local function getScreenScale()
+	local camera = Workspace.CurrentCamera
+	if not camera then return 1 end
+	local baseHeight = 1080
+	local currentHeight = camera.ViewportSize.Y
+	return math.max(0.4, currentHeight / baseHeight)
+end
 
 local function lerp(a, b, t)
 	return a + (b - a) * t
 end
 
--- 将屏幕坐标（像素）转换为 parent 的 Offset 坐标
 local function screenToParentOffset(screenPos: Vector2, parent: GuiObject)
 	local parentAbs = parent.AbsolutePosition
 	return screenPos - parentAbs
 end
 
--- 世界坐标转屏幕像素
 local function worldToScreen(worldPos: Vector3)
-	local cam = workspace.CurrentCamera
+	local cam = Workspace.CurrentCamera
 	local v3 = cam:WorldToViewportPoint(worldPos)
 	return Vector2.new(v3.X, v3.Y)
 end
 
--- 创建贝塞尔曲线函数（父容器坐标系）
 local function makeBezierInParent(fromScreen: Vector2, toScreen: Vector2, parent: GuiObject)
 	local from = screenToParentOffset(fromScreen, parent)
-	local to   = screenToParentOffset(toScreen, parent)
-
+	local to = screenToParentOffset(toScreen, parent)
 	local distance = (to - from).Magnitude
-	local curveH   = math.clamp(distance / 3, 100, 400)
-	local randomX  = math.random(-50, 50)
-	local mid      = (from + to) / 2 - Vector2.new(randomX, curveH)
-
+	local scale = getScreenScale()
+	local curveH = math.clamp(distance / 2.5, 50 * scale, 300 * scale)
+	local randomX = math.random(-30 * scale, 30 * scale)
+	local mid = (from + to) / 2 + Vector2.new(randomX, -curveH)
 	return function(t)
 		local u = 1 - t
 		local pos = (u*u)*from + 2*u*t*mid + (t*t)*to
@@ -36,177 +45,190 @@ local function makeBezierInParent(fromScreen: Vector2, toScreen: Vector2, parent
 	end
 end
 
--- 在屏幕宽高中间 1/3 区域内随机生成出生点
 local function randomSpawnInCenter(container: GuiObject)
 	local screenSize = container.AbsoluteSize
-	local screenPos  = container.AbsolutePosition
-
-	local minX = screenPos.X + screenSize.X * (1/3)
-	local maxX = screenPos.X + screenSize.X * (2/3)
-	local minY = screenPos.Y + screenSize.Y * (1/3)
-	local maxY = screenPos.Y + screenSize.Y * (2/3)
-
-	local randX = math.random() * (maxX - minX) + minX
-	local randY = math.random() * (maxY - minY) + minY
-	return Vector2.new(randX, randY)
+	local screenPos = container.AbsolutePosition
+	local minX = screenPos.X + screenSize.X * 0.4
+	local maxX = screenPos.X + screenSize.X * 0.6
+	local minY = screenPos.Y + screenSize.Y * 0.4
+	local maxY = screenPos.Y + screenSize.Y * 0.6
+	return Vector2.new(math.random(minX, maxX), math.random(minY, maxY))
 end
 
-
--- 飞向目标 UI 动画（带到达时目标缩放提示）
+-- ========================================================
+-- 2. 核心功能
+-- ========================================================
 function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 	opts = opts or {}
-	local duration    = opts.duration or 0.8
-	local easeStyle   = opts.easeStyle or Enum.EasingStyle.Quint
-	local easeDir     = opts.easeDir or Enum.EasingDirection.InOut
-	local targetScale = opts.targetScale or 0.75
-	local container   = (opts.container and opts.container:IsA("GuiObject")) and opts.container or prefab.Parent
-
-	-- 额外 pulse 配置（目标到达提示）
-	local pulseScale    = opts.pulseScale or 1.15
-	local pulseUpTime   = opts.pulseUpTime or 0.1
-	local pulseDownTime = opts.pulseDownTime or 0.15
-
-	-- 克隆 & 基本姿态
-	local tip = prefab:Clone()
-	tip.Parent = container
-	tip.Visible = true
-	tip.AnchorPoint = Vector2.new(0.5, 0.5)
-	pcall(function() tip.ZIndex = math.max((target.ZIndex or 1), (prefab.ZIndex or 1)) + 5 end)
-
-	-- 数据展示（可选）
-	local ok, uiInfo = pcall(function() return require(game.ReplicatedStorage.ScriptAlias.UIInfo) end)
-	if ok and uiInfo and uiInfo.SetInfo then
-		pcall(function() uiInfo:SetInfo(tip, { Value = value }) end)
+	local scaleFactor = getScreenScale() -- 仅用于计算爆炸距离
+	local container = (opts.Container and opts.Container:IsA("GuiObject")) and opts.Container or prefab.Parent
+	if not container or not container:IsA("GuiObject") then
+		container = target.Parent
 	end
-
-	-- 起飞点（屏幕像素）
-	local startScreen
-	if opts.worldPart then
-		startScreen = worldToScreen(opts.worldPart.Position)
-	elseif opts.worldPosition then
-		startScreen = worldToScreen(opts.worldPosition)
+	local flyMode = opts.FlyMode or "Multiple"
+	local showText = (opts.ShowText ~= nil) and opts.ShowText or (flyMode == "Single")
+	local randRotate = opts.RandRotate
+	if randRotate == nil then
+		if flyMode == "Single" then
+			randRotate = false
+		elseif flyMode == "Multiple" then
+			randRotate = true
+		else
+			randRotate = false
+		end
+	end
+	
+	local particleCount
+	if flyMode == "Single" then
+		particleCount = 1
 	else
-		startScreen = randomSpawnInCenter(container) -- 随机出生
-	end
-
-	-- 目标点（屏幕像素，取目标中心）
-	local tgtAbs = target.AbsolutePosition
-	local tgtCtr = Vector2.new(tgtAbs.X + target.AbsoluteSize.X / 2, tgtAbs.Y + target.AbsoluteSize.Y / 2)
-
-	-- 起始放置（在容器坐标系内）
-	local startOffset = screenToParentOffset(startScreen, container)
-	tip.Position = UDim2.fromOffset(startOffset.X, startOffset.Y)
-
-	-- UIScale 控制大小（飞行物）
-	local uiScale = tip:FindFirstChildOfClass("UIScale") or Instance.new("UIScale")
-	uiScale.Parent = tip
-	uiScale.Scale = 0.5 -- 出生时更小
-
-	-- 出生动画：缩放 0.5 → 1，同时向上飘
-	local floatOffset = Vector2.new(0, -50) -- 上漂距离（可调整）
-	local floatTime = 0.25
-
-	local floatTween = TweenService:Create(
-		tip,
-		TweenInfo.new(floatTime, Enum.EasingStyle.Sine, Enum.EasingDirection.Out),
-		{ Position = UDim2.fromOffset(startOffset.X, startOffset.Y + floatOffset.Y) }
-	)
-
-	local appearTween = TweenService:Create(uiScale, TweenInfo.new(floatTime, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 })
-
-	-- 当浮动完成后，再从“漂浮后的位置”开始计算贝塞尔并飞向目标（解决你指出的问题）
-	local function beginMainFlight()
-		-- 取漂浮后中心点的屏幕坐标作为贝塞尔起点
-		local absPos = tip.AbsolutePosition
-		local absSize = tip.AbsoluteSize
-		local startAfterFloatScreen = Vector2.new(absPos.X + absSize.X / 2, absPos.Y + absSize.Y / 2)
-
-		-- 现在基于漂浮后的位置创建贝塞尔曲线
-		local bezierAt = makeBezierInParent(startAfterFloatScreen, tgtCtr, container)
-
-		-- NumberValue 驱动 t
-		local tValue = Instance.new("NumberValue")
-		tValue.Value = 0
-
-		local conn
-		local startScale = uiScale.Scale -- 此时应为 1
-		local overshootScale = startScale * 1.1 -- 稍微放大一点点
-		local endScale = targetScale
-
-		conn = tValue.Changed:Connect(function(t)
-			local p = bezierAt(t)
-			tip.Position = UDim2.fromOffset(p.X, p.Y)
-
-			-- 前半段：1 → 1.1，后半段：1.1 → targetScale
-			if t < 0.2 then
-				uiScale.Scale = lerp(startScale, overshootScale, t / 0.2)
+		particleCount = 10
+		if type(value) == "number" then
+			if value < 10 then
+				particleCount = value
 			else
-				uiScale.Scale = lerp(overshootScale, endScale, (t - 0.2) / 0.8)
+				particleCount = math.random(10, 20)
 			end
-		end)
-
-		local tween = TweenService:Create(tValue, TweenInfo.new(duration, easeStyle, easeDir), { Value = 1 })
-		tween:Play()
-
-		tween.Completed:Connect(function()
-			if conn then conn:Disconnect() end
-			tValue:Destroy()
-
-			-- 到达目标后：在目标上播放缩放提示（放大 -> 回弹）
-			local createdTargetScale = false
-			local targetScaleObj = target:FindFirstChildOfClass("UIScale")
-			if not targetScaleObj then
-				targetScaleObj = Instance.new("UIScale")
-				targetScaleObj.Parent = target
-				createdTargetScale = true
-				targetScaleObj.Scale = 1
-			end
-
-			local originalTargetScale = targetScaleObj.Scale or 1
-
-			local pulseUpTween = TweenService:Create(
-				targetScaleObj,
-				TweenInfo.new(pulseUpTime, Enum.EasingStyle.Back, Enum.EasingDirection.Out),
-				{ Scale = originalTargetScale * pulseScale }
-			)
-
-			local pulseDownTween = TweenService:Create(
-				targetScaleObj,
-				TweenInfo.new(pulseDownTime, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-				{ Scale = originalTargetScale }
-			)
-
-			pulseUpTween:Play()
-			pulseUpTween.Completed:Connect(function()
-				pulseDownTween:Play()
-				pulseDownTween.Completed:Connect(function()
-					if createdTargetScale then
-						task.defer(function()
-							if targetScaleObj and targetScaleObj.Parent then
-								targetScaleObj:Destroy()
-							end
-						end)
-					else
-						targetScaleObj.Scale = originalTargetScale
-					end
-				end)
-			end)
-
-			-- 飞行物自身的消失动画
-			local disappearTween = TweenService:Create(uiScale, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0 })
-			disappearTween:Play()
-			disappearTween.Completed:Connect(function()
-				tip:Destroy()
-			end)
-		end)
+		end
 	end
-
-	-- 播放出生动画，浮动结束后开始主飞行（保证主飞行从浮动后的位置开始）
-	appearTween:Play()
-	floatTween:Play()
-	floatTween.Completed:Connect(beginMainFlight)
-
-	return tip
+	local startScreenCenter
+	if opts.WorldPart then
+		startScreenCenter = worldToScreen(opts.WorldPart.Position)
+	elseif opts.WorldPosition then
+		startScreenCenter = worldToScreen(opts.WorldPosition)
+	else
+		startScreenCenter = randomSpawnInCenter(container)
+	end
+	local completedCount = 0
+	local uiInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
+	for i = 1, particleCount do
+		task.spawn(function()
+			-- 1. 克隆 (自动继承你在属性面板里设置好的 Size)
+			local particle = ObjectPool:Spawn(prefab)
+			if showText then
+				uiInfo:SetInfo(particle, { Value = value })
+			end
+			
+			particle.Name = "EffectCoin"
+			particle.Parent = container
+			particle.Visible = true
+			particle.BackgroundTransparency = 1
+			particle.AnchorPoint = Vector2.new(0.5, 0.5)
+			-- 确保层级正确
+			pcall(function() particle.ZIndex = (target.ZIndex or 1) + 10 end)
+			-- 2. 设置初始位置
+			local startOffset = screenToParentOffset(startScreenCenter, container)
+			particle.Position = UDim2.fromOffset(startOffset.X, startOffset.Y)
+			-- 3. 使用 UIScale 控制缩放动画
+			local uiScale = particle:FindFirstChildOfClass("UIScale") or Instance.new("UIScale", particle)
+			uiScale.Scale = 0 -- 初始不可见
+			-- ------------------------------------------------
+			-- 阶段 1：爆炸 (Explosion) 或直接出现
+			-- ------------------------------------------------
+			if flyMode == "Multiple" then
+				local angle = math.random() * math.pi * 2
+				-- 爆炸半径依然需要适配屏幕大小，否则在手机上会炸太远
+				local minRad = 120 * scaleFactor
+				local maxRad = 320 * scaleFactor
+				local radius = math.random(minRad, maxRad)
+				local offsetX = math.cos(angle) * radius
+				local offsetY = math.sin(angle) * radius
+				local explodePos = UDim2.fromOffset(startOffset.X + offsetX, startOffset.Y + offsetY)
+				local explodeTime = 0.4
+				local rotationTarget = randRotate and math.random(-180, 180) or 0
+				local explodeTween = TweenService:Create(particle, TweenInfo.new(explodeTime, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+					Position = explodePos,
+					Rotation = rotationTarget
+				})
+				-- 【动画】Scale 从 0 变到 1
+				-- 这里的 1 代表“还原为 Template 的原始大小”
+				local appearTween = TweenService:Create(uiScale, TweenInfo.new(explodeTime * 0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+					Scale = 1
+				})
+				explodeTween:Play()
+				appearTween:Play()
+				task.wait(0.3 + math.random() * 0.2)
+			else
+				-- 单元素模式：直接出现，无爆炸
+				uiScale.Scale = 1
+				local initialRotation = randRotate and math.random(-180, 180) or 0
+				particle.Rotation = initialRotation
+			end
+			if not particle.Parent then return end
+			-- ------------------------------------------------
+			-- 阶段 2：停顿与飞行
+			-- ------------------------------------------------
+			local tgtAbs = target.AbsolutePosition
+			local tgtCtr = Vector2.new(tgtAbs.X + target.AbsoluteSize.X / 2, tgtAbs.Y + target.AbsoluteSize.Y / 2)
+			local currAbs = particle.AbsolutePosition
+			local currCtr = Vector2.new(currAbs.X + particle.AbsoluteSize.X/2, currAbs.Y + particle.AbsoluteSize.Y/2)
+			local bezierFunc = makeBezierInParent(currCtr, tgtCtr, container)
+			local tVal = Instance.new("NumberValue")
+			tVal.Value = 0
+			local conn
+			conn = tVal.Changed:Connect(function(t)
+				if not particle.Parent then
+					conn:Disconnect()
+					return
+				end
+				local p = bezierFunc(t)
+				particle.Position = UDim2.fromOffset(p.X, p.Y)
+				particle.Rotation = lerp(particle.Rotation, 0, t)
+			end)
+			local flyTime = 0.6
+			local flyTween = TweenService:Create(tVal, TweenInfo.new(flyTime, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Value = 1 })
+			-- 【动画】Scale 从 1 变到 0.3 (飞入变小)
+			local shrinkTween = TweenService:Create(uiScale, TweenInfo.new(flyTime, Enum.EasingStyle.Quad, Enum.EasingDirection.In), { Scale = 0.3 })
+			flyTween:Play()
+			shrinkTween:Play()
+			flyTween.Completed:Connect(function()
+				if tVal then tVal:Destroy() end
+				ObjectPool:DeSpawn(particle)
+				completedCount = completedCount + 1
+				if completedCount == particleCount and showText and type(value) == "number" then
+					-- 创建浮动文本
+					local textLabel = Instance.new("TextLabel")
+					textLabel.Name = "FlyText"
+					textLabel.Parent = container
+					local textOffset = screenToParentOffset(tgtCtr, container)
+					textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+					textLabel.Position = UDim2.fromOffset(textOffset.X, textOffset.Y)
+					textLabel.Size = UDim2.new(0, 120, 0, 60)
+					textLabel.BackgroundTransparency = 1
+					textLabel.Text = "+" .. value
+					textLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+					textLabel.TextScaled = true
+					textLabel.Font = Enum.Font.GothamBold
+					textLabel.TextStrokeTransparency = 0
+					textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+					local textUI = textLabel:FindFirstChildOfClass("UIScale") or Instance.new("UIScale", textLabel)
+					textUI.Scale = 0
+					local appearText = TweenService:Create(textUI, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Scale = 1})
+					appearText:Play()
+					local textInfo = TweenInfo.new(1.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+					local textMove = TweenService:Create(textLabel, textInfo, {Position = UDim2.fromOffset(textOffset.X, textOffset.Y - 80)})
+					local textFade = TweenService:Create(textLabel, textInfo, {TextTransparency = 1})
+					local scaleDown = TweenService:Create(textUI, textInfo, {Scale = 0.8})
+					textMove:Play()
+					textFade:Play()
+					scaleDown:Play()
+					textMove.Completed:Connect(function()
+						textLabel:Destroy()
+					end)
+				end
+				if math.random() > 0.7 then
+					local ts = target:FindFirstChildOfClass("UIScale") or Instance.new("UIScale", target)
+					local punchIn = TweenService:Create(ts, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Scale = 1.2})
+					punchIn:Play()
+					punchIn.Completed:Connect(function()
+						TweenService:Create(ts, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Scale = 1}):Play()
+					end)
+				end
+			end)
+		end)
+		if i % 5 == 0 then task.wait() end
+	end
+	return nil
 end
 
 return TweenFlyUtil

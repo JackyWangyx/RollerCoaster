@@ -3,7 +3,7 @@
 RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
-	SlideAcceleration = 100,
+	SlideAcceleration = 500,
 }
 
 RollerCoasterDefine.GamePhase = {

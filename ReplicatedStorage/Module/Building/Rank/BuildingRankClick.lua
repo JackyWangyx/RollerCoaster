@@ -4,8 +4,8 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingRankClick = {}
 
-function BuildingRankClick:Init(buildingPart, triggerPart)
-	BuildingRank:Handle(buildingPart, Define.RankList.TotalClick)
+function BuildingRankClick:Init(buildingPart, opts)
+	BuildingRank:Handle(buildingPart, opts, Define.RankList.TotalClick)
 end
 
 return BuildingRankClick

@@ -10,6 +10,7 @@ local SceneManager = {}
 SceneManager.Config = nil
 SceneManager.CurrentLevelName = nil
 SceneManager.LevelRoot = nil
+SceneManager.AreaList = nil
 
 function SceneManager:Init()
 	if RunService:IsServer() then
@@ -23,6 +24,7 @@ function SceneManager:Init()
 		else
 			levelRoot = game.Workspace:FindFirstChild(SceneManager.CurrentLevelName )
 		end 
+		
 		levelRoot.Name = "LevelRoot"
 		levelRoot.Parent = game.Workspace
 		local levelNameLabel = Instance.new("StringValue")
@@ -37,6 +39,14 @@ function SceneManager:Init()
 		SceneManager.LevelRoot = game.Workspace:WaitForChild("LevelRoot")
 		SceneManager.CurrentLevelName = SceneManager.LevelRoot:WaitForChild("LevelName").Value
 		LogUtil:Log("[Client] Scene Load Success!")
+	end
+	
+	local areaRoot = SceneManager.LevelRoot:FindFirstChild("Area")
+	if areaRoot then
+		SceneManager.AreaList = areaRoot:GetChildren()
+		if SceneManager.AreaList  then
+			SceneManager.AreaList = Util:ListSortByPartName(SceneManager.AreaList)
+		end
 	end
 end
 

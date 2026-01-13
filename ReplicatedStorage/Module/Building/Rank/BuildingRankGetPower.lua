@@ -4,8 +4,8 @@ local Define = require(game.ReplicatedStorage.Define)
 
 local BuildingRankGetPower = {}
 
-function BuildingRankGetPower:Init(buildingPart, triggerPart)
-	BuildingRank:Handle(buildingPart, Define.RankList.TotalGetPower)
+function BuildingRankGetPower:Init(buildingPart, opts)
+	BuildingRank:Handle(buildingPart, opts, Define.RankList.TotalGetPower)
 end
 
 return BuildingRankGetPower

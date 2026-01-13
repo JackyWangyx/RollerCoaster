@@ -4,10 +4,11 @@ local TrackRoute = {}
 
 TrackRoute.__index = TrackRoute
 
-function TrackRoute.new(segmentList)
+function TrackRoute.new(segmentList, prefabList)
 	local self = setmetatable({}, TrackRoute)
 
 	self.SegmentList = segmentList
+	--self.PrefabList = prefabList
 	self:InitPath()
 	
 	return self
@@ -17,7 +18,8 @@ function TrackRoute:InitPath()
 	local length = 0
 	
 	self.SectionList = {}
-	for _, segment in ipairs(self.SegmentList) do
+	for index, segment in ipairs(self.SegmentList) do
+		--local prefab = self.PrefabList[index]
 		local trackSection = TrackSection.new(segment)
 		table.insert(self.SectionList, trackSection)
 	end

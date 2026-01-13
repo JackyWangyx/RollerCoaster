@@ -23,19 +23,19 @@ local CurrentTrainingInfo = nil
 local ToolData = nil
 local PlayerPos = nil
 
-function TrainingMachine:Handle(buildingPart, triggerPart, index)
+function TrainingMachine:Handle(buildingPart, opts, index)
 	local data = ConfigManager:GetData("Training", index)
 	local trainingInfo = {
 		TrainingMachine = self,
 		BuildingPart = buildingPart,
-		TriggerPart = triggerPart,
+		TriggerPart = opts.TriggerPart,
 		Index = index,
 		Data = data,
 		IsLock = true,
 		Fx = Util:LoadPrefab(data.FX),
 	}
 	
-	local building = Building.Proximity(buildingPart , Define.Message.EnterTrainingMachine, function()
+	local building = Building.Proximity(buildingPart, opts, Define.Message.EnterTrainingMachine, function()
 		TrainingMachine:Start(trainingInfo)
 	end)
 

@@ -15,7 +15,7 @@ ID,PackageID,Icon,Description,RewardType,RewardID,RewardCount
 11,3,rbxassetid://120879384686937,DoubleWins,Prop,2,2
 12,3,rbxassetid://84959116887125,DoubleSpeed,Prop,3,2
 13,3,rbxassetid://124158144966213,GoldHatch,Prop,4,2
-14,3,rbxassetid://104471684228431,Claw Storm,Tool,16,1
+14,3,rbxassetid://104471684228431,Claw Storm,Tool,20,1
 15,3,rbxassetid://127022518238132,1K,Coin,1,1000
 16,3,rbxassetid://107325582276772,Crimson,Pet,246,1
 17,4,rbxassetid://120879384686937,DoubleWins,Prop,2,1
