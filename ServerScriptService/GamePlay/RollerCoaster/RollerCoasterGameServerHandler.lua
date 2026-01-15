@@ -108,19 +108,19 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 		TrackIndex = param.Index,
 	}
 	
-	local currentRank = RollerCoasterRequest:GetCurrentRank(player)
-	local rankInfo = RollerCoasterRequest:GetRankInfo(player, { Rank = currentRank })
-	local rankData = ConfigManager:GetData("Rank", currentRank)
+	local themeKey = trackInfo.ThemeKey
+	local gameThemeInfo = RollerCoasterRequest:GetThemeInfo(player, { ThemeKey = themeKey })
+	local themeData = ConfigManager:SearchData("Theme", "ThemeKey", themeKey)
 	gameInitParam.UpSegmentNameList = upSegmentNameList
 	gameInitParam.DownSegmentNameList = downSegmentNameList
-	gameInitParam.Rank = currentRank
-	gameInitParam.TrackLevel = rankInfo.TrackLevel
+	gameInitParam.ThemeKey = themeKey
+	gameInitParam.TrackLevel = gameThemeInfo.TrackLevel
 	local speed = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.SPEED)
 	--local maxSpeedFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.MAX_SPEED_FACTOR)
-	gameInitParam.Speed = speed * rankData.SpeedFactor -- * maxSpeedFactor 
+	gameInitParam.Speed = speed * themeData.SpeedFactor -- * maxSpeedFactor 
 	
 	local getCoinFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_COIN_FACTOR)
-	local rewardCoinPerMeter = getCoinFactor * rankData.RewardCoin
+	local rewardCoinPerMeter = getCoinFactor * themeData.RewardCoin
 	gameInitParam.RewardCoinPerMeter = rewardCoinPerMeter
 	
 	local toolRequest = require(game.ServerScriptService.ScriptAlias.Tool)
@@ -132,12 +132,12 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 	local playerInfo = {
 		Player = player,
 		TrackIndex = param.Index,
-		Rank = currentRank,
-		TrackLevel = rankInfo.TrackLevel,
+		ThemeKey = themeKey,
+		TrackLevel = gameThemeInfo.TrackLevel,
 		TrackInfo = trackInfo,
 		Length = trackInfo.DownTrack.Length,
-		RankInfo = rankInfo,
-		RankData = rankData,
+		ThemeInfo = gameThemeInfo,
+		ThemeData = themeData,
 		ArrvieDistance = 0,
 		CurrentDistance = 0,
 		RewardCoinPerMeter = rewardCoinPerMeter,
@@ -220,7 +220,7 @@ function RollerCoasterGameServerHandler:GetWins(player)
 	if not playerInfo then return false end
 	
 	local getWinsFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_WINS_FACTOR)
-	local value = playerInfo.RankData.RewardWins * getWinsFactor
+	local value = playerInfo.ThemeData.RewardWins * getWinsFactor
 	local accountRequest = require(game.ServerScriptService.ScriptAlias.Account)
 	accountRequest:AddWins(player, { Value = value })
 	return true

@@ -27,6 +27,7 @@ function IAPClient:Purchase(productKey, param, callback)
 	
 	local player = Players.LocalPlayer
 	local iapData = ConfigManager:SearchData("IAP", "ProductKey", productKey)
+	local iapList = ConfigManager:GetDataList("IAP")
 	if not iapData then
 		warn("[IAP Client] IAPData not found! "..productKey)
 		return

@@ -85,7 +85,7 @@ function Partner:Buy(player, param)
 		if coinRemain < data.CostCoin then
 			return {
 				Success = false,
-				Message = Define.Message.PartnerCoinNotEnough
+				Message = Define.Message.CoinNotEnough
 			}
 		end
 
@@ -97,7 +97,7 @@ function Partner:Buy(player, param)
 		if winsRemain < data.CostWins then
 			return {
 				Success = false,
-				Message = Define.Message.PartnerWinsNotEnough
+				Message = Define.Message.WinsNotEnough
 			}
 		end
 

@@ -1,7 +1,9 @@
 ﻿local Workspace = game:GetService("Workspace")
 
+local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local SceneManager = require(game.ReplicatedStorage.ScriptAlias.SceneManager)
+local SceneAreaManager = require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 
 local BuildingManager = {}
@@ -14,7 +16,7 @@ BuildingManager.Mode = {
 BuildingManager.GlobalBuildingPath = nil
 BuildingManager.AreaBuildingPathList = {}
 
-function BuildingManager:Init()
+function BuildingManager:Init()	
 	BuildingManager.GlobalBuildingPath = SceneManager.LevelRoot:WaitForChild("Building")
 	if BuildingManager.GlobalBuildingPath then
 		BuildingManager:InitPath(BuildingManager.GlobalBuildingPath, true, -1)

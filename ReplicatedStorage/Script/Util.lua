@@ -950,19 +950,29 @@ function Util:GetWorkspaceFolder(folderName)
 end
 
 -- Active DeActive (Show / Hide) - Move to replicatedStoreage
-local ActiveParentCache = {}
+local DeActiveCache = {}
+local DeActiveFolder = Util:GetReplicatedFolder("RuntimeOnly_DeActive")
 
 function Util:ActiveObject(object)
-	local activeParent = ActiveParentCache[object]
+	if not object then return end
+	local info = DeActiveCache[object]
+	if not info then return end
+	local activeParent = info.Parent
 	if not activeParent then return end
 	object.Parent = activeParent
-	ActiveParentCache[object] = nil
+	DeActiveCache[object] = nil
 end
 
 function Util:DeActiveObject(object)
-	ActiveParentCache[object] = object.Parent
-	local deActiveFolder = Util:GetReplicatedFolder("RuntimeOnly_DeActive")
-	object.Parent = deActiveFolder
+	if not object then return end
+	local info = DeActiveCache[object]
+	if info then return end
+	info = {
+		Parent = object.Parent
+	}
+	
+	DeActiveCache[object] = info
+	object.Parent = DeActiveFolder
 end
 
 -- Fx

@@ -52,7 +52,7 @@ function UIRailUpdate:Button_BuyRobux()
 	if not UIRailUpdate.TrackInfo then return end
 	IAPClient:Purchase( UIRailUpdate.TrackInfo.ProductKey, function(success)
 		if success then
-			NetClient:Request("RollerCoaster", "UpgradeTrack", { Type == "Robux" }, function(result)
+			NetClient:Request("RollerCoaster", "UpgradeTrack", { Type = "Robux" }, function(result)
 				if result.Success then
 					UIRailUpdate:Refresh()
 				else

@@ -116,7 +116,7 @@ function UIPetLoot:CheckAccount(count)
 		if UIPetLoot.CostCoin > 0 then
 			local remainCoin = NetClient:RequestWait("Account", "GetCoin")
 			if remainCoin < UIPetLoot.CostCoin * count then
-				UIManager:ShowMessage(Define.Message.PetLootCoinNotEnough)
+				UIManager:ShowMessage(Define.Message.CoinNotEnough)
 				return false
 			else
 				return true
@@ -124,7 +124,7 @@ function UIPetLoot:CheckAccount(count)
 		elseif UIPetLoot.CostWins > 0 then
 			local remainWins = NetClient:RequestWait("Account", "GetWins")
 			if remainWins < UIPetLoot.CostWins * count then
-				UIManager:ShowMessage(Define.Message.PetLootWinsNotEnough)
+				UIManager:ShowMessage(Define.Message.WinsNotEnough)
 				return false
 			else
 				return true

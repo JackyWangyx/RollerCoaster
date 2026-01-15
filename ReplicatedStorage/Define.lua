@@ -181,8 +181,8 @@ Define.Message = {
 	PetMaxLevel = "Pet is max level",
 
 	-- Pet Loot
-	PetLootCoinNotEnough = "Coin not enough!",
-	PetLootWinsNotEnough = "Wins not enough!",
+	CoinNotEnough = "Coin not enough!",
+	WinsNotEnough = "Wins not enough!",
 	PetPackageFull = "Pacakge Full!",
 	
 	-- Animal
@@ -192,26 +192,19 @@ Define.Message = {
 	-- Tool Store
 	ToolLocked = "Tool not unlock!",
 	ToolBaught = "Tool baught!",
-	ToolCoinNotEnough = "Coin not enough!",
-	ToolWinsNotEnough = "Wins not enough!",
 	
 	-- Partner Store
 	PartnerBaught = "Partner baught!",
-	PartnerCoinNotEnough = "Coin not enough!",
-	PartnerWinsNotEnough = "Wins not enough!",
 	
 	-- Trail Store
 	TrailLocked = "Trail not unlock!",
 	TrailBaught = "Trail baught!",
-	TrailCoinNotEnough = "Coin not enough!",
-	TrailWinsNotEnough = "Wins not enough!",
 	
 	-- Training
 	EnterTrainingMachine = "Enter Training Machine",
 	TrainingLock = "Training is locked",
 	
 	-- Rebirth
-	RebirthCoinNotEnough = "Coin not enough",
 	AutoRebirth = "Auto rebirth !",
 	
 	-- Scene Building

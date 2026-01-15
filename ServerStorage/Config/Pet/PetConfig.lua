@@ -152,236 +152,236 @@ ID,Name,Rarity,Icon,Prefab,Size,Indexable,World,MaxExistCoinFactor,GetCoinFactor
 148,Buzzy,5,rbxassetid://139499492939806,PetNew/Rank02/800K05_Buzzy_Large,Large,false,2,0,2700,2700X,nil
 149,Buzzy,5,rbxassetid://139499492939806,PetNew/Rank02/800K05_Buzzy,nil,false,2,0,1,1X,nil
 150,Buzzy,5,rbxassetid://139499492939806,PetNew/Rank02/800K05_Buzzy,nil,false,2,0,1,1X,nil
-151,Slimee,1,rbxassetid://110118864895973,PetNew/Rank03/3M01_Slimee,Tiny,true,2,0,6,6X,nil
-152,Slimee,1,rbxassetid://110118864895973,PetNew/Rank03/3M01_Slimee_Mid,Normal,false,2,0,7.2,7.2X,nil
-153,Slimee,1,rbxassetid://110118864895973,PetNew/Rank03/3M01_Slimee_Large,Large,false,2,0,9,9X,nil
-154,Slimee,1,rbxassetid://110118864895973,PetNew/Rank03/3M01_Slimee,nil,false,2,0,1,1X,nil
-155,Slimee,1,rbxassetid://110118864895973,PetNew/Rank03/3M01_Slimee,nil,false,2,0,1,1X,nil
-156,Bubbloo,2,rbxassetid://130923749805734,PetNew/Rank03/3M02_Bubbloo,Tiny,true,2,0,6,6X,nil
-157,Bubbloo,2,rbxassetid://130923749805734,PetNew/Rank03/3M02_Bubbloo_Mid,Normal,false,2,0,7.2,7.2X,nil
-158,Bubbloo,2,rbxassetid://130923749805734,PetNew/Rank03/3M02_Bubbloo_Large,Large,false,2,0,9,9X,nil
-159,Bubbloo,2,rbxassetid://130923749805734,PetNew/Rank03/3M02_Bubbloo,nil,false,2,0,1,1X,nil
-160,Bubbloo,2,rbxassetid://130923749805734,PetNew/Rank03/3M02_Bubbloo,nil,false,2,0,1,1X,nil
-161,Cherubee,3,rbxassetid://71445192977824,PetNew/Rank03/3M03_ Cherubee,Tiny,true,2,0,6,6X,nil
-162,Cherubee,3,rbxassetid://71445192977824,PetNew/Rank03/3M03_ Cherubee_Mid,Normal,false,2,0,7.2,7.2X,nil
-163,Cherubee,3,rbxassetid://71445192977824,PetNew/Rank03/3M03_ Cherubee_Large,Large,false,2,0,9,9X,nil
-164,Cherubee,3,rbxassetid://71445192977824,PetNew/Rank03/3M03_ Cherubee,nil,false,2,0,1,1X,nil
-165,Cherubee,3,rbxassetid://71445192977824,PetNew/Rank03/3M03_ Cherubee,nil,false,2,0,1,1X,nil
-166,Mystiboo,4,rbxassetid://138070079030804,PetNew/Rank03/3M04_Mystiboo,Tiny,true,2,0,6,6X,nil
-167,Mystiboo,4,rbxassetid://138070079030804,PetNew/Rank03/3M04_Mystiboo_Mid,Normal,false,2,0,7.2,7.2X,nil
-168,Mystiboo,4,rbxassetid://138070079030804,PetNew/Rank03/3M04_Mystiboo_Large,Large,false,2,0,9,9X,nil
-169,Mystiboo,4,rbxassetid://138070079030804,PetNew/Rank03/3M04_Mystiboo,nil,false,2,0,1,1X,nil
-170,Mystiboo,4,rbxassetid://138070079030804,PetNew/Rank03/3M04_Mystiboo,nil,false,2,0,1,1X,nil
-171,Zapcube,4,rbxassetid://74750011108036,PetNew/Rank03/3M05_Zapcube,Tiny,true,2,0,6,6X,nil
-172,Zapcube,4,rbxassetid://74750011108036,PetNew/Rank03/3M05_Zapcube_Mid,Normal,false,2,0,7.2,7.2X,nil
-173,Zapcube,4,rbxassetid://74750011108036,PetNew/Rank03/3M05_Zapcube_Large,Large,false,2,0,9,9X,nil
-174,Zapcube,4,rbxassetid://74750011108036,PetNew/Rank03/3M05_Zapcube,nil,false,2,0,1,1X,nil
-175,Zapcube,4,rbxassetid://74750011108036,PetNew/Rank03/3M05_Zapcube,nil,false,2,0,1,1X,nil
-176,Cryostel,1,rbxassetid://98793576432233,PetNew/Rank02/12M01_Cryostel,Tiny,true,2,0,6,6X,nil
-177,Cryostel,1,rbxassetid://98793576432233,PetNew/Rank02/12M01_Cryostel_Mid,Normal,false,2,0,7.2,7.2X,nil
-178,Cryostel,1,rbxassetid://98793576432233,PetNew/Rank02/12M01_Cryostel_Large,Large,false,2,0,9,9X,nil
-179,Cryostel,1,rbxassetid://98793576432233,PetNew/Rank02/12M01_Cryostel,nil,false,2,0,1,1X,nil
-180,Cryostel,1,rbxassetid://98793576432233,PetNew/Rank02/12M01_Cryostel,nil,false,2,0,1,1X,nil
-181,Aethergem,2,rbxassetid://88351182574814,PetNew/Rank02/12M02_Aethergem,Tiny,true,2,0,6,6X,nil
-182,Aethergem,2,rbxassetid://88351182574814,PetNew/Rank02/12M02_Aethergem_Mid,Normal,false,2,0,7.2,7.2X,nil
-183,Aethergem,2,rbxassetid://88351182574814,PetNew/Rank02/12M02_Aethergem_Large,Large,false,2,0,9,9X,nil
-184,Aethergem,2,rbxassetid://88351182574814,PetNew/Rank02/12M02_Aethergem,nil,false,2,0,1,1X,nil
-185,Aethergem,2,rbxassetid://88351182574814,PetNew/Rank02/12M02_Aethergem,nil,false,2,0,1,1X,nil
-186,Luminova,3,rbxassetid://97958746390784,PetNew/Rank02/12M03_Luminova,Tiny,true,2,0,6,6X,nil
-187,Luminova,3,rbxassetid://97958746390784,PetNew/Rank02/12M03_Luminova_Mid,Normal,false,2,0,7.2,7.2X,nil
-188,Luminova,3,rbxassetid://97958746390784,PetNew/Rank02/12M03_Luminova_Large,Large,false,2,0,9,9X,nil
-189,Luminova,3,rbxassetid://97958746390784,PetNew/Rank02/12M03_Luminova,nil,false,2,0,1,1X,nil
-190,Luminova,3,rbxassetid://97958746390784,PetNew/Rank02/12M03_Luminova,nil,false,2,0,1,1X,nil
-191,Pyrocore,4,rbxassetid://125673790407899,PetNew/Rank02/12M04_Pyrocore,Tiny,true,2,0,6,6X,nil
-192,Pyrocore,4,rbxassetid://125673790407899,PetNew/Rank02/12M04_Pyrocore_Mid,Normal,false,2,0,7.2,7.2X,nil
-193,Pyrocore,4,rbxassetid://125673790407899,PetNew/Rank02/12M04_Pyrocore_Large,Large,false,2,0,9,9X,nil
-194,Pyrocore,4,rbxassetid://125673790407899,PetNew/Rank02/12M04_Pyrocore,nil,false,2,0,1,1X,nil
-195,Pyrocore,4,rbxassetid://125673790407899,PetNew/Rank02/12M04_Pyrocore,nil,false,2,0,1,1X,nil
-196,Voidion,4,rbxassetid://107423189403607,PetNew/Rank02/12M05_Voidion,Tiny,true,2,0,6,6X,nil
-197,Voidion,4,rbxassetid://107423189403607,PetNew/Rank02/12M05_Voidion_Mid,Normal,false,2,0,7.2,7.2X,nil
-198,Voidion,4,rbxassetid://107423189403607,PetNew/Rank02/12M05_Voidion_Large,Large,false,2,0,9,9X,nil
-199,Voidion,4,rbxassetid://107423189403607,PetNew/Rank02/12M05_Voidion,nil,false,2,0,1,1X,nil
-200,Voidion,4,rbxassetid://107423189403607,PetNew/Rank02/12M05_Voidion,nil,false,2,0,1,1X,nil
-201,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo,Tiny,true,4,0,6,6X,nil
-202,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo_Mid,Normal,false,4,0,7.2,7.2X,nil
-203,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo_Large,Large,false,4,0,9,9X,nil
+151,Slimee,6,rbxassetid://110118864895973,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,42,42X,ProductStorePet151
+152,Slimee,6,rbxassetid://110118864895973,PetNew/PetsRoblox/Rank01RB01_Slimee_Mid,Normal,false,2,0,50.4,50.4X,nil
+153,Slimee,6,rbxassetid://110118864895973,PetNew/PetsRoblox/Rank01RB01_Slimee_Large,Large,false,2,0,63,63X,nil
+154,Slimee,6,rbxassetid://110118864895973,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+155,Slimee,6,rbxassetid://110118864895973,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+156,Bubbloo,6,rbxassetid://130923749805734,PetNew/PetsRoblox/Rank01RB02_Bubbloo,Tiny,true,2,0,170,170X,ProductStorePet156
+157,Bubbloo,6,rbxassetid://130923749805734,PetNew/PetsRoblox/Rank01RB02_Bubbloo_Mid,Normal,false,2,0,204,204X,nil
+158,Bubbloo,6,rbxassetid://130923749805734,PetNew/PetsRoblox/Rank01RB02_Bubbloo_Large,Large,false,2,0,255,255X,nil
+159,Bubbloo,6,rbxassetid://130923749805734,PetNew/PetsRoblox/Rank01RB02_Bubbloo,nil,false,2,0,1,1X,nil
+160,Bubbloo,6,rbxassetid://130923749805734,PetNew/PetsRoblox/Rank01RB02_Bubbloo,nil,false,2,0,1,1X,nil
+161,Cherubee,6,rbxassetid://71445192977824,PetNew/PetsRoblox/Rank02RB03_Cherubee,Tiny,true,2,0,900,900X,ProductStorePet161
+162,Cherubee,6,rbxassetid://71445192977824,PetNew/PetsRoblox/Rank02RB03_Cherubee_Mid,Normal,false,2,0,1080,1080X,nil
+163,Cherubee,6,rbxassetid://71445192977824,PetNew/PetsRoblox/Rank02RB03_Cherubee_Large,Large,false,2,0,1350,1350X,nil
+164,Cherubee,6,rbxassetid://71445192977824,PetNew/PetsRoblox/Rank02RB03_Cherubee,nil,false,2,0,1,1X,nil
+165,Cherubee,6,rbxassetid://71445192977824,PetNew/PetsRoblox/Rank02RB03_Cherubee,nil,false,2,0,1,1X,nil
+166,Mystiboo,6,rbxassetid://138070079030804,PetNew/PetsRoblox/Rank02RB04_Mystiboo,Tiny,true,2,0,2900,2900X,ProductStorePet166
+167,Mystiboo,6,rbxassetid://138070079030804,PetNew/PetsRoblox/Rank02RB04_Mystiboo_Mid,Normal,false,2,0,3480,3480X,nil
+168,Mystiboo,6,rbxassetid://138070079030804,PetNew/PetsRoblox/Rank02RB04_Mystiboo_Large,Large,false,2,0,4350,4350X,nil
+169,Mystiboo,6,rbxassetid://138070079030804,PetNew/PetsRoblox/Rank02RB04_Mystiboo,nil,false,2,0,1,1X,nil
+170,Mystiboo,6,rbxassetid://138070079030804,PetNew/PetsRoblox/Rank02RB04_Mystiboo,nil,false,2,0,1,1X,nil
+171,Zapcube,6,rbxassetid://74750011108036,PetNew/PetsRoblox/Rank01RB05_Zapcube,Tiny,true,2,0,1,1X,nil
+172,Zapcube,6,rbxassetid://74750011108036,PetNew/PetsRoblox/Rank01RB05_Zapcube_Mid,Normal,false,2,0,1,1X,nil
+173,Zapcube,6,rbxassetid://74750011108036,PetNew/PetsRoblox/Rank01RB05_Zapcube_Large,Large,false,2,0,1,1X,nil
+174,Zapcube,6,rbxassetid://74750011108036,PetNew/PetsRoblox/Rank01RB05_Zapcube,nil,false,2,0,1,1X,nil
+175,Zapcube,6,rbxassetid://74750011108036,PetNew/PetsRoblox/Rank01RB05_Zapcube,nil,false,2,0,1,1X,nil
+176,Cryostel,6,rbxassetid://98793576432233,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,1,1X,nil
+177,Cryostel,6,rbxassetid://98793576432233,PetNew/PetsRoblox/Rank01RB01_Slimee,Normal,false,2,0,1,1X,nil
+178,Cryostel,6,rbxassetid://98793576432233,PetNew/PetsRoblox/Rank01RB01_Slimee,Large,false,2,0,1,1X,nil
+179,Cryostel,6,rbxassetid://98793576432233,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+180,Cryostel,6,rbxassetid://98793576432233,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+181,Aethergem,6,rbxassetid://88351182574814,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,1,1X,nil
+182,Aethergem,6,rbxassetid://88351182574814,PetNew/PetsRoblox/Rank01RB01_Slimee,Normal,false,2,0,1,1X,nil
+183,Aethergem,6,rbxassetid://88351182574814,PetNew/PetsRoblox/Rank01RB01_Slimee,Large,false,2,0,1,1X,nil
+184,Aethergem,6,rbxassetid://88351182574814,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+185,Aethergem,6,rbxassetid://88351182574814,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+186,Luminova,6,rbxassetid://97958746390784,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,1,1X,nil
+187,Luminova,6,rbxassetid://97958746390784,PetNew/PetsRoblox/Rank01RB01_Slimee,Normal,false,2,0,1,1X,nil
+188,Luminova,6,rbxassetid://97958746390784,PetNew/PetsRoblox/Rank01RB01_Slimee,Large,false,2,0,1,1X,nil
+189,Luminova,6,rbxassetid://97958746390784,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+190,Luminova,6,rbxassetid://97958746390784,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+191,Pyrocore,6,rbxassetid://125673790407899,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,1,1X,nil
+192,Pyrocore,6,rbxassetid://125673790407899,PetNew/PetsRoblox/Rank01RB01_Slimee,Normal,false,2,0,1,1X,nil
+193,Pyrocore,6,rbxassetid://125673790407899,PetNew/PetsRoblox/Rank01RB01_Slimee,Large,false,2,0,1,1X,nil
+194,Pyrocore,6,rbxassetid://125673790407899,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+195,Pyrocore,6,rbxassetid://125673790407899,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+196,Voidion,6,rbxassetid://107423189403607,PetNew/PetsRoblox/Rank01RB01_Slimee,Tiny,true,2,0,1,1X,nil
+197,Voidion,6,rbxassetid://107423189403607,PetNew/PetsRoblox/Rank01RB01_Slimee,Normal,false,2,0,1,1X,nil
+198,Voidion,6,rbxassetid://107423189403607,PetNew/PetsRoblox/Rank01RB01_Slimee,Large,false,2,0,1,1X,nil
+199,Voidion,6,rbxassetid://107423189403607,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+200,Voidion,6,rbxassetid://107423189403607,PetNew/PetsRoblox/Rank01RB01_Slimee,nil,false,2,0,1,1X,nil
+201,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo,Tiny,true,4,0,1,1X,nil
+202,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo_Mid,Normal,false,4,0,1,1X,nil
+203,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo_Large,Large,false,4,0,1,1X,nil
 204,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo,nil,false,4,0,1,1X,nil
 205,Infermo,6,rbxassetid://128833722760603,PetNew/PetsRoblox/Roblox01_Infermo,nil,false,4,0,1,1X,nil
-206,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli,Tiny,true,4,0,6,6X,nil
-207,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli_Mid,Normal,false,4,0,7.2,7.2X,nil
-208,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli_Large,Large,false,4,0,9,9X,nil
+206,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli,Tiny,true,4,0,1,1X,nil
+207,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli_Mid,Normal,false,4,0,1,1X,nil
+208,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli_Large,Large,false,4,0,1,1X,nil
 209,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli,nil,false,4,0,1,1X,nil
 210,Loveli,6,rbxassetid://82162367145565,PetNew/PetsRoblox/Roblox02_ Loveli,nil,false,4,0,1,1X,nil
-211,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex,Tiny,true,4,0.8,6,6X,nil
-212,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex_Mid,Normal,false,4,1.2,7.2,7.2X,nil
-213,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex_Large,Large,false,4,1.6,9,9X,nil
+211,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex,Tiny,true,4,0,1,1X,nil
+212,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex_Mid,Normal,false,4,0,1,1X,nil
+213,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex_Large,Large,false,4,0,1,1X,nil
 214,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex,nil,false,4,0,1,1X,nil
 215,HaloHex,5,rbxassetid://78390941572868,PetNew/PetsRoblox/Roblox03_HaloHex,nil,false,4,0,1,1X,nil
-216,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite,Tiny,true,4,1.5,6,6X,nil
-217,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite_Mid,Normal,false,4,2.25,7.2,7.2X,nil
-218,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite_Large,Large,false,4,3,9,9X,nil
+216,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite,Tiny,true,4,0,1,1X,nil
+217,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite_Mid,Normal,false,4,0,1,1X,nil
+218,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite_Large,Large,false,4,0,1,1X,nil
 219,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite,nil,false,4,0,1,1X,nil
 220,Frostbite,5,rbxassetid://100764664840612,PetNew/PetsRoblox/Roblox04_Frostbite,nil,false,4,0,1,1X,nil
-221,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01,Tiny,true,4,0,6,6X,nil
-222,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01_Mid,Normal,false,4,0,7.2,7.2X,nil
-223,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01_Large,Large,false,4,0,9,9X,nil
+221,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01,Tiny,true,4,0,1,1X,nil
+222,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01_Mid,Normal,false,4,0,1,1X,nil
+223,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01_Large,Large,false,4,0,1,1X,nil
 224,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01,nil,false,4,0,1,1X,nil
 225,Cardbox Demonling,4,rbxassetid://138951244810713,PetNew/SignPet/SignOnline01,nil,false,4,0,1,1X,nil
-226,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02,Tiny,true,4,0,6,6X,nil
-227,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02_Mid,Normal,false,4,0,7.2,7.2X,nil
-228,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02_Large,Large,false,4,0,9,9X,nil
+226,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02,Tiny,true,4,0,1,1X,nil
+227,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02_Mid,Normal,false,4,0,1,1X,nil
+228,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02_Large,Large,false,4,0,1,1X,nil
 229,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02,nil,false,4,0,1,1X,nil
 230,Stitched Demonkin,4,rbxassetid://112978571737998,PetNew/SignPet/SignOnline02,nil,false,4,0,1,1X,nil
-231,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03,Tiny,true,4,0,6,6X,nil
-232,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03_Mid,Normal,false,4,0,7.2,7.2X,nil
-233,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03_Large,Large,false,4,0,9,9X,nil
+231,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03,Tiny,true,4,0,1,1X,nil
+232,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03_Mid,Normal,false,4,0,1,1X,nil
+233,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03_Large,Large,false,4,0,1,1X,nil
 234,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03,nil,false,4,0,1,1X,nil
 235,Rainbowcorn,5,rbxassetid://121468072938857,PetNew/SignPet/SignOnline03,nil,false,4,0,1,1X,nil
-236,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701,Tiny,true,4,0,6,6X,nil
-237,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701_Mid,Normal,false,4,0,7.2,7.2X,nil
-238,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701_Large,Large,false,4,0,9,9X,nil
+236,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701,Tiny,true,4,0,1,1X,nil
+237,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701_Mid,Normal,false,4,0,1,1X,nil
+238,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701_Large,Large,false,4,0,1,1X,nil
 239,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701,nil,false,4,0,1,1X,nil
 240,Tinker Wyrmling,4,rbxassetid://121041467889399,PetNew/SignPet/Sign701,nil,false,4,0,1,1X,nil
-241,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702,Tiny,true,4,0,6,6X,nil
-242,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702_Mid,Normal,false,4,0,7.2,7.2X,nil
-243,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702_Large,Large,false,4,0,9,9X,nil
+241,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702,Tiny,true,4,0,1,1X,nil
+242,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702_Mid,Normal,false,4,0,1,1X,nil
+243,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702_Large,Large,false,4,0,1,1X,nil
 244,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702,nil,false,4,0,1,1X,nil
 245,Magic Queen,5,rbxassetid://118184927311617,PetNew/SignPet/Sign702,nil,false,4,0,1,1X,nil
-246,Crimson,5,rbxassetid://130219904784080,PetNew/SignPet/SignMax,Tiny,true,4,0,6,6X,nil
-247,Crimson,5,rbxassetid://130219904784080,PetNew/SignPet/SignMax_Mid,Normal,false,4,0,7.2,7.2X,nil
-248,Crimson,5,rbxassetid://130219904784080,PetNew/SignPet/SignMax_Large,Large,false,4,0,9,9X,nil
-249,Crimson,5,rbxassetid://130219904784080,PetNew/SignPet/Sign702,nil,false,4,0,1,1X,nil
-250,Crimson,5,rbxassetid://130219904784080,PetNew/SignPet/Sign702,nil,false,4,0,1,1X,nil
-251,Holywing,5,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie02,Tiny,true,4,0,6,6X,ProductStorePet251
-252,Holywing,5,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie02_Mid,Normal,false,4,0,7.2,7.2X,nil
-253,Holywing,5,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie02_Large,Large,false,4,0,9,9X,nil
-254,Holywing,5,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie02,nil,false,4,0,1,1X,nil
-255,Holywing,5,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie02,nil,false,4,0,1,1X,nil
-256,Abyss,5,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie03,Tiny,true,4,0,6,6X,ProductStorePet256
-257,Abyss,5,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie03_Mid,Normal,false,4,0,7.2,7.2X,nil
-258,Abyss,5,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie03_Large,Large,false,4,0,9,9X,nil
-259,Abyss,5,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie03,nil,false,4,0,1,1X,nil
-260,Abyss,5,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie03,nil,false,4,0,1,1X,nil
-261,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01,Tiny,true,3,0,6,6X,nil
-262,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01_Mid,Normal,false,3,0,7.2,7.2X,nil
-263,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01_Large,Large,false,3,0,9,9X,nil
+246,Crimson,6,rbxassetid://130219904784080,PetNew/PetsRoblox/Newbie01,Tiny,true,4,2,1,200%,ProductStorePet246
+247,Crimson,6,rbxassetid://130219904784080,PetNew/PetsRoblox/Newbie01_Mid,Normal,false,4,2.4,1,240%,nil
+248,Crimson,6,rbxassetid://130219904784080,PetNew/PetsRoblox/Newbie01_Large,Large,false,4,3,1,300%,nil
+249,Crimson,6,rbxassetid://130219904784080,PetNew/PetsRoblox/Newbie01,nil,false,4,0,1,1X,nil
+250,Crimson,6,rbxassetid://130219904784080,PetNew/PetsRoblox/Newbie01,nil,false,4,0,1,1X,nil
+251,Abyss,6,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie02,Tiny,true,4,3.2,1,320%,ProductStorePet251
+252,Abyss,6,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie02_Mid,Normal,false,4,3.84,1,384%,nil
+253,Abyss,6,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie02_Large,Large,false,4,4.8,1,480%,nil
+254,Abyss,6,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie02,nil,false,4,0,1,1X,nil
+255,Abyss,6,rbxassetid://80387007915967,PetNew/PetsRoblox/Newbie02,nil,false,4,0,1,1X,nil
+256,Holywing,6,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie03,Tiny,true,4,4.5,1,450%,ProductStorePet256
+257,Holywing,6,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie03_Mid,Normal,false,4,5.4,1,540%,nil
+258,Holywing,6,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie03_Large,Large,false,4,6.75,1,675%,nil
+259,Holywing,6,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie03,nil,false,4,0,1,1X,nil
+260,Holywing,6,rbxassetid://96427321607903,PetNew/PetsRoblox/Newbie03,nil,false,4,0,1,1X,nil
+261,Abyss,1,rbxassetid://89029589362419,PetNew/Rank03/52M01,Tiny,true,3,0,1,1X,nil
+262,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01_Mid,Normal,false,3,0,1,1X,nil
+263,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01_Large,Large,false,3,0,1,1X,nil
 264,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01,nil,false,3,0,1,1X,nil
 265,VerdantShard,1,rbxassetid://89029589362419,PetNew/Rank03/52M01,nil,false,3,0,1,1X,nil
-266,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02,Tiny,true,3,0,6,6X,nil
-267,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02_Mid,Normal,false,3,0,7.2,7.2X,nil
-268,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02_Large,Large,false,3,0,9,9X,nil
+266,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02,Tiny,true,3,0,1,1X,nil
+267,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02_Mid,Normal,false,3,0,1,1X,nil
+268,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02_Large,Large,false,3,0,1,1X,nil
 269,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02,nil,false,3,0,1,1X,nil
 270,FrostShard,2,rbxassetid://103631935951917,PetNew/Rank03/52M02,nil,false,3,0,1,1X,nil
-271,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03,Tiny,true,3,0,6,6X,nil
-272,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03_Mid,Normal,false,3,0,7.2,7.2X,nil
-273,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03_Large,Large,false,3,0,9,9X,nil
+271,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03,Tiny,true,3,0,1,1X,nil
+272,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03_Mid,Normal,false,3,0,1,1X,nil
+273,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03_Large,Large,false,3,0,1,1X,nil
 274,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03,nil,false,3,0,1,1X,nil
 275,ArcaneShard,3,rbxassetid://81657116913258,PetNew/Rank03/52M03,nil,false,3,0,1,1X,nil
-276,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04,Tiny,true,3,0,6,6X,nil
-277,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04_Mid,Normal,false,3,0,7.2,7.2X,nil
-278,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04_Large,Large,false,3,0,9,9X,nil
+276,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04,Tiny,true,3,0,1,1X,nil
+277,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04_Mid,Normal,false,3,0,1,1X,nil
+278,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04_Large,Large,false,3,0,1,1X,nil
 279,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04,nil,false,3,0,1,1X,nil
 280,InfernoShard,4,rbxassetid://133150422484036,PetNew/Rank03/52M04,nil,false,3,0,1,1X,nil
-281,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05,Tiny,true,3,0,6,6X,nil
-282,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05_Mid,Normal,false,3,0,7.2,7.2X,nil
-283,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05_Large,Large,false,3,0,9,9X,nil
+281,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05,Tiny,true,3,0,1,1X,nil
+282,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05_Mid,Normal,false,3,0,1,1X,nil
+283,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05_Large,Large,false,3,0,1,1X,nil
 284,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05,nil,false,3,0,1,1X,nil
 285,VoidShard,4,rbxassetid://139639986153724,PetNew/Rank03/52M05,nil,false,3,0,1,1X,nil
-286,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01,Tiny,true,3,0,6,6X,nil
-287,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01_Mid,Normal,false,3,0,7.2,7.2X,nil
-288,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01_Large,Large,false,3,0,9,9X,nil
+286,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01,Tiny,true,3,0,1,1X,nil
+287,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01_Mid,Normal,false,3,0,1,1X,nil
+288,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01_Large,Large,false,3,0,1,1X,nil
 289,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01,nil,false,3,0,1,1X,nil
 290,NatureCore,1,rbxassetid://78483603362131,PetNew/Rank04/210M01,nil,false,3,0,1,1X,nil
-291,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02,Tiny,true,3,0,6,6X,nil
-292,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02_Mid,Normal,false,3,0,7.2,7.2X,nil
-293,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02_Large,Large,false,3,0,9,9X,nil
+291,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02,Tiny,true,3,0,1,1X,nil
+292,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02_Mid,Normal,false,3,0,1,1X,nil
+293,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02_Large,Large,false,3,0,1,1X,nil
 294,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02,nil,false,3,0,1,1X,nil
 295,ShadowCore,2,rbxassetid://107028468395283,PetNew/Rank04/210M02,nil,false,3,0,1,1X,nil
-296,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03,Tiny,true,3,0,6,6X,nil
-297,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03_Mid,Normal,false,3,0,7.2,7.2X,nil
-298,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03_Large,Large,false,3,0,9,9X,nil
+296,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03,Tiny,true,3,0,1,1X,nil
+297,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03_Mid,Normal,false,3,0,1,1X,nil
+298,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03_Large,Large,false,3,0,1,1X,nil
 299,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03,nil,false,3,0,1,1X,nil
 300,AngelCore,3,rbxassetid://77099667734453,PetNew/Rank04/210M03,nil,false,3,0,1,1X,nil
-301,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04,Tiny,true,3,0,6,6X,nil
-302,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04_Mid,Normal,false,3,0,7.2,7.2X,nil
-303,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04_Large,Large,false,3,0,9,9X,nil
+301,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04,Tiny,true,3,0,1,1X,nil
+302,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04_Mid,Normal,false,3,0,1,1X,nil
+303,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04_Large,Large,false,3,0,1,1X,nil
 304,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04,nil,false,3,0,1,1X,nil
 305,FlameCore,4,rbxassetid://96769369371376,PetNew/Rank04/210M04,nil,false,3,0,1,1X,nil
-306,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05,Tiny,true,3,0,6,6X,nil
-307,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05_Mid,Normal,false,3,0,7.2,7.2X,nil
-308,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05_Large,Large,false,3,0,9,9X,nil
+306,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05,Tiny,true,3,0,1,1X,nil
+307,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05_Mid,Normal,false,3,0,1,1X,nil
+308,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05_Large,Large,false,3,0,1,1X,nil
 309,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05,nil,false,3,0,1,1X,nil
 310,SunCore,4,rbxassetid://71619341682288,PetNew/Rank04/210M05,nil,false,3,0,1,1X,nil
-311,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01,Tiny,true,3,0,6,6X,nil
-312,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01_Mid,Normal,false,3,0,7.2,7.2X,nil
-313,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01_Large,Large,false,3,0,9,9X,nil
+311,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01,Tiny,true,3,0,1,1X,nil
+312,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01_Mid,Normal,false,3,0,1,1X,nil
+313,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01_Large,Large,false,3,0,1,1X,nil
 314,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01,nil,false,3,0,1,1X,nil
 315,SlimeBud,1,rbxassetid://120139927477903,PetNew/Rank04/840M01,nil,false,3,0,1,1X,nil
-316,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02,Tiny,true,3,0,6,6X,nil
-317,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02_Mid,Normal,false,3,0,7.2,7.2X,nil
-318,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02_Large,Large,false,3,0,9,9X,nil
+316,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02,Tiny,true,3,0,1,1X,nil
+317,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02_Mid,Normal,false,3,0,1,1X,nil
+318,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02_Large,Large,false,3,0,1,1X,nil
 319,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02,nil,false,3,0,1,1X,nil
 320,CrystalCrab,2,rbxassetid://81273924367666,PetNew/Rank04/840M02,nil,false,3,0,1,1X,nil
-321,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03,Tiny,true,3,0,6,6X,nil
-322,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03_Mid,Normal,false,3,0,7.2,7.2X,nil
-323,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03_Lare,Large,false,3,0,9,9X,nil
+321,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03,Tiny,true,3,0,1,1X,nil
+322,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03_Mid,Normal,false,3,0,1,1X,nil
+323,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03_Lare,Large,false,3,0,1,1X,nil
 324,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03,nil,false,3,0,1,1X,nil
 325,ArcaneClaw,3,rbxassetid://105493313037234,PetNew/Rank04/840M03,nil,false,3,0,1,1X,nil
-326,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04,Tiny,true,3,0,6,6X,nil
-327,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04_Mid,Normal,false,3,0,7.2,7.2X,nil
-328,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04_Large,Large,false,3,0,9,9X,nil
+326,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04,Tiny,true,3,0,1,1X,nil
+327,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04_Mid,Normal,false,3,0,1,1X,nil
+328,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04_Large,Large,false,3,0,1,1X,nil
 329,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04,nil,false,3,0,1,1X,nil
 330,FlameBrute,4,rbxassetid://128186301865101,PetNew/Rank04/840M04,nil,false,3,0,1,1X,nil
-331,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05,Tiny,true,3,0,6,6X,nil
-332,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05_Mid,Normal,false,3,0,7.2,7.2X,nil
-333,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05_Large,Large,false,3,0,9,9X,nil
+331,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05,Tiny,true,3,0,1,1X,nil
+332,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05_Mid,Normal,false,3,0,1,1X,nil
+333,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05_Large,Large,false,3,0,1,1X,nil
 334,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05,nil,false,3,0,1,1X,nil
 335,SolarDominator,4,rbxassetid://132828270324812,PetNew/Rank04/840M05,nil,false,3,0,1,1X,nil
-336,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01,Tiny,true,3,0,6,6X,nil
-337,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01_Mid,Normal,false,3,0,7.2,7.2X,nil
-338,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01_Large,Large,false,3,0,9,9X,nil
+336,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01,Tiny,true,3,0,1,1X,nil
+337,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01_Mid,Normal,false,3,0,1,1X,nil
+338,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01_Large,Large,false,3,0,1,1X,nil
 339,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01,nil,false,3,0,1,1X,nil
 340,EmeraldGem,1,rbxassetid://99175632344236,PetNew/Rank04/3B01,nil,false,3,0,1,1X,nil
-341,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02,Tiny,true,3,0,6,6X,nil
-342,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02_Mid,Normal,false,3,0,7.2,7.2X,nil
-343,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02_Large,Large,false,3,0,9,9X,nil
+341,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02,Tiny,true,3,0,1,1X,nil
+342,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02_Mid,Normal,false,3,0,1,1X,nil
+343,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02_Large,Large,false,3,0,1,1X,nil
 344,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02,nil,false,3,0,1,1X,nil
 345,SapphireGem,2,rbxassetid://122403592627819,PetNew/Rank04/3B02,nil,false,3,0,1,1X,nil
-346,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03,Tiny,true,3,0,6,6X,nil
-347,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03_Mid,Normal,false,3,0,7.2,7.2X,nil
-348,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03_Large,Large,false,3,0,9,9X,nil
+346,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03,Tiny,true,3,0,1,1X,nil
+347,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03_Mid,Normal,false,3,0,1,1X,nil
+348,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03_Large,Large,false,3,0,1,1X,nil
 349,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03,nil,false,3,0,1,1X,nil
 350,Amethyst Crown,3,rbxassetid://111137937410636,PetNew/Rank04/3B03,nil,false,3,0,1,1X,nil
-351,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04,Tiny,true,3,0,6,6X,nil
-352,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04_Mid,Normal,false,3,0,7.2,7.2X,nil
-353,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04_Large,Large,false,3,0,9,9X,nil
+351,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04,Tiny,true,3,0,1,6X,nil
+352,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04_Mid,Normal,false,3,0,1,7.2X,nil
+353,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04_Large,Large,false,3,0,1,9X,nil
 354,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04,nil,false,3,0,1,1X,nil
 355,Ruby Wings,4,rbxassetid://87419362750249,PetNew/Rank04/3B04,nil,false,3,0,1,1X,nil
-356,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05,Tiny,true,3,0,6,6X,nil
-357,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05_Mid,Normal,false,3,0,7.2,7.2X,nil
-358,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05_Large,Large,false,3,0,9,9X,nil
+356,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05,Tiny,true,3,0,1,1X,nil
+357,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05_Mid,Normal,false,3,0,1,1X,nil
+358,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05_Large,Large,false,3,0,1,1X,nil
 359,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05,nil,false,3,0,1,1X,nil
 360,Golden Relic,4,rbxassetid://124374738935791,PetNew/Rank04/3B05,nil,false,3,0,1,1X,nil
-361,Hipopotamo,6,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,Tiny,true,4,0,6,6X,nil
-362,Hipopotamo,6,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01_Mid,Normal,false,4,0,7.2,7.2X,nil
-363,Hipopotamo,6,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01_Large,Large,false,4,0,9,9X,nil
-364,Hipopotamo,6,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,nil,false,4,0,1,1X,nil
-365,Hipopotamo,6,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,nil,false,4,0,1,1X,nil
-366,Odin DinDin Dun,6,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,Tiny,true,4,0,6,6X,nil
-367,Odin DinDin Dun,6,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03_Mid,Normal,false,4,0,7.2,7.2X,nil
-368,Odin DinDin Dun,6,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03_Large,Large,false,4,0,9,9X,nil
-369,Odin DinDin Dun,6,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,nil,false,4,0,1,1X,nil
-370,Odin DinDin Dun,6,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,nil,false,4,0,1,1X,nil
-371,Chimpanzini Bananini,5,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,Tiny,true,4,1.2,6,6X,nil
-372,Chimpanzini Bananini,5,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04_Mid,Normal,false,4,1.8,7.2,7.2X,nil
-373,Chimpanzini Bananini,5,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04_Large,Large,false,4,2.4,9,9X,nil
-374,Chimpanzini Bananini,5,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,nil,false,4,0,1,1X,nil
-375,Chimpanzini Bananini,5,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,nil,false,4,0,1,1X,nil
-376,Tralalero Tralala,5,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,Tiny,true,4,2,6,6X,nil
-377,Tralalero Tralala,5,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05_Mid,Normal,false,4,3,7.2,7.2X,nil
-378,Tralalero Tralala,5,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05_Large,Large,false,4,4,9,9X,nil
-379,Tralalero Tralala,5,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
-380,Tralalero Tralala,5,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
+361,Hipopotamo,5,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,Tiny,true,4,0,50,50X,nil
+362,Hipopotamo,5,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01_Mid,Normal,false,4,0,60,60X,nil
+363,Hipopotamo,5,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01_Large,Large,false,4,0,75,75X,nil
+364,Hipopotamo,5,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,nil,false,4,0,1,1X,nil
+365,Hipopotamo,5,rbxassetid://95979472459104,PetNew/PetsRoblox/Brainrot01,nil,false,4,0,1,1X,nil
+366,Odin DinDin Dun,5,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,Tiny,true,4,0,160,160X,nil
+367,Odin DinDin Dun,5,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03_Mid,Normal,false,4,0,192,192X,nil
+368,Odin DinDin Dun,5,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03_Large,Large,false,4,0,240,240X,nil
+369,Odin DinDin Dun,5,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,nil,false,4,0,1,1X,nil
+370,Odin DinDin Dun,5,rbxassetid://94959290083015,PetNew/PetsRoblox/Brainrot03,nil,false,4,0,1,1X,nil
+371,Chimpanzini Bananini,6,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,Tiny,true,4,1,1,100%,nil
+372,Chimpanzini Bananini,6,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04_Mid,Normal,false,4,1.2,1,120%,nil
+373,Chimpanzini Bananini,6,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04_Large,Large,false,4,1.5,1,150%,nil
+374,Chimpanzini Bananini,6,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,nil,false,4,0,1,1X,nil
+375,Chimpanzini Bananini,6,rbxassetid://100896048702275,PetNew/PetsRoblox/Brainrot04,nil,false,4,0,1,1X,nil
+376,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,Tiny,true,4,1.5,1,150%,nil
+377,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05_Mid,Normal,false,4,1.8,1,180%,nil
+378,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05_Large,Large,false,4,2.25,1,225%,nil
+379,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
+380,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
 381,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01,Tiny,true,5,0,6,6X,nil
 382,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Mid,Normal,false,5,0,7.2,7.2X,nil
 383,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Large,Large,false,5,0,9,9X,nil

@@ -63,7 +63,7 @@ function PetLoot:Open(player, param)
 		if coinRemain < costCoin  then
 			return {
 				Success = false, 
-				Message = Define.Message.PetLootCoinNotEnough,
+				Message = Define.Message.CoinNotEnough,
 				PetList = nil
 			}
 		end
@@ -75,7 +75,7 @@ function PetLoot:Open(player, param)
 		if winsRemain < costWins  then
 			return {
 				Success = false, 
-				Message = Define.Message.PetLootWinsNotEnough,
+				Message = Define.Message.WinsNotEnough,
 				PetList = nil
 			}
 		end

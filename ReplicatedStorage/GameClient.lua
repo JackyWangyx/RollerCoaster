@@ -41,13 +41,13 @@ function GameClient:Init()
 	
 	GameClient:RegisterLoadProcess("Resources Manager", require(game.ReplicatedStorage.ScriptAlias.ResourcesManager))
 	GameClient:RegisterLoadProcess("Scene Manager", require(game.ReplicatedStorage.ScriptAlias.SceneManager))
-	GameClient:RegisterLoadProcess("Scene Area Manager", require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager))
 	GameClient:RegisterLoadProcess("IAP Client",  require(game.ReplicatedStorage.ScriptAlias.IAPClient))
 	GameClient:RegisterLoadProcess("Trade Client", require(game.ReplicatedStorage.ScriptAlias.TradeClient))
 	GameClient:RegisterLoadProcess("Friend Manager", require(game.ReplicatedStorage.ScriptAlias.FriendManager))
 	GameClient:RegisterLoadProcess("Player Manager", require(game.ReplicatedStorage.ScriptAlias.PlayerManager))
 	GameClient:RegisterLoadProcess("UI Manager", require(game.ReplicatedStorage.ScriptAlias.UIManager))
 	GameClient:RegisterLoadProcess("Building Manager", require(game.ReplicatedStorage.ScriptAlias.BuildingManager))
+	GameClient:RegisterLoadProcess("Scene Area Manager", require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager))
 	
 	-- GamePlay
 	GameClient:RegisterLoadProcess("Game Manager", require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager))

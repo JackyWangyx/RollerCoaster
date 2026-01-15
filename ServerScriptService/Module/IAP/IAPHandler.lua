@@ -194,51 +194,51 @@ function IAPHandler:BuyTrail(player, param)
 end
 
 -- Coin 100
-function IAPHandler:Win100(player, param)
+function IAPHandler:Win300K(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 100 })
+	accountRequest:AddCoin(player, { Value = 300000 })
 	return true
 end
 
 -- Coin 500
-function IAPHandler:Win500(player, param)
+function IAPHandler:Win2M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 500 })
+	accountRequest:AddCoin(player, { Value = 2000000 })
 	return true
 end
 
 -- Coin 1K
-function IAPHandler:Win1K(player, param)
+function IAPHandler:Win10M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 1000 })
+	accountRequest:AddCoin(player, { Value = 10000000 })
 	return true
 end
 
 -- Coin 5K
-function IAPHandler:Win5K(player, param)
+function IAPHandler:Win25M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 5000 })
+	accountRequest:AddCoin(player, { Value = 25000000 })
 	return true
 end
 
 -- Coin 10K
-function IAPHandler:Win10K(player, param)
+function IAPHandler:Win45M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 10000 })
+	accountRequest:AddCoin(player, { Value = 45000000 })
 	return true
 end
 
 -- Coin 25K
-function IAPHandler:Win25K(player, param)
+function IAPHandler:Win100M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 25000 })
+	accountRequest:AddCoin(player, { Value = 100000000 })
 	return true
 end
 
 -- Coin 100K
-function IAPHandler:Win100K(player, param)
+function IAPHandler:Win500M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
-	accountRequest:AddCoin(player, { Value = 100000 })
+	accountRequest:AddCoin(player, { Value = 500000000 })
 	return true
 end
 

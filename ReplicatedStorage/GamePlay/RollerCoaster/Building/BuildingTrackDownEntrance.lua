@@ -13,7 +13,7 @@ local BuildingTrackDownEntrance = {}
 
 function BuildingTrackDownEntrance:Init(buildingPart, opts)
 	local building = Building.Trigger(buildingPart, opts, function()
-		RollerCoasterGameManager:Exit(opts.AreaIndex)
+		RollerCoasterGameManager:Slide(opts.AreaIndex)
 	end)
 end
 

@@ -83,7 +83,7 @@ function Trail:Buy(player, param)
 		if coinRemain < data.CostCoin then
 			return {
 				Success = false,
-				Message = Define.Message.TrailCoinNotEnough
+				Message = Define.Message.CoinNotEnough
 			}
 		end
 
@@ -95,7 +95,7 @@ function Trail:Buy(player, param)
 		if winsRemain < data.CostWins then
 			return {
 				Success = false,
-				Message = Define.Message.TrailWinsNotEnough
+				Message = Define.Message.WinsNotEnough
 			}
 		end
 

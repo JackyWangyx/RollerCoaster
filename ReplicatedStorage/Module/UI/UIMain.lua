@@ -162,6 +162,10 @@ function UIMain:Button_AnimalStore()
 	UIManager:ShowAndHideOther("AnimalStore")
 end
 
+function UIMain:Button_Theme()
+	UIManager:ShowAndHideOther("Theme")
+end
+
 -- Sign
 function UIMain:Button_SignDaily15()
 	UIManager:ShowAndHideOther("SignDaily15")

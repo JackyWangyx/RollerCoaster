@@ -92,7 +92,7 @@ function Tool:Buy(player, param)
 		if coinRemain < data.CostCoin then
 			return {
 				Success = false,
-				Message = Define.Message.ToolCoinNotEnough
+				Message = Define.Message.CoinNotEnough
 			}
 		end
 
@@ -104,7 +104,7 @@ function Tool:Buy(player, param)
 		if winsRemain < data.CostWins then
 			return {
 				Success = false,
-				Message = Define.Message.ToolWinsNotEnough
+				Message = Define.Message.WinsNotEnough
 			}
 		end
 

@@ -33,35 +33,26 @@ local function new(buildingPart, opts, triggerMode)
 	self.OnlySelf = true
 	self.TriggerMode = triggerMode or Building.TriggerMode.None
 	self.Options = opts
-	self.SelfAreaIndex = -1
+	self.SelfAreaIndex = SceneAreaManager.SelfAreaIndex
 	self.IsSelfArea = true
 	
 	if opts.Mode == BuildingManager.Mode.Glbobal then
 		self.IsSelfArea = true
 	else
-		self.IsSelfArea = false
+		self.IsSelfArea = SceneAreaManager.SelfAreaIndex == opts.AreaIndex
 	end
 	
-	--EventManager:Listen(EventManager.Define.RefreshTheme, function(themeKey)
-	--	self.ThemeKey = themeKey
-	--	self:RefreshTheme()
-	--end)
-	
-	--EventManager:Listen(EventManager.Define.RefreshArea, function(areaInfoList)
-	--	local player = game.Players.LocalPlayer
-	--	for areaIndex, areaInfo in ipairs(areaInfoList) do
-	--		self.IsSelfArea = areaInfo.PlaeyrId == player.UserId
-	--		if self.IsSelfArea then
-	--			self.SelfAreaIndex = areaIndex
-	--		end
-	--	end
-	--end)
+	--print(buildingPart.Name, self.IsSelfArea, opts.AreaIndex)
 	
 	return self
 end
 
 function Building:CheckEnable()
-	return self.IsSelfArea
+	if self.Options.Mode == BuildingManager.Mode.Glbobal then
+		return true
+	else
+		return self.IsSelfArea
+	end
 end
 
 ----------------------------------------------------------------------------------------------
@@ -148,38 +139,7 @@ end
 -- Refresh
 
 function Building:Refresh()
-	--self:RefreshTheme()
-	--self:RefreshRenderer()
+	--
 end
-
---function Building:RefreshTheme()
---	if not self.RendererTrans then return end
---	if self.RendererList == nil then
---		self.RendererList = self.RendererTrans:GetChildren()
---	end
-	
---	if self.RendererList and #self.RendererList >= 1 then
---		local find = false
---		for _, child in ipairs(self.RendererList) do
---			local isMatch = (child.Name == self.ThemeKey)
---			if isMatch then
---				Util:ActiveObject(child)
---				find = true
---			else
---				Util:DeActiveObject(child)
---			end
---		end
-		
---		if not find then
---			Util:ActiveObject(self.RendererList[1])
---		end
---	end
---end
-
---function Building:RefreshRenderer()
---	if self.RefreshFunc then
---		self.RefreshFunc(self)
---	end
---end
 
 return Building

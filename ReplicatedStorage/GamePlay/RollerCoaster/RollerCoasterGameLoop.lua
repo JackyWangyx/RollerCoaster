@@ -63,10 +63,11 @@ function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	-- Create Track
 	RollerCoasterGameLoop.TrackIndex = gameInitParam.TrackIndex
 	
-	local trackRoot = SceneManager.AreaList[RollerCoasterGameLoop.TrackIndex].Track
+	local trackRoot = SceneManager.AreaList[RollerCoasterGameLoop.TrackIndex]
+	local trackStart = trackRoot:FindFirstChild("TrackStart")
 	local upSegmentList = {}
 	for _, segmentName in ipairs(gameInitParam.UpSegmentNameList) do
-		local segment = trackRoot.Up:FindFirstChild(segmentName)
+		local segment = trackStart.Up:FindFirstChild(segmentName)
 		table.insert(upSegmentList, segment)
 	end
 	
@@ -74,7 +75,7 @@ function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	
 	local downSegmentList = {}
 	for _, segmentName in ipairs(gameInitParam.DownSegmentNameList) do
-		local segment = trackRoot.Down:FindFirstChild(segmentName)
+		local segment = trackStart.Down:FindFirstChild(segmentName)
 		table.insert(downSegmentList, segment)
 	end
 

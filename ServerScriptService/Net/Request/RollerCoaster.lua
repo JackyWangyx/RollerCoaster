@@ -8,23 +8,15 @@ local PlayerRecord = require(game.ServerScriptService.ScriptAlias.PlayerRecord)
 local IAPServer = require(game.ServerScriptService.ScriptAlias.IAPServer)
 local PlayerPrefs = require(game.ServerScriptService.ScriptAlias.PlayerPrefs)
 
+local ThemeRequest = require(game.ServerScriptService.ScriptAlias.Theme)
+
 local RollerCoaster = {}
 
 function LoadInfo(player)
 	local saveInfo = PlayerPrefs:GetModule(player, "RollerCoaster")
-	if saveInfo.CurrentRank == nil then
-		saveInfo.CurrentRank = 1
-	end
-	
-	if saveInfo.MaxRank == nil then
-		saveInfo.MaxRank = 1
-	end
-	
-	if saveInfo.RankList == nil then
-		saveInfo.RankList = {
-			["1"] = {
-				ID = 1,
-				IsUnlock = true,
+	if saveInfo.ThemeList == nil then
+		saveInfo.ThemeList = {
+			["World01"] = {
 				TrackLevel = 1,
 			}
 		}
@@ -41,74 +33,36 @@ function RollerCoaster:GetInfo(player)
 	return saveInfo
 end
 
-function RollerCoaster:GetCurrentRank(player)
+function RollerCoaster:GetThemeInfo(player, param)
 	local saveInfo = LoadInfo(player)
-	return saveInfo.CurrentRank
-end
-
-function RollerCoaster:SetCurrentRank(player, param)
-	local saveInfo = LoadInfo(player)
-	local rank = param.Rank
-	saveInfo.CurrentRank = rank
-	return true
-end
-
-function RollerCoaster:GetMaxRank(player)
-	local saveInfo = LoadInfo(player)
-	return saveInfo.MaxRank
-end
-
-function RollerCoaster:GetRankInfo(player, param)
-	local saveInfo = LoadInfo(player)
-	local rank = param.Rank
-	local rankList = saveInfo.RankList
-	local rankInfo = rankList[tostring(rank)]
-	if not rankInfo then
-		rankInfo = {
-			ID = rank,
-			IsUnlock = false,
+	local themeKey = param.ThemeKey
+	local themeList = saveInfo.ThemeList
+	local themeInfo = themeList[themeKey]
+	if not themeInfo then
+		themeInfo = {
 			TrackLevel = 1,
 		}
 		
-		rankList[tostring(rank)] = rankInfo
+		themeList[themeKey] = themeInfo
 	end
 	
-	return rankInfo
-end
-
-function RollerCoaster:UnlockRank(player, param)
-	local rankInfo = RollerCoaster:GetRankInfo(player, param)
-	if rankInfo.IsUnlock then
-		return false
-	end
-	
-	local rank = param.Rank
-	local rankData = ConfigManager:GetData("Rank", rank)
-	local accountRequest = require(game.ServerScriptService.ScriptAlias.Account)
-	local remainWins = accountRequest:GetWins(player)
-	if remainWins < rankData.CostWins  then
-		return false
-	end
-	
-	accountRequest:SpendWins(player, { Value = rankData.CostCoin })
-	rankInfo.IsUnlock = true
-	return true
+	return themeInfo
 end
 
 -----------------------------------------------------------------------------------------------
 -- Track
 
 function RollerCoaster:GetTrackStoreInfo(player)
-	local currentRank = RollerCoaster:GetCurrentRank(player)
-	local rankInfo =  RollerCoaster:GetRankInfo(player, { Rank = currentRank })
-	local trackLevel = rankInfo.TrackLevel
-	local trackDataList = ConfigManager:SearchAllData("Track", "Rank", currentRank, "Direction", "Up")
+	local themeKey = ThemeRequest:GetCurrentTheme(player)
+	local themeData = ConfigManager:SearchData("Theme", "ThemeKey", themeKey)
+	local themeInfo =  RollerCoaster:GetThemeInfo(player, { ThemeKey = themeKey })
+	local trackLevel = themeInfo.TrackLevel
+	local trackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Up")
 	local isMaxLevel = trackLevel >= #trackDataList
 	local trackData = trackDataList[trackLevel]
-	local rankData = ConfigManager:GetData("Rank", currentRank)
 	local info = {
-		Name = rankData.Name,
-		Icon = rankData.Icon,
+		Name = themeData.Name,
+		Icon = themeData.Icon,
 		Level = trackLevel,
 		MaxLevel = #trackDataList,
 		IsMaxLevel = isMaxLevel,
@@ -123,10 +77,11 @@ end
 
 function RollerCoaster:UpgradeTrack(player, param)
 	local buyType = param.Type
-	local currentRank = RollerCoaster:GetCurrentRank(player)
-	local rankInfo =  RollerCoaster:GetRankInfo(player, { Rank = currentRank })
-	local trackLevel = rankInfo.TrackLevel
-	local trackDataList = ConfigManager:SearchAllData("Track", "Rank", currentRank, "Direction", "Up")
+	local themeKey = ThemeRequest:GetCurrentTheme(player)
+	local themeData = ConfigManager:SearchData("Theme", "ThemeKey", themeKey)
+	local themeInfo =  RollerCoaster:GetThemeInfo(player, { ThemeKey = themeKey })
+	local trackLevel = themeInfo.TrackLevel
+	local trackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Up")
 	local isMaxLevel = trackLevel >= #trackDataList
 	local trackData = trackDataList[trackLevel]
 	
@@ -150,7 +105,7 @@ function RollerCoaster:UpgradeTrack(player, param)
 		accountRequest:SpendCoin(player, { Value = trackData.CostCoin })
 	end
 	
-	rankInfo.TrackLevel += 1
+	themeInfo.TrackLevel += 1
 	EventManager:Dispatch(EventManager.Define.RefreshTrack, { Player = player })
 	
 	return {

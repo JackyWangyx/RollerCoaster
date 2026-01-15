@@ -1,5 +1,6 @@
 ﻿local RunService = game:GetService("RunService")
 
+local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local LogUtil = require(game.ReplicatedStorage.ScriptAlias.LogUtil)
 
@@ -46,6 +47,13 @@ function SceneManager:Init()
 		SceneManager.AreaList = areaRoot:GetChildren()
 		if SceneManager.AreaList  then
 			SceneManager.AreaList = Util:ListSortByPartName(SceneManager.AreaList)
+		end
+		
+		if RunService:IsClient() then
+			local sceneAreaManager = require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager)
+			local serverAreaInfoList = NetClient:RequestWait("Scene", "GetAreaInfoList")
+			sceneAreaManager.ServerAeraInfoList = serverAreaInfoList
+			sceneAreaManager:InitSelfAreaIndex()
 		end
 	end
 end

@@ -130,7 +130,7 @@ function Rebirth:RebirthManual(player)
 	if coin < currentData.CostCoin then
 		return {
 			Success = false,
-			Message = Define.Message.RebirthCoinNotEnough,
+			Message = Define.Message.CoinNotEnough,
 		}
 	end
 	

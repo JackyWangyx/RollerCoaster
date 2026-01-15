@@ -4,22 +4,24 @@ local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
+local UIInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
 
 local SceneAreaServerHandler = require(game.ServerScriptService.ScriptAlias.SceneAreaServerHandler)
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 
 local RollerCoasterRequest = nil
+local ThemeRequest = nil
 local TrackCreator = require(game.ReplicatedStorage.ScriptAlias.TrackCreator)
 
 local Define = require(game.ReplicatedStorage.Define)
 
 local RollerCoasterTrackServerHandler = {}
 
-RollerCoasterTrackServerHandler.TrackPointList = {}
 RollerCoasterTrackServerHandler.TrackList = {}
 
 function RollerCoasterTrackServerHandler:Init()
 	RollerCoasterRequest = require(game.ServerScriptService.ScriptAlias.RollerCoaster)
+	ThemeRequest = require(game.ServerScriptService.ScriptAlias.Theme)
 	
 	RollerCoasterTrackServerHandler:InitTrack(SceneAreaServerHandler.AreaPointList)
 	
@@ -37,30 +39,51 @@ function RollerCoasterTrackServerHandler:Init()
 			RollerCoasterTrackServerHandler:RefreshTrack(player)
 		end)
 	end)
+	
+	EventManager:Listen(EventManager.Define.RefreshArea, function(serverAreaInfoList)
+		for index, areaInfo in ipairs(serverAreaInfoList) do
+			local trackInfo = RollerCoasterTrackServerHandler.TrackList[index]
+			if areaInfo.ThemeKey ~= nil and areaInfo.ThemeKey ~= trackInfo.ThemeKey and trackInfo.Player ~= nil then
+				trackInfo.ThemeKey = areaInfo.ThemeKey
+				task.spawn(function()
+					RollerCoasterTrackServerHandler:RefreshTrack(trackInfo.Player)
+				end)
+			end
+		end	
+	end)
 end
 
 function RollerCoasterTrackServerHandler:InitTrack(trackPointList)
 	for index = 1, SceneAreaServerHandler.AreaCount do
-		local trackPoint = SceneAreaServerHandler.AreaPointList[index].Track
+		local trackRoot = SceneAreaServerHandler.AreaPointList[index]
+		local trackStart = trackRoot:FindFirstChild("TrackStart")
+		local trackEnd = trackRoot:FindFirstChild("TrackEnd")
+		local playerInfoPart = trackRoot:FindFirstChild("PlayerInfo")
 		
 		local upFoloder = Instance.new("Folder")
 		upFoloder.Name = "Up"
-		upFoloder.Parent = trackPoint
+		upFoloder.Parent = trackStart
 		
 		local downFoloder = Instance.new("Folder")
 		downFoloder.Name = "Down"
-		downFoloder.Parent = trackPoint
+		downFoloder.Parent = trackStart
 		
+		local areaInfo = SceneAreaServerHandler.AreaInfoList[index]
 		local trackInfo = {
 			Index = index,
 			Player = nil,
-			Root = trackPoint,
+			Start = trackStart,
+			End = trackEnd,
+			PlayerInfoPart = playerInfoPart,
 			UpTrack = nil,
 			DownTrack = nil,
+			ThemeKey = areaInfo.ThemeKey,
 		}
 		
-		local areaInfo = SceneAreaServerHandler.AreaInfoList[index]
 		areaInfo.TrackInfo = trackInfo
+		table.insert(RollerCoasterTrackServerHandler.TrackList, trackInfo)
+		
+		Util:DeActiveObject(trackInfo.End)
 	end
 end
 
@@ -113,11 +136,16 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 	end
 	
 	local player = trackInfo.Player
-	local currentRank = RollerCoasterRequest:GetCurrentRank(player)
-	local rankInfo = RollerCoasterRequest:GetRankInfo(player, { Rank = currentRank })
-	local rank = currentRank
-	local trackLevel = rankInfo.TrackLevel
-	local position = trackInfo.Root.Position
+	if not player then
+		return
+	end
+	
+	local themeKey = ThemeRequest:GetCurrentTheme(player)
+	local themeData = ConfigManager:SearchData("Theme", "ThemeKey", themeKey)
+	local gameThemeInfo = RollerCoasterRequest:GetThemeInfo(player, { ThemeKey = themeKey })
+	local trackLevel = gameThemeInfo.TrackLevel
+	local position = trackInfo.Start.Position
+	trackInfo.ThemeKey = themeKey
 	
 	-- Up
 	local upTrackInfo = {
@@ -125,10 +153,10 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 		PrefabList = {},
 		Angle = RollerCoasterDefine.TrackAngle,
 		StartOffset = position + Vector3.new(0, 0, 0),
-		Root = trackInfo.Root.Up,
+		Root = trackInfo.Start.Up,
 	}
 	
-	local upTrackDataList = ConfigManager:SearchAllData("Track", "Rank", rank, "Direction", "Up")
+	local upTrackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Up")
 	for index = 1, trackLevel do
 		local data = upTrackDataList[index]
 		local prefabInfo = {
@@ -149,10 +177,10 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 		PrefabList = {},
 		Angle = RollerCoasterDefine.TrackAngle,
 		StartOffset = position + Vector3.new(-20, 0, 0),
-		Root = trackInfo.Root.Down,
+		Root = trackInfo.Start.Down,
 	}
 
-	local downTrackDataList = ConfigManager:SearchAllData("Track", "Rank", rank, "Direction", "Down")
+	local downTrackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Down")
 	for index = 1, #downTrackDataList do
 		local data = downTrackDataList[index]
 		local prefabInfo = {
@@ -165,6 +193,26 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 
 	local downTrack = TrackCreator:Create(downTrackInfo)
 	trackInfo.DownTrack = downTrack
+	
+	-- End
+	
+	if trackInfo.End then
+		Util:ActiveObject(trackInfo.End)
+		local endPos = downTrack.TrackRoute:GetPointByFactor(1).Position + RollerCoasterDefine.Game.TrackEndOffset
+		trackInfo.End:PivotTo(CFrame.new(endPos))
+	end
+	
+	-- Player Info
+	if trackInfo.PlayerInfoPart then
+		local playerInfo = {
+			Name = player.Name,
+		}
+		
+		UIInfo:SetInfo(trackInfo.PlayerInfoPart, playerInfo)	
+		PlayerManager:GetHeadIconAsync(player, function(icon)
+			UIInfo:SetValue(trackInfo.PlayerInfoPart, "HeadIcon", icon)
+		end)	
+	end
 end
 
 function RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
@@ -177,6 +225,10 @@ function RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
 		TrackCreator:Clear(trackInfo.DownTrack)
 		trackInfo.DownTrack = nil
 	end	
+	
+	if trackInfo.End then
+		Util:DeActiveObject(trackInfo.End)
+	end
 end
 
 return RollerCoasterTrackServerHandler

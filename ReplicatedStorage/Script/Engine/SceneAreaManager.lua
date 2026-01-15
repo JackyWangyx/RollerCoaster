@@ -5,20 +5,25 @@ local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 
 local SceneAreaManager = {}
 
+SceneAreaManager.AreaPointList = {}
 SceneAreaManager.AreaInfoList = {}
+SceneAreaManager.AreaCount = 0
 
-SceneAreaManager.ServerAeraInfoList = {}
 SceneAreaManager.SelfAreaIndex = -1
+SceneAreaManager.ServerAeraInfoList = nil
 
 function SceneAreaManager:Init()
+	if not SceneManager.AreaList then return end
+	local areaPointList = {}
 	for areaIndex, area in ipairs(SceneManager.AreaList) do
 		local areaInfo = {
+			PlayerID = nil,
 			Index = areaIndex,
 			Area = area,
-			ThemeKey = "Default",
+			ThemeKey = nil,
 			ThemeList = {},
 		}
-		
+
 		local themeRoot = area:FindFirstChild("Theme")
 		if themeRoot then
 			local themeList = themeRoot:GetChildren()
@@ -27,30 +32,43 @@ function SceneAreaManager:Init()
 					Theme = theme,
 					ThemeKey = theme.Name,
 				}
-				
+
 				table.insert(areaInfo.ThemeList, themeInfo)
 			end
 		end
-		
+
+		table.insert(areaPointList, area)
 		table.insert(SceneAreaManager.AreaInfoList, areaInfo)
 	end
+
+	SceneAreaManager.AreaPointList = areaPointList
+	SceneAreaManager.AreaCount = #areaPointList
 	
-	EventManager:Listen(EventManager.Define.RefreshArea, function(areaInfoList)
-		SceneAreaManager:RefreshServerAreaInfo(areaInfoList)
+	EventManager:Listen(EventManager.Define.RefreshArea, function(serverAreaIndex)
+		SceneAreaManager:RefreshServerAreaInfo(serverAreaIndex)
 	end)
 	
-	for areaIndex, areaInfo in ipairs(SceneAreaManager.AreaInfoList) do
-		SceneAreaManager:SwitchTheme(areaIndex, areaInfo.ThemeKey)
+	SceneAreaManager:RefreshServerAreaInfo(SceneAreaManager.ServerAeraInfoList)
+end
+
+function SceneAreaManager:InitSelfAreaIndex()
+	local player = game.Players.LocalPlayer
+	for areaIndex, serverAreaInfo in ipairs(SceneAreaManager.ServerAeraInfoList) do
+		local areaInfo = SceneAreaManager.AreaInfoList[areaIndex]
+		if serverAreaInfo.PlayerID == player.UserId then
+			SceneAreaManager.SelfAreaIndex = areaIndex
+		end
 	end
 end
 
-function SceneAreaManager:RefreshServerAreaInfo(areaInfoList)
-	SceneAreaManager.ServerAeraInfoList = areaInfoList
-
-	local player = game.Players.LocalPlayer
-	for areaIndex, areaInfo in ipairs(areaInfoList) do
-		if areaInfo.PlaeyrId == player.UserId then
-			SceneAreaManager.SelfAreaIndex = areaIndex
+function SceneAreaManager:RefreshServerAreaInfo(serverAreaInfoList)
+	SceneAreaManager.ServerAeraInfoList = serverAreaInfoList
+	SceneAreaManager:InitSelfAreaIndex()
+	for areaIndex, serverAreaInfo in ipairs(serverAreaInfoList) do
+		local areaInfo = SceneAreaManager.AreaInfoList[areaIndex]
+		if serverAreaInfo.ThemeKey ~= areaInfo.ThemeKey then
+			areaInfo.ThemeKey = serverAreaInfo.ThemeKey
+			SceneAreaManager:SwitchTheme(areaIndex, serverAreaInfo.ThemeKey)
 		end
 	end
 end
@@ -67,7 +85,7 @@ function SceneAreaManager:SwitchTheme(areaIndex, themeKey)
 			Util:DeActiveObject(themeInfo.Theme)
 		end
 	end
-	
+
 	if not find and #areaInfo.ThemeList > 0 then
 		Util:ActiveObject(areaInfo.ThemeList[1].Theme)
 	end

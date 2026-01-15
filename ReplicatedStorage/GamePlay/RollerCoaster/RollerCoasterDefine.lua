@@ -4,6 +4,7 @@ RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
 	SlideAcceleration = 500,
+	TrackEndOffset = Vector3.new(0, 0, 0)
 }
 
 RollerCoasterDefine.GamePhase = {
