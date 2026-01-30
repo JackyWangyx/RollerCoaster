@@ -9,8 +9,11 @@ local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 
 local UIAnimation = require(game.ReplicatedStorage.ScriptAlias.UIAnimation)
 local UIEffect = require(game.ReplicatedStorage.ScriptAlias.UIEffect)
+local UIPage = nil
 
 local UIManager = {}
+
+UIManager.PlayerGUI = nil
 
 UIManager.AnimationType = {
 	None = "None",
@@ -27,7 +30,6 @@ UIManager.GroupType = {
 }
 
 UIManager.GroupCache = {}
-
 UIManager.Enable = true
 
 ---------------------------------------
@@ -54,11 +56,14 @@ local UIInfoList = {}
 -- Init
 -- ==============================
 function UIManager:Init()
+	UIPage = require(game.ReplicatedStorage.ScriptAlias.UIPage)
 	local player = game.Players.LocalPlayer
 	player.CharacterAdded:Connect(function()
+		UIManager.PlayerGUI = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 		UIManager:InitImpl()
 	end)
 	
+	UIManager.PlayerGUI = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	UIEffect:Init()
 	UIManager:InitImpl()
 end
@@ -67,7 +72,7 @@ function UIManager:InitImpl()
 	local function CreateUIFolder(name)
 		local floder = Instance.new("Folder")
 		floder.Name = name
-			floder.Parent =  game.Players.LocalPlayer:WaitForChild("PlayerGui")
+		floder.Parent = UIManager.PlayerGUI
 		return floder
 	end
 
@@ -125,11 +130,10 @@ function UIManager:InitImpl()
 end
 
 function UIManager:InitPage(pagePrefab)
-	local playerGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	local pageInstance = pagePrefab:Clone()
-	pageInstance.Parent = playerGui
+	pageInstance.Parent = UIManager.PlayerGUI
 	pageInstance.Enabled = false
-
+	
 	local uiInfo = {
 		Name = pageInstance.Name,
 		UI = pageInstance,
@@ -155,13 +159,14 @@ function UIManager:InitPage(pagePrefab)
 		
 		UIAnimation:HandlePageShow(uiInfo, uiScript.ShowAnimationType)
 		UIAnimation:HandlePageHide(uiInfo, uiScript.HideAnimationType)
-
+		
 		local childList = uiInfo.UI:GetDescendants()
-		local uiPage = require(game.ReplicatedStorage.ScriptAlias.UIPage)
-		uiPage:Handle(uiInfo.UI, uiScript, childList)
+		UIPage:Handle(uiInfo.UI, uiScript, childList)
 
 		if uiInfo.InitFunc then
-			uiInfo.InitFunc(uiScript, uiInfo.UI)
+			task.spawn(function()
+				uiInfo.InitFunc(uiScript, uiInfo.UI)
+			end)
 		end
 	end
 	

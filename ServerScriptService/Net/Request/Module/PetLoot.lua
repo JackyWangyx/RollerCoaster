@@ -87,7 +87,7 @@ function PetLoot:Open(player, param)
 	if packageCount + count > packageMax then
 		return {
 			Success = false, 
-			Message = Define.Message.PetPackageFull,
+			Message = Define.Message.PackageFull,
 			PetList = nil
 		}
 	end

@@ -11,7 +11,7 @@ ID,ProductID,ProductKey,Type,Unnamed: 4
 7,1669908945,GetCoinX2,GamePass,nil
 8,1670126834,WinX2,GamePass,nil
 9,1669645165,MaxSpeedX2,GamePass,nil
-10,1669749005,AutoGame,GamePass, 
+10,1669749005,AutoPlay,GamePass, 
 11,3511656744,ProductStoreTool25,Product,nil
 12,3511656946,ProductStoreTool26,Product,nil
 13,3511657145,ProductStoreTool27,Product,nil
@@ -56,10 +56,8 @@ ID,ProductID,ProductKey,Type,Unnamed: 4
 52,3512651736,ProductStorePackage3,Product,nil
 53,3512651845,ProductStorePackage5,Product,nil
 54,3512651948,ProductStorePackage6,Product,nil
-55,46,ProductStorePartner12,Product,nil
-56,47,ProductStorePartner13,Product,nil
-57,48,ProductStorePartner14,Product,nil
-58,49,ProductStorePartner15,Product,nil
+55,3524859973,ProductStorePartnerRB01,Product,nil
+56,3524860096,ProductStorePartnerRB02,Product,nil
 ]]
 
 return IAPConfig

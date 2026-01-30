@@ -137,6 +137,7 @@ function UIInfo:HandleAllButton(uiRoot, uiScript, param, cacheChildList)
 		end
 		
 		-- IAP GamePass
+		
 		if string.match(buttonName, "^Button_.+_GamePass$") ~= nil then
 			UIButtonGamePass:Handle(button)
 			continue

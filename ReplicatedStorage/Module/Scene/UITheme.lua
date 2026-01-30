@@ -51,20 +51,23 @@ function UITheme:Refresh()
 			local data = ConfigManager:GetData("Theme", info.ID)
 			info = Util:TableMerge(info, data)
 			
-			local isSelect = UITheme.SelectIndex == index
-			info.IsSelect = isSelect
+		
 			local isCurrent = UITheme.CurrentThemeKey == info.ThemeKey
-			if isSelect then
-				UITheme.SelectThemeInfo = info
-			end
-			
 			if isCurrent and UITheme.SelectIndex < 0 then
 				UITheme.SelectIndex = index
+			end
+			
+			local isSelect = UITheme.SelectIndex == index
+			info.IsSelect = isSelect
+			
+			if isSelect then
+				UITheme.SelectThemeInfo = info
 			end
 		end
 		
 		UITheme.InfoList = infoList
 		UITheme.ItemList = UIList:LoadWithInfo(UITheme.ThemeFrame, "UIThemeItem", infoList)
+		--UIList:HandleItemList(UITheme.ItemList, UITheme, "UIThemeItem")
 		if not UITheme.HandleButtonList then
 			UITheme.HandleButtonList = true
 			UIList:HandleItemList(UITheme.ItemList, UITheme, "UIThemeItem")

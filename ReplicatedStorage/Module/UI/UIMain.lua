@@ -42,6 +42,8 @@ function UIMain:Init(root)
 	UIMain.MainFrame = Util:GetChildByName(UIMain.UIRoot, "MainFrame", true, childList)
 	
 	UIRollerCoasterGameInfo:Init(root)
+	UIRollerCoasterAutoPlay:Init(root)
+	
 	UIAnimalEquip:Init(root)
 	UIBuffInfo:Init(root)
 	

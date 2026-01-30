@@ -3,31 +3,23 @@
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local IAPClient = require(game.ReplicatedStorage.ScriptAlias.IAPClient)
+local SceneAreaManager = require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager)
+
+local RollerCoasterGameLoop = nil
+local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 
 local Define = require(game.ReplicatedStorage.Define)
 
-
 local RollerCoasterAutoPlay = {}
 
-local Info = {
+RollerCoasterAutoPlay.Info = {
 	IsAutoGame = false,
-	IsAutoClick = false,
+	--IsAutoClick = false,
 }
 
-local CurrentPlayerStatus = nil
-
 function RollerCoasterAutoPlay:Init()
-	Info.IsAutoGame = false
-	Info.IsAutoClick = false
-
-	CurrentPlayerStatus = Define.PlayerStatus.Idle
-	NetClient:Request("Player", "GetStatus", function(status)	
-		CurrentPlayerStatus = status	
-	end)
-
-	EventManager:Listen(EventManager.Define.RefreshPlayerStatus, function(status)
-		CurrentPlayerStatus = status
-	end)
+	RollerCoasterGameLoop = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameLoop)
+	RollerCoasterAutoPlay.Info.IsAutoGame = false
 
 	task.spawn(function() 
 		RollerCoasterAutoPlay:AutoPlayCo()
@@ -38,34 +30,37 @@ function RollerCoasterAutoPlay:AutoPlayCo()
 	task.wait()
 	local player = game.Players.LocalPlayer
 	while true do
-		--if Info.IsAutoGame then
-		--	if CurrentPlayerStatus == Define.PlayerStatus.Idle then
-		--		NetClient:Request("Game", "Enter", function(result)	
-		--		end)
-		--		task.wait(1)
-		--	end
-		--end
+		local currentState = RollerCoasterGameLoop.GamePhase
+		if RollerCoasterAutoPlay.Info.IsAutoGame then
+			if currentState == RollerCoasterDefine.GamePhase.Idle then
+				task.wait(2)
+			end
+			
+			if currentState == RollerCoasterDefine.GamePhase.Idle then
+				NetClient:Request("RollerCoaster", "Enter", { Index = SceneAreaManager.CurrentAreaIndex }, function(result)	
+				end)
+				task.wait(2)
+			else
+				task.wait(2)
+			end
+		end
 
 		task.wait(0.1)
 	end
 end
 
-function RollerCoasterAutoPlay:GetInfo()
-	return Info
-end
-
 -- Game
 
 function RollerCoasterAutoPlay:StartAutoGame()
-	if Info.IsAutoGame then return end
-	Info.IsAutoGame = true
-	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, Info)
+	if RollerCoasterAutoPlay.Info.IsAutoGame then return end
+	RollerCoasterAutoPlay.Info.IsAutoGame = true
+	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, RollerCoasterAutoPlay.Info)
 end
 
 function RollerCoasterAutoPlay:EndAutoGame()
-	if not Info.IsAutoGame then return end
-	Info.IsAutoGame = false
-	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, Info)
+	if not RollerCoasterAutoPlay.Info.IsAutoGame then return end
+	RollerCoasterAutoPlay.Info.IsAutoGame = false
+	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, RollerCoasterAutoPlay.Info)
 end
 
 return RollerCoasterAutoPlay

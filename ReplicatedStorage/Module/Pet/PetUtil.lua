@@ -15,7 +15,7 @@ function PetUtil:CheckPackage(count)
 	if result then
 		return true
 	else
-		UIManager:ShowMessage(Define.Message.PetPackageFull)
+		UIManager:ShowMessage(Define.Message.PackageFull)
 		return false
 	end
 end

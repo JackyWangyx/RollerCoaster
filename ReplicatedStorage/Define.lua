@@ -176,34 +176,24 @@ Define.Message = {
 	IAPProcessNotFound = "Process function not found!",
 	IAPPurchaseFailed = "Process failed!",
 
-	-- Pet
-	ConfirmDeletePet = "Delete selected pet?",
-	PetMaxLevel = "Pet is max level",
-
-	-- Pet Loot
+	-- General
+	MaxLevel = "Reach the maximum level",
 	CoinNotEnough = "Coin not enough!",
 	WinsNotEnough = "Wins not enough!",
-	PetPackageFull = "Pacakge Full!",
+	PackageFull = "Pacakge Full!",
+	Baught = "Purchase completed",
+	Locked = "Locked",
+	PreviousLocked = "Previous one not unlocked",
+	
+	-- Pet
+	ConfirmDeletePet = "Delete selected pet?",
 	
 	-- Animal
 	ConfirmDeleteAnimal = "Delete selected animal?",
-	AnimalMaxLevel = "Animal is max level",
-	
-	-- Tool Store
-	ToolLocked = "Tool not unlock!",
-	ToolBaught = "Tool baught!",
-	
-	-- Partner Store
-	PartnerBaught = "Partner baught!",
-	
-	-- Trail Store
-	TrailLocked = "Trail not unlock!",
-	TrailBaught = "Trail baught!",
 	
 	-- Training
 	EnterTrainingMachine = "Enter Training Machine",
-	TrainingLock = "Training is locked",
-	
+
 	-- Rebirth
 	AutoRebirth = "Auto rebirth !",
 	

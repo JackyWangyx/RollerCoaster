@@ -12,7 +12,6 @@ function UIButtonGamePass:Handle(button)
 	local iapData = ConfigManager:SearchData("IAP", "ProductKey", productKey)
 	if not iapData or iapData.Type ~= "GamePass" then return end
 	
-	task.wait()
 	UIButtonGamePass:Refresh(button)
 	UIButton:Handle(button, function()
 		IAPClient:CheckHasGamePass(productKey, function(result)

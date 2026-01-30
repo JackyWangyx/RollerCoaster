@@ -20,14 +20,27 @@ function UIRollerCoasterAutoPlay:Init(root)
 end
 
 function UIRollerCoasterAutoPlay:Refresh()
-	local info = RollerCoasterAutoPlay:GetInfo()
+	local info = RollerCoasterAutoPlay.Info
 	UIInfo:SetInfo(UIRollerCoasterAutoPlay.UIRoot, info)
 end
 
 -- Game
-
 function UIRollerCoasterAutoPlay:Button_AutoGame()
-	local info = UIRollerCoasterAutoPlay:GetInfo()
+	IAPClient:CheckHasGamePass("AutoPlay", function(isPurchased)
+		if isPurchased then
+			UIRollerCoasterAutoPlay:SwitchAutoPlay()
+		else
+			IAPClient:Purchase("AutoPlay", function(success)
+				if success then
+					UIRollerCoasterAutoPlay:SwitchAutoPlay()
+				end			
+			end)
+		end
+	end)
+end
+
+function UIRollerCoasterAutoPlay:SwitchAutoPlay()
+	local info = RollerCoasterAutoPlay.Info
 	if info.IsAutoGame then
 		RollerCoasterAutoPlay:EndAutoGame()
 	else

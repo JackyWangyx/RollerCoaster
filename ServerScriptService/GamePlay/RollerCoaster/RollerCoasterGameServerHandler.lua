@@ -94,6 +94,10 @@ end
 
 function RollerCoasterGameServerHandler:Enter(player, param)
 	local trackInfo = RollerCoasterTrackServerHandler:GetTrackByIndex(param.Index)
+	if trackInfo.Player == nil then
+		return false
+	end
+	
 	local upSegmentNameList = {}
 	for _, segment in ipairs(trackInfo.UpTrack.SegmentList) do
 		table.insert(upSegmentNameList, segment.Name)
@@ -116,8 +120,8 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 	gameInitParam.ThemeKey = themeKey
 	gameInitParam.TrackLevel = gameThemeInfo.TrackLevel
 	local speed = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.SPEED)
-	--local maxSpeedFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.MAX_SPEED_FACTOR)
-	gameInitParam.Speed = speed * themeData.SpeedFactor -- * maxSpeedFactor 
+	local maxSpeedFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.MAX_SPEED_FACTOR)
+	gameInitParam.Speed = speed * themeData.SpeedFactor * maxSpeedFactor 
 	
 	local getCoinFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_COIN_FACTOR)
 	local rewardCoinPerMeter = getCoinFactor * themeData.RewardCoin
@@ -128,6 +132,9 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 	local toolData = ConfigManager:GetData("Tool", toolInfo.ID)
 	local moveHeight = toolData.GameHeight
 	gameInitParam.MoveHeight = moveHeight
+	
+	local upTrackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Up")
+	gameInitParam.IsTrackMaxLevel = gameThemeInfo.TrackLevel >= #upTrackDataList
 	
 	local playerInfo = {
 		Player = player,
@@ -140,11 +147,12 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 		ThemeData = themeData,
 		ArrvieDistance = 0,
 		CurrentDistance = 0,
+		IsGetWins = false,
 		RewardCoinPerMeter = rewardCoinPerMeter,
 		MoveSpeed = gameInitParam.Speed,
-		SlideAcceleration = RollerCoasterDefine.Game.SlideAcceleration,
+		SlideAcceleration = 0,
+		SlideAccelerationDelta = RollerCoasterDefine.Game.SlideAccelerationDelta,
 		GamePhase = RollerCoasterDefine.GamePhase.Up,
-		AttachPart = {},
 	}
 	
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
@@ -155,23 +163,7 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 
 	PlayerManager:DisablePhysic(player)
 
-	-- 抵消重力
-	local att = Instance.new("Attachment")
-	att.Parent = rootPart
-	local vf = Instance.new("VectorForce")
-	vf.Attachment0 = att
-	vf.RelativeTo = Enum.ActuatorRelativeTo.World
-	vf.ApplyAtCenterOfMass = true
-
-	local mass = rootPart.AssemblyMass
-	vf.Force = Vector3.new(0, mass * workspace.Gravity, 0)
-	vf.Parent = rootPart
-	
-	table.insert(playerInfo.AttachPart, att)
-	table.insert(playerInfo.AttachPart, vf)
-	
 	PlayerCache[player] = playerInfo
-	
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Enter, gameInitParam)
 	return true
 end
@@ -190,6 +182,7 @@ function RollerCoasterGameServerHandler:Slide(player, param)
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	playerInfo.ArriveDistance = param.ArriveDistance
 	playerInfo.MoveSpeed = 0
+	
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Down
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Slide)
 	return true
@@ -200,15 +193,6 @@ function RollerCoasterGameServerHandler:Exit(player)
 	if not playerInfo then return false end
 	
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Idle
-	local attachList = table.clone(playerInfo.AttachPart)
-	--task.delay(1, function()
-		for _, part in ipairs(attachList) do
-			part:Destroy()
-		end
-		
-		PlayerManager:EnablePhysic(player)
-	--end)
-
 	PlayerCache[player] = nil
 	
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Exit)
@@ -218,11 +202,12 @@ end
 function RollerCoasterGameServerHandler:GetWins(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
-	
+	if playerInfo.IsGetWins then return false end
 	local getWinsFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_WINS_FACTOR)
 	local value = playerInfo.ThemeData.RewardWins * getWinsFactor
 	local accountRequest = require(game.ServerScriptService.ScriptAlias.Account)
 	accountRequest:AddWins(player, { Value = value })
+	playerInfo.IsGetWins = true
 	return true
 end
 

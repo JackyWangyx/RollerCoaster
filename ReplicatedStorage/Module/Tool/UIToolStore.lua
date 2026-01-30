@@ -46,33 +46,46 @@ end
 
 function UIToolStore:RefreshItemList()
 	NetClient:Request("Tool", "GetPackageList", function(infoList)
+		local showInfoList = {}
 		for _, info in ipairs(infoList) do
 			local data = ConfigManager:GetData("Tool", info.ID)
+			if data.CostRobux > 0 and not info.IsBuy then
+				continue
+			end
+			
 			Util:TableMerge(info, data)
+			table.insert(showInfoList, info)
 		end
 
-		ActivityUtil:ProcessInfoList(infoList)
+		ConfigManager:FliterDataSource("Tool", showInfoList)
+		ActivityUtil:ProcessInfoList(showInfoList)
 		
 		-- 优先RB付费，价格升序
-		infoList = Util:ListSort(infoList, {
-			--function(info) return info.IsEquip and -1 or 1 end,
-			function(info) return info.CostCoin end,
-			function(info) return info.CostWins end,
+		--infoList = Util:ListSort(infoList, {
+		--	--function(info) return info.IsEquip and -1 or 1 end,
+		--	function(info) return info.CostCoin end,
+		--	function(info) return info.CostWins end,
+		--	function(info) return info.CostRobux end,
+		--})
+		
+		-- 按可购买顺序
+		showInfoList = Util:ListSort(showInfoList, {
+			function(info) return info.BuyOrder end,
 			function(info) return info.CostRobux end,
 		})
 
-		UIToolStore:MoveAfterCondition(infoList, function(info)
+		UIToolStore:MoveAfterCondition(showInfoList, function(info)
 			return info.ID == 1
 		end, function(info)
 			return info.CostRobux > 0
 		end)
 		
-		UIToolStore.ItemList = UIList:LoadWithInfoData(UIToolStore.UIRoot, "UIToolItem", infoList, "Tool")
+		UIToolStore.ItemList = UIList:LoadWithInfoData(UIToolStore.UIRoot, "UIToolItem", showInfoList, "Tool")
 		UIList:HandleItemList(UIToolStore.ItemList, UIToolStore, "UIToolItem")
 		
 		UIToolStore:RefreshInfo()
 		
-		if #infoList > 0 then
+		if #showInfoList > 0 then
 			UIToolStore.InfoPart.Visible = true
 		end		
 	end)
@@ -123,10 +136,10 @@ function UIToolStore:SelectItem(index)
 	local info = AttributeUtil:GetInfo(item)
 	UIInfo:SetInfo(UIToolStore.InfoPart, info)
 	
-	local infoNewbiePart = Util:GetChildByName(UIToolStore.InfoPart, "Info_CostNewbie")
-	if infoNewbiePart then
-		infoNewbiePart.Visible = data.ID == 20
-	end	
+	--local infoNewbiePart = Util:GetChildByName(UIToolStore.InfoPart, "Info_CostNewbie")
+	--if infoNewbiePart then
+	--	infoNewbiePart.Visible = data.ID == 20
+	--end	
 end
 
 function UIToolStore:Button_Equip()

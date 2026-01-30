@@ -324,7 +324,7 @@ function UIPetPack:Button_Craft()
 				end
 			end)
 		else
-			UIManager:ShowMessage(Define.Message.PetMaxLevel)
+			UIManager:ShowMessage(Define.Message.MaxLevel)
 		end
 	end)
 end
@@ -341,7 +341,7 @@ function UIPetPack:Button_CraftRobux()
 				end
 			end)
 		else
-			UIManager:ShowMessage(Define.Message.PetMaxLevel)
+			UIManager:ShowMessage(Define.Message.MaxLevel)
 		end
 	end)
 end

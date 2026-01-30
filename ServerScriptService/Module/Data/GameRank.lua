@@ -113,7 +113,7 @@ function GameRank:Init()
 	end)
 
 	game:BindToClose(function()
-		if RunService:IsStudio() then return end
+		--if RunService:IsStudio() then return end
 		task.spawn(function()
 			GameRank:ForceUpdateRank(false)
 		end)

@@ -2,6 +2,7 @@
 
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
+local SceneAreaManager = require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager)
 
 local ConfigManager = {}
 
@@ -18,6 +19,35 @@ local DataListCache = {}
 --local value = ConfigManager:GetValue("Pet", 1, "Name")
 --print(value)
 --ConfigManager:Log(petTable)
+
+function ConfigManager:GetDataSource()
+	if SceneAreaManager.CurrentThemeKey then
+		return SceneAreaManager.CurrentThemeKey 
+	end
+	
+	return nil
+end
+
+function ConfigManager:FliterDataSource(configName, infoList)
+	local resul = {}
+	local currentDataSource = ConfigManager:GetDataSource()
+	for index, info in ipairs(infoList) do
+		local dataSource = info.DataSource
+		if not dataSource then
+			local data = ConfigManager:GetData(configName, info.ID)
+			if data then
+				dataSource = data.DataSource
+			end	
+		end
+		
+		if dataSource == nil or dataSource == currentDataSource then
+			table.insert(resul, info)
+		end
+	end
+	
+	infoList = resul
+	return resul
+end
 
 function ConfigManager:GetTableName(str)
 	local len = #str

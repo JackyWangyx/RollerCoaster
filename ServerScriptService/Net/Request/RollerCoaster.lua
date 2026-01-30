@@ -60,17 +60,29 @@ function RollerCoaster:GetTrackStoreInfo(player)
 	local trackDataList = ConfigManager:SearchAllData("Track"..themeKey, "Direction", "Up")
 	local isMaxLevel = trackLevel >= #trackDataList
 	local trackData = trackDataList[trackLevel]
+	local nextTrackData = nil
+	if isMaxLevel then
+		nextTrackData = nil
+	else
+		nextTrackData = trackDataList[trackLevel + 1]
+	end
+	
 	local info = {
 		Name = themeData.Name,
-		Icon = themeData.Icon,
+		Icon = trackData.Icon,
 		Level = trackLevel,
 		MaxLevel = #trackDataList,
 		IsMaxLevel = isMaxLevel,
 		CostCoin = trackData.CostCoin,
 		CostRobux = trackData.CostRobux,
 		ProductKey = trackData.ProductKey,
-		Length = trackData.Length
 	}
+	
+	if nextTrackData then
+		info.Length = nextTrackData.Length
+	else
+		info.Length = 0
+	end
 	
 	return info
 end

@@ -135,16 +135,16 @@ function UIAnimation:GetBlur()
 end
 
 function UIAnimation:RefreshBlur(uiManager)
-	local pageGroup = uiManager:GetGroup(uiManager.GroupType.Page)
-	local coverGroup = uiManager:GetGroup(uiManager.GroupType.Cover)
-	local topGroup = uiManager:GetGroup(uiManager.GroupType.Top)
+	--local pageGroup = uiManager:GetGroup(uiManager.GroupType.Page)
+	--local coverGroup = uiManager:GetGroup(uiManager.GroupType.Cover)
+	--local topGroup = uiManager:GetGroup(uiManager.GroupType.Top)
 	
-	local needShow = pageGroup.Stack:Count() > 1 or topGroup.Stack:Count() > 0
-	if needShow then
-		UIAnimation:BlurFadeIn()
-	else
-		UIAnimation:BlurFadeOut()
-	end
+	--local needShow = pageGroup.Stack:Count() > 1 or topGroup.Stack:Count() > 0
+	--if needShow then
+	--	UIAnimation:BlurFadeIn()
+	--else
+	--	UIAnimation:BlurFadeOut()
+	--end
 end
 
 function UIAnimation:BlurFadeIn()

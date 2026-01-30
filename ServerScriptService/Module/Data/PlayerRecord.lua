@@ -68,6 +68,10 @@ function PlayerRecord:AddValue(player, key, value)
 		GameRank:SetRank(player, Define.RankList.TotalGetCoin, newValue)
 	end
 	
+	if key == Define.PlayerRecord.TotalGetWins then
+		GameRank:SetRank(player, Define.RankList.TotalGetWins, newValue)
+	end
+	
 	if key == Define.PlayerRecord.TotalGetPower then
 		GameRank:SetRank(player, Define.RankList.TotalGetPower, newValue)
 	end

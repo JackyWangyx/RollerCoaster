@@ -3,8 +3,14 @@
 RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
-	SlideAcceleration = 500,
-	TrackEndOffset = Vector3.new(0, 0, 0)
+	SlideAccelerationDelta = 20,
+	TrackEndOffset = Vector3.new(10, 2, -50),
+	DropEffectDelay = 0.35,
+	DropCameraShakeParam = {
+		Poweer = Vector3.new(0, 3, 0),
+		Duration = 1,
+		Count = 6
+	}
 }
 
 RollerCoasterDefine.GamePhase = {

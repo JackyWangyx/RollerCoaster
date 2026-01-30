@@ -34,7 +34,7 @@ function UIRobloxStore:Button_LimitedTime_Pet1()
 	local check = PetUtil:CheckPackage(1)
 	if not check then return end
 	
-	IAPClient:Purchase("ProductStorePet450", function(result)
+	IAPClient:Purchase("ProductStorePet246", function(result)
 	end)
 end
 

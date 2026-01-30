@@ -17,15 +17,15 @@ RollerCoasterGameManager.UpdateGameInfo = nil
 function RollerCoasterGameManager:Init()
 	RollerCoasterGameLoop:Init()
 	RollerCoasterAutoPlay:Init()
-	
-	
 end
 
 ----------------------------------------------------------------------------------------------------------
 -- Game Phase
 
 function RollerCoasterGameManager:Enter(index)
-	NetClient:Request("RollerCoaster", "Enter", { Index = index })
+	NetClient:Request("RollerCoaster", "Enter", { Index = index }, function()
+		EventManager:Dispatch(EventManager.D)
+	end)
 end
 
 function RollerCoasterGameManager:ArriveEnd(index)

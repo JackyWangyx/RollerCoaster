@@ -67,14 +67,14 @@ function Trail:Buy(player, param)
 	if info.IsLock then
 		return {
 			Success = false,
-			Message = Define.Message.TrailLocked
+			Message = Define.Message.Locked
 		}
 	end
 	-- 已购买
 	if info.IsBuy then
 		return {
 			Success = false,
-			Message = Define.Message.TrailBaught
+			Message = Define.Message.Baught
 		}
 	end
 	

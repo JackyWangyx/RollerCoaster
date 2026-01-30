@@ -17,8 +17,13 @@ function UIPage:Handle(uiRoot, uiScript, cacheChildList)
 		cacheChildList = uiRoot:GetDescendants()
 	end
 	
-	UIInfo:HandleAllButton(uiRoot, uiScript, nil, cacheChildList)
-	UIPage:HandleInfo(uiRoot, uiScript, cacheChildList)
+	task.spawn(function()
+		UIInfo:HandleAllButton(uiRoot, uiScript, nil, cacheChildList)
+	end)
+	
+	task.spawn(function()
+		UIPage:HandleInfo(uiRoot, uiScript, cacheChildList)
+	end)
 end
 
 function UIPage:HandleInfo(uiRoot, uiScriot, cacheChildList)
@@ -39,7 +44,7 @@ function UIPage:HandleInfo(uiRoot, uiScriot, cacheChildList)
 	end)
 
 	-- Page Info
-	for _, part in pairs(cacheChildList) do
+	for _, part in ipairs(cacheChildList) do
 		-- Coin
 		if part.Name == "Text_Account_Coin" and part:IsA("TextLabel") then
 			NetClient:Request("Account", "GetCoin", function(result)
@@ -79,7 +84,7 @@ function UIPage:HandleInfo(uiRoot, uiScriot, cacheChildList)
 			local notifyScriptFile = Util:GetChildByTypeAndName(game.ReplicatedStorage, "ModuleScript", notifyScriptName, true, ResourcesManager.ReplicatedStorageCache.Module)
 			local notifyScript = require(notifyScriptFile)
 			notifyScript:Handle(part)
-			UIEffect:HandlePart(part:WaitForChild("Notify"), UIEffect.EffectType.Shake)
+			UIEffect:HandlePart(part:FindFirstChild("Notify"), UIEffect.EffectType.Shake)
 		end
 	end
 end

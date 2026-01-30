@@ -36,7 +36,6 @@ function SceneManager:Init()
 		
 		LogUtil:Log("[Server] Scene Load Success! ", SceneManager.CurrentLevelName)
 	else
-		task.wait()
 		SceneManager.LevelRoot = game.Workspace:WaitForChild("LevelRoot")
 		SceneManager.CurrentLevelName = SceneManager.LevelRoot:WaitForChild("LevelName").Value
 		LogUtil:Log("[Client] Scene Load Success!")

@@ -94,7 +94,7 @@ function Animal:Buy(player, param)
 	if not Animal:CheckPackage(player) then
 		return {
 			Success = false,
-			Message = Define.Message.PetPackageFull
+			Message = Define.Message.PackageFull
 		}
 	end
 	

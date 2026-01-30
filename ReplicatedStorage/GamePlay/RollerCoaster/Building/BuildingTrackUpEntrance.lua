@@ -12,6 +12,7 @@ local Define = require(game.ReplicatedStorage.Define)
 local BuildingTrackUpEntrance = {}
 
 function BuildingTrackUpEntrance:Init(buildingPart, opts)
+	opts.Mode = Building.Mode.Global
 	local building = Building.Trigger(buildingPart, opts, function()
 		RollerCoasterGameManager:Enter(opts.AreaIndex)
 	end)

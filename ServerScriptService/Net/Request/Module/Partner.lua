@@ -69,14 +69,14 @@ function Partner:Buy(player, param)
 	if info.IsLock then
 		return {
 			Success = false,
-			Message = Define.Message.PartnerLocked
+			Message = Define.Message.Locked
 		}
 	end
 	-- 已购买
 	if info.IsBuy then
 		return {
 			Success = false,
-			Message = Define.Message.PartnerBaught
+			Message = Define.Message.Baught
 		}
 	end
 	

@@ -4,6 +4,7 @@ local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
+local UIInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
 
 local Define = require(game.ReplicatedStorage.Define)
 
@@ -24,6 +25,7 @@ function SceneAreaServerHandler:Init()
 			Player = nil,
 			Index = areaIndex,
 			Area = area,
+			SpawnLocation = area:FindFirstChild("SpawnLocation"),
 			ThemeKey = "Default",
 			ThemeList = {},
 		}
@@ -35,6 +37,7 @@ function SceneAreaServerHandler:Init()
 				local themeInfo = {
 					Theme = theme,
 					ThemeKey = theme.Name,
+					PlayerInfoPart = theme:FindFirstChild("PlayerInfo"),
 				}
 
 				table.insert(areaInfo.ThemeList, themeInfo)
@@ -65,6 +68,11 @@ function SceneAreaServerHandler:OnPlayerAdded(player, character)
 	if areaInfo then
 		areaInfo.Player = player
 		SceneAreaServerHandler:CreateArea(player, areaInfo)
+		
+		local rootPart = PlayerManager:GetHumanoidRootPart(player)
+		if rootPart then
+			rootPart.CFrame = CFrame.new(areaInfo.SpawnLocation.Position + Vector3.new(0, 5, 0))
+		end
 
 		local themeRequest = require(game.ServerScriptService.ScriptAlias.Theme)
 		local currentThemeKey = themeRequest:GetCurrentTheme(player)
@@ -147,11 +155,44 @@ function SceneAreaServerHandler:CreateArea(player, areaInfo)
 	for index, func in ipairs(SceneAreaServerHandler.OnCreateArea) do
 		pcall(func, player, areaInfo)
 	end
+	
+	SceneAreaServerHandler:RefreshPlayerInfo(areaInfo)
 end
 
 function SceneAreaServerHandler:ClearArea(player, areaInfo)
 	for index, func in ipairs(SceneAreaServerHandler.OnClearArea) do
 		pcall(func, player, areaInfo)
+	end
+	
+	SceneAreaServerHandler:RefreshPlayerInfo(areaInfo)
+end
+
+-----------------------------------------------------------------------------------------------
+-- Player Info
+
+function SceneAreaServerHandler:RefreshPlayerInfo(areaInfo)
+	local player = areaInfo.Player
+	for _, themeInfo in ipairs(areaInfo.ThemeList) do
+		if themeInfo.PlayerInfoPart then
+			if player then
+				local playerInfo = {
+					Name = player.Name,
+				}
+
+				UIInfo:SetInfo(themeInfo.PlayerInfoPart, playerInfo)	
+				PlayerManager:GetHeadIconAsync(player, function(icon)
+					UIInfo:SetValue(themeInfo.PlayerInfoPart, "HeadIcon", icon)
+				end)
+			else
+				local playerInfo = {
+					Name = "",
+					HeadIcon = "",
+				}
+
+				UIInfo:SetInfo(themeInfo.PlayerInfoPart, playerInfo)	
+			end
+
+		end
 	end
 end
 

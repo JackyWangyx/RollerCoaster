@@ -143,16 +143,6 @@ end
 -------------------------------------------------------------------------------------------------------
 -- PetLoot
 
--- SlimePetEggX3
-function IAPHandler:SlimePetEggX3(player, param)
-	return true
-end
-
--- SlimePetEggX9
-function IAPHandler:SlimePetEggX9(player, param)
-	return true
-end
-
 -- SlimePetEggX1
 function IAPHandler:SlimePetEggX1(player, param)
 	return true
@@ -300,6 +290,10 @@ end
 -------------------------------------------------------------------------------------------------------
 
 -- [Game Pass]
+
+function IAPHandler:AutoPlay(player, param)
+	return true
+end
 
 -- SuperLuck
 function IAPHandler:SuperLuck(player, param)

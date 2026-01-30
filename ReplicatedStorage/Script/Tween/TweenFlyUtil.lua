@@ -80,11 +80,11 @@ function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 	
 	local particleCount
 	if flyMode == "Single" then
-		particleCount = 1
-	else
 		particleCount = 10
+	else
+		particleCount = 30
 		if type(value) == "number" then
-			if value < 10 then
+			if value < 30 then
 				particleCount = value
 			else
 				particleCount = math.random(10, 20)

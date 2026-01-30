@@ -49,7 +49,14 @@ end
 
 function Theme:GetCurrentTheme(player)
 	local saveInfo = LoadInfo(player)
-	return saveInfo.SelectThemeKey
+	local result = saveInfo.SelectThemeKey
+	if not saveInfo.SelectThemeKey then
+		local data = ConfigManager:GetData("Theme", 1)
+		saveInfo.SelectThemeKey = data.ThemeKey
+		result = saveInfo.SelectThemeKey
+	end
+	
+	return result
 end
 
 function Theme:GetInfo(player, param)

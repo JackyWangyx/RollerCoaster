@@ -109,9 +109,9 @@ function DebugWindow:CreateTabBar(container)
 		DebugLogTab:CreateTab(page)
 	end)
 	
-	DebugWindow:RegisterTab("Browser", tabBar, contentFrame, function(page)
-		DebugBrowserTab:CreateTab(page)
-	end)
+	--DebugWindow:RegisterTab("Browser", tabBar, contentFrame, function(page)
+	--	DebugBrowserTab:CreateTab(page)
+	--end)
 end
 
 

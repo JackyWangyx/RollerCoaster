@@ -52,6 +52,7 @@ function UIEffect:HandlePartWithUIInfo(uiInfo, part)
 end
 
 function UIEffect:HandlePart(part, effectType)
+	if not part then return end
 	local effectInfo = {
 		UI = nil,
 		Part = part,

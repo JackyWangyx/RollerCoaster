@@ -9,7 +9,8 @@ SceneAreaManager.AreaPointList = {}
 SceneAreaManager.AreaInfoList = {}
 SceneAreaManager.AreaCount = 0
 
-SceneAreaManager.SelfAreaIndex = -1
+SceneAreaManager.CurrentAreaIndex = -1
+SceneAreaManager.CurrentThemeKey = nil
 SceneAreaManager.ServerAeraInfoList = nil
 
 function SceneAreaManager:Init()
@@ -26,7 +27,7 @@ function SceneAreaManager:Init()
 
 		local themeRoot = area:FindFirstChild("Theme")
 		if themeRoot then
-			local themeList = themeRoot:GetChildren()
+			local themeList = Util:ListSortByPartName(themeRoot:GetChildren())
 			for themeIndex, theme in ipairs(themeList) do
 				local themeInfo = {
 					Theme = theme,
@@ -56,7 +57,8 @@ function SceneAreaManager:InitSelfAreaIndex()
 	for areaIndex, serverAreaInfo in ipairs(SceneAreaManager.ServerAeraInfoList) do
 		local areaInfo = SceneAreaManager.AreaInfoList[areaIndex]
 		if serverAreaInfo.PlayerID == player.UserId then
-			SceneAreaManager.SelfAreaIndex = areaIndex
+			SceneAreaManager.CurrentAreaIndex = areaIndex
+			SceneAreaManager.CurrentThemeKey = serverAreaInfo.ThemeKey
 		end
 	end
 end

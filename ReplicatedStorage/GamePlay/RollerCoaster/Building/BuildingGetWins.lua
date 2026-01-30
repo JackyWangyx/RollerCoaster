@@ -12,6 +12,7 @@ local Define = require(game.ReplicatedStorage.Define)
 local BuildingGetWins = {}
 
 function BuildingGetWins:Init(buildingPart, opts)
+	opts.Mode = Building.Mode.Global
 	local building = Building.Trigger(buildingPart, opts, function()
 		RollerCoasterGameManager:GetWins(opts.AreaIndex)
 	end)

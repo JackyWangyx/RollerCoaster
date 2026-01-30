@@ -51,7 +51,7 @@ function Tool:GetPackageList(player)
 				ID = id,
 				IsBuy = false,
 				IsEquip = isEquip,
-				IsLock = false,
+				IsLock = true,
 			}
 			
 			-- 默认装备
@@ -59,6 +59,10 @@ function Tool:GetPackageList(player)
 				newInfo.IsEquip = true
 				newInfo.IsLock = false
 				newInfo.IsBuy = true
+			end
+			
+			if data.BuyOrder == 2 then
+				newInfo.IsLock = false
 			end
 
 			packageList[data.ID] = newInfo
@@ -76,15 +80,32 @@ function Tool:Buy(player, param)
 	if info.IsLock then
 		return {
 			Success = false,
-			Message = Define.Message.ToolLocked
+			Message = Define.Message.Locked
 		}
 	end
+	
 	-- 已购买
 	if info.IsBuy then
 		return {
 			Success = false,
-			Message = Define.Message.ToolBaught
+			Message = Define.Message.Baught
 		}
+	end
+	
+	-- 检查是否获得前置物品
+	local buyOrder = data.BuyOrder
+	if buyOrder > 1 then
+		local previousOrder = buyOrder - 1
+		local previousData = ConfigManager:SearchData("Tool", "BuyOrder", previousOrder)
+		if previousData then
+			local previousInfo = packageList[previousData.ID]
+			if not previousInfo.IsBuy then
+				return {
+					Success = false,
+					Message = Define.Message.PreviousLocked
+				}
+			end
+		end
 	end
 	
 	if data.CostCoin > 0 then
@@ -112,6 +133,17 @@ function Tool:Buy(player, param)
 	end
 	
 	info.IsBuy = true
+	
+	-- 有购买顺序配置，则解锁下一个可购买物品
+	if buyOrder > 1 then
+		local nextBuyOrder = buyOrder + 1
+		local nextData = ConfigManager:SearchData("Tool", "BuyOrder", nextBuyOrder)
+		if nextData then
+			local nextInfo = packageList[nextData.ID]
+			nextInfo.IsLock = false
+		end
+	end
+	
 	AnalyticsManager:Event(player, AnalyticsManager.Define.BuyTool, "ToolID", data.ID)
 	
 	PlayerRecord:AddValue(player, PlayerRecord.Define.TotalGetTool, 1)

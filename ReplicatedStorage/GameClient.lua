@@ -41,13 +41,14 @@ function GameClient:Init()
 	
 	GameClient:RegisterLoadProcess("Resources Manager", require(game.ReplicatedStorage.ScriptAlias.ResourcesManager))
 	GameClient:RegisterLoadProcess("Scene Manager", require(game.ReplicatedStorage.ScriptAlias.SceneManager))
+	GameClient:RegisterLoadProcess("Scene Area Manager", require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager))
 	GameClient:RegisterLoadProcess("IAP Client",  require(game.ReplicatedStorage.ScriptAlias.IAPClient))
 	GameClient:RegisterLoadProcess("Trade Client", require(game.ReplicatedStorage.ScriptAlias.TradeClient))
 	GameClient:RegisterLoadProcess("Friend Manager", require(game.ReplicatedStorage.ScriptAlias.FriendManager))
 	GameClient:RegisterLoadProcess("Player Manager", require(game.ReplicatedStorage.ScriptAlias.PlayerManager))
 	GameClient:RegisterLoadProcess("UI Manager", require(game.ReplicatedStorage.ScriptAlias.UIManager))
+	
 	GameClient:RegisterLoadProcess("Building Manager", require(game.ReplicatedStorage.ScriptAlias.BuildingManager))
-	GameClient:RegisterLoadProcess("Scene Area Manager", require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager))
 	
 	-- GamePlay
 	GameClient:RegisterLoadProcess("Game Manager", require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager))
@@ -61,6 +62,8 @@ function GameClient:Init()
 	GameClient:RegisterLoadProcess("Sound Manager", require(game.ReplicatedStorage.ScriptAlias.SoundManager))
 	GameClient:RegisterLoadProcess("Debug Client", require(game.ReplicatedStorage.ScriptAlias.DebugClient))	
 	GameClient:RegisterLoadProcess("Camera Manager", require(game.ReplicatedStorage.ScriptAlias.CameraManager))	
+	
+	GameClient:RegisterLoadProcess("Guide Manager", require(game.ReplicatedStorage.ScriptAlias.GuideManager))
 	
 	task.spawn(function()
 		local success = GameClient:StartLoading()
@@ -100,25 +103,38 @@ function GameClient:StartLoading()
 		Info.Name = name
 		Info.Index = index
 		
-		local success = GameClient:LoadProcess(module)
+		local progress = Util:RoundFloat((index - 1) * 1.0 / count, 2)
 		
-		if not success then
-			LogUtil:Warn("[Client] Load Failed!", name, module)
-			return false
-		end
-		
-		local endTime = tick()
-		local spendTime = Util:RoundFloat((endTime - startTime) * 1000, 3)
-		
-		local progress = Util:RoundFloat(index * 1.0 / count, 2)
 		Info = {
 			Name = name,
 			Index = index,
 			Count = count,
 			Progress = progress,
-			Time = spendTime,
+			Time = 0,
 			ProgressText = math.round(progress * 100).."%"
 		}
+		
+		GameClient:RefreshProgress(Info)
+		
+		local loadComplete = false
+		local loadSuccess = GameClient:LoadProcess(module, function(complete)
+			loadComplete = complete
+		end)	
+		if not loadSuccess then
+			LogUtil:Warn("[Client] Load Failed!", name, module)
+			return false
+		end
+		
+		while not loadComplete do
+			task.wait()
+		end
+		
+		local endTime = tick()
+		local spendTime = Util:RoundFloat((endTime - startTime) * 1000, 3)	
+		progress = Util:RoundFloat(index * 1.0 / count, 2)
+		Info.Time = spendTime
+		Info.Progress = progress
+		GameClient:RefreshProgress(Info)
 		
 		while spendTime < 0.15 do
 			spendTime += 1.0 / 60
@@ -132,7 +148,8 @@ function GameClient:StartLoading()
 	end
 	
 	LogUtil:Log("[Client] Load Success!")
-	task.wait(0.5)
+	
+	task.wait()
 	
 	UpdateConnection:Disconnect()
 	
@@ -150,12 +167,20 @@ function GameClient:RegisterLoadProcess(name, module)
 	})
 end
 
-function GameClient:LoadProcess(loadModule)
+function GameClient:LoadProcess(loadModule, onDone)
+	local complete = false
 	local success, result = pcall(function()
-		local initFunc = loadModule["Init"]
-		if initFunc then
-			initFunc(loadModule)
-		end
+		task.spawn(function()
+			local initFunc = loadModule["Init"]
+			if initFunc then
+				initFunc(loadModule)
+			end
+			
+			complete = true
+			if onDone then
+				onDone(true)
+			end	
+		end)
 	end)
 
 	if success then

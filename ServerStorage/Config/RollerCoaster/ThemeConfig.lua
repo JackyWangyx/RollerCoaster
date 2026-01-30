@@ -2,9 +2,9 @@
 
 ThemeConfig.Data = [[
 ID,ThemeKey,Name,Icon,SpeedFactor,RewardCoin,RewardWins,CostWins
-1,World01,World01,rbxassetid://86721141310393,0.7,1,1,100
-2,World02,World02,rbxassetid://86721141310393,0.1,2.0,10,10000
-3,World03,World03,rbxassetid://86721141310393,0.01,100.0,100,10000000
+1,World01,Fruit World,rbxassetid://114016408382947,0.7,1,1,0
+2,World02,Candy World,rbxassetid://133233408383365,0.1,2.0,15,6
+3,World03,World03,rbxassetid://98320519244873,0.01,100.0,50,120
 ]]
 
 return ThemeConfig

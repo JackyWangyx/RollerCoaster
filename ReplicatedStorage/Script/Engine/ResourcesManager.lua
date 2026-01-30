@@ -13,6 +13,9 @@ function ResourcesManager:Init()
 	ResourcesManager:LoadReplicatedStorage()
 end
 
+----------------------------------------------------------------------------------------------------------------
+-- Prefab
+
 function ResourcesManager:LoadReplicatedStorage()
 	local isWorking = true
 	task.spawn(function()
@@ -61,6 +64,47 @@ function ResourcesManager:LoadImpl(path)
 	end
 
 	return current
+end
+
+local function GetInstanceByPath(startInstance: Instance, path: string): Instance?
+	if not startInstance or path == "" then
+		return nil
+	end
+
+	local current = startInstance
+	for part in string.gmatch(path, "[^.]+") do
+		current = current:FindFirstChild(part)
+		if not current then
+			return nil
+		end
+	end
+
+	return current
+end
+
+----------------------------------------------------------------------------------------------------------------
+-- UI
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+function ResourcesManager:GetGuiByPath(path: string): Instance?
+	if not player then return nil end
+
+	local playerGui = player:WaitForChild("PlayerGui", 10)
+	if not playerGui then return nil end
+
+	return GetInstanceByPath(playerGui, path)
+end
+
+----------------------------------------------------------------------------------------------------------------
+-- Part
+
+local Workspace = game:GetService("Workspace")
+
+function ResourcesManager:GetPartByPath(path: string): BasePart?
+	local instance = GetInstanceByPath(Workspace, path)
+	return instance
 end
 
 return ResourcesManager

@@ -19,7 +19,7 @@ function BuildingAnimalIAP:Handle(buildingPart, opts, animalID)
 					--BuildingAnimalIAP:Refresh(buildingPart, triggerPart, animalID)
 				end)
 			else
-				UIManager:ShowMessage(Define.Message.PetPackageFull)
+				UIManager:ShowMessage(Define.Message.PackageFull)
 			end
 		end)
 

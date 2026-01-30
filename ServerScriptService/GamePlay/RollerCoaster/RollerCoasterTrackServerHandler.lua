@@ -57,9 +57,8 @@ function RollerCoasterTrackServerHandler:InitTrack(trackPointList)
 	for index = 1, SceneAreaServerHandler.AreaCount do
 		local trackRoot = SceneAreaServerHandler.AreaPointList[index]
 		local trackStart = trackRoot:FindFirstChild("TrackStart")
-		local trackEnd = trackRoot:FindFirstChild("TrackEnd")
-		local playerInfoPart = trackRoot:FindFirstChild("PlayerInfo")
-		
+		local trackEndList = Util:GetAllChildByName(trackRoot, "TrackEnd", true)
+
 		local upFoloder = Instance.new("Folder")
 		upFoloder.Name = "Up"
 		upFoloder.Parent = trackStart
@@ -73,8 +72,7 @@ function RollerCoasterTrackServerHandler:InitTrack(trackPointList)
 			Index = index,
 			Player = nil,
 			Start = trackStart,
-			End = trackEnd,
-			PlayerInfoPart = playerInfoPart,
+			EndList = trackEndList,
 			UpTrack = nil,
 			DownTrack = nil,
 			ThemeKey = areaInfo.ThemeKey,
@@ -196,22 +194,9 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 	
 	-- End
 	
-	if trackInfo.End then
-		Util:ActiveObject(trackInfo.End)
+	for _, trackEnd in ipairs(trackInfo.EndList) do
 		local endPos = downTrack.TrackRoute:GetPointByFactor(1).Position + RollerCoasterDefine.Game.TrackEndOffset
-		trackInfo.End:PivotTo(CFrame.new(endPos))
-	end
-	
-	-- Player Info
-	if trackInfo.PlayerInfoPart then
-		local playerInfo = {
-			Name = player.Name,
-		}
-		
-		UIInfo:SetInfo(trackInfo.PlayerInfoPart, playerInfo)	
-		PlayerManager:GetHeadIconAsync(player, function(icon)
-			UIInfo:SetValue(trackInfo.PlayerInfoPart, "HeadIcon", icon)
-		end)	
+		trackEnd:PivotTo(CFrame.new(endPos))
 	end
 end
 
