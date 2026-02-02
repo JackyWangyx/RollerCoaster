@@ -1,6 +1,6 @@
 ﻿local RollerCoasterDefine = {}
 
-RollerCoasterDefine.TrackAngle = 30
+RollerCoasterDefine.TrackAngle = 0
 
 RollerCoasterDefine.Game = {
 	SlideAccelerationDelta = 20,
@@ -10,7 +10,9 @@ RollerCoasterDefine.Game = {
 		Poweer = Vector3.new(0, 3, 0),
 		Duration = 1,
 		Count = 6
-	}
+	},
+	UpTrackOffset = Vector3.zero,
+	DownTrackOffset = Vector3.new(-20, 0, 0),
 }
 
 RollerCoasterDefine.GamePhase = {

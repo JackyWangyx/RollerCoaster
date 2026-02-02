@@ -183,52 +183,57 @@ function IAPHandler:BuyTrail(player, param)
 	return true
 end
 
--- Coin 100
-function IAPHandler:Win300K(player, param)
+----------------------------------------------------------------------------
+-- Account Coin
+
+function IAPHandler:Coin300K(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 300000 })
 	return true
 end
 
--- Coin 500
-function IAPHandler:Win2M(player, param)
+function IAPHandler:Coin2M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 2000000 })
 	return true
 end
 
--- Coin 1K
-function IAPHandler:Win10M(player, param)
+function IAPHandler:Coin10M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 10000000 })
 	return true
 end
 
--- Coin 5K
-function IAPHandler:Win25M(player, param)
+function IAPHandler:Coin25M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 25000000 })
 	return true
 end
 
--- Coin 10K
-function IAPHandler:Win45M(player, param)
+function IAPHandler:Coin45M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 45000000 })
 	return true
 end
 
--- Coin 25K
-function IAPHandler:Win100M(player, param)
+function IAPHandler:Coin100M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 100000000 })
 	return true
 end
 
--- Coin 100K
-function IAPHandler:Win500M(player, param)
+function IAPHandler:Coin500M(player, param)
 	local accountRequest = NetServer:RequireModule("Account")
 	accountRequest:AddCoin(player, { Value = 500000000 })
+	return true
+end
+
+----------------------------------------------------------------------------
+-- Account Wins
+
+function IAPHandler:Wins10K(player, param)
+	local accountRequest = NetServer:RequireModule("Account")
+	accountRequest:AddWins(player, { Value = 10000 })
 	return true
 end
 
@@ -236,6 +241,13 @@ end
 function IAPHandler:DoublePowerX5(player, param)
 	local propRequest = NetServer:RequireModule("Prop")
 	local data = ConfigManager:SearchData("Prop", "ProductKey", "DoublePowerX5")
+	propRequest:Buy(player, { ID = data.ID })
+	return true
+end
+
+function IAPHandler:DoubleCoinsX5(player, param)
+	local propRequest = NetServer:RequireModule("Prop")
+	local data = ConfigManager:SearchData("Prop", "ProductKey", "DoubleCoinsX5")
 	propRequest:Buy(player, { ID = data.ID })
 	return true
 end

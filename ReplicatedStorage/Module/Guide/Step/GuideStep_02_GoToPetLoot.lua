@@ -18,18 +18,18 @@ end
 local TriggerEvent = nil
 
 function GuideStepImpl:EnableImpl()
-	TriggerEvent = function()
-		self:Complete()
+	TriggerEvent = function(uiName)
+		if uiName == "UIPetLoot" then
+			self:Complete()
+		end
 	end
 	
-	EventManager:Listen(EventManager.Define.GameStart, TriggerEvent)
+	EventManager:Listen(EventManager.Define.ShowUI, TriggerEvent)
 end
 
 function GuideStepImpl:DisableImpl()
-	EventManager:Remove(EventManager.Define.GameStart, TriggerEvent)
+	EventManager:Remove(EventManager.Define.ShowUI, TriggerEvent)
 	TriggerEvent = nil
 end
-
-
 
 return GuideStepImpl

@@ -11,10 +11,12 @@ function GuideManager:Init()
 	NetClient:Request("Guide", "GetInfoList", function(infoList)
 		SaveInfoList = infoList
 		
-		for key, info in pairs(infoList) do
-			local config = GuideManager:GetConfig(key)
-			local guideScript = require(script.Parent.Step:FindFirstChild(key))
-			local guide = guideScript.new(key, config, info)
+		for index, guideConfig in ipairs(GuideDefine.GuideList) do
+			local key = guideConfig.Key
+			local guideInfo = infoList[key]
+			local guideScriptFile = script.Parent.Step:FindFirstChild(key)
+			local guideScript = require(guideScriptFile)
+			local guide = guideScript.new(key, guideConfig, guideInfo)
 			table.insert(GuideList, guide)
 		end
 		

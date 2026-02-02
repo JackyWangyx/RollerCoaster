@@ -24,7 +24,7 @@ end
 
 function RollerCoasterGameManager:Enter(index)
 	NetClient:Request("RollerCoaster", "Enter", { Index = index }, function()
-		EventManager:Dispatch(EventManager.D)
+		EventManager:Dispatch(EventManager.Define.GameStart)
 	end)
 end
 
@@ -41,7 +41,9 @@ function RollerCoasterGameManager:Slide(index)
 end
 
 function RollerCoasterGameManager:Exit(index)
-	NetClient:Request("RollerCoaster", "Exit")
+	NetClient:Request("RollerCoaster", "Exit", function()
+		EventManager:Dispatch(EventManager.Define.GameFinish)
+	end)
 end
 
 function RollerCoasterGameManager:GetWins(index)

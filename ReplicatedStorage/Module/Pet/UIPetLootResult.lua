@@ -76,6 +76,9 @@ UIPetLootResult.OpenTaskRunning = false
 
 function UIPetLootResult:Open()
 	local skipOpen = false
+	
+	EventManager:Dispatch(EventManager.Define.PetLoot)
+	
 	IAPClient:CheckHasGamePass("FastHatch", function(result)
 		skipOpen = result
 	end)

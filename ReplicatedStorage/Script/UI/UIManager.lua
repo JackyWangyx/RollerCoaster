@@ -6,6 +6,7 @@ local StackList = require(game.ReplicatedStorage.ScriptAlias.StackList)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
+local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 
 local UIAnimation = require(game.ReplicatedStorage.ScriptAlias.UIAnimation)
 local UIEffect = require(game.ReplicatedStorage.ScriptAlias.UIEffect)
@@ -256,6 +257,8 @@ function UIManager:ShowPageImpl(uiName, uiGroupType, param)
 	end
 
 	UIAnimation:RefreshBlur(self)
+	
+	EventManager:Dispatch(EventManager.Define.ShowUI, uiName)
 end
 
 function UIManager:Hide(uiName, processBlur)
@@ -321,6 +324,8 @@ function UIManager:Hide(uiName, processBlur)
 			UIAnimation:RefreshBlur(self)
 		end)
 	end	
+	
+	EventManager:Dispatch(EventManager.Define.HideUI, uiName)
 end
 
 -- ==============================

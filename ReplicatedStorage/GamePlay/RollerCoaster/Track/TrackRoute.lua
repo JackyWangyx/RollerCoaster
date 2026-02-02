@@ -65,10 +65,22 @@ function TrackRoute:GetPointByFactor(factor)
 	return self:GetPointByDistance(distance)
 end
 
+local function isValueNaN(x)
+	return x ~= x
+end
+
+local function isVectorNaN(v)
+	if isValueNaN(v.X) or isValueNaN(v.Y) or isValueNaN(v.Z) then
+		return true
+	else
+		return false
+	end
+end
+
 function TrackRoute:GetPointByDistance(distance)
 	distance = math.clamp(distance, 0, self.Length)
 	
-	if distance <= 0 then
+	if distance <= 1e-6 then
 		return {
 			Position = self.PointList[1].Position,
 			Rotation = self.PointList[1].Rotation,
@@ -87,17 +99,34 @@ function TrackRoute:GetPointByDistance(distance)
 		local p2 = self.PointList[i + 1]
 		if p1.Distance <= distance and distance < p2.Distance then
 			local segDist = p2.Distance - p1.Distance
-			if segDist <= 0 then
+			if segDist <= 1e-6 then
 				return {
 					Position = p1.Position,
 					Rotation = p1.Rotation,
 				}
 			end
+			
 			local alpha = math.clamp((distance - p1.Distance) / segDist, 0, 1)
 
-			local pos = p1.Position:lerp(p2.Position, alpha)
-			local rot = p1.Rotation:lerp(p2.Rotation, alpha)
+			local pos = p1.Position:Lerp(p2.Position, alpha)
 
+			local rx1, ry1, rz1 = p1.Rotation:ToOrientation()
+			local rx2, ry2, rz2 = p2.Rotation:ToOrientation()
+
+			local rx = rx1 + (rx2 - rx1) * alpha
+			local ry = ry1 + (ry2 - ry1) * alpha
+			local rz = rz1 + (rz2 - rz1) * alpha
+
+			ry = (ry + math.pi) % (math.pi*2) - math.pi
+			local rot = CFrame.fromOrientation(rx, ry, rz)
+
+			if isVectorNaN(pos) or isVectorNaN(rot) then
+				return {
+					Position = p1.Position,
+					Rotation = p1.Rotation,
+				}
+			end
+			
 			return {
 				Position = pos,
 				Rotation = rot,
@@ -148,55 +177,5 @@ function TrackRoute:GetNearestPathDistance(position)
 	local distance = self:SearchNearestPos(position, left, right, depth)
 	return distance
 end
-
--- 查找最近的路径点
---function TrackRoute:GetNearestPathDistance(position)
---	if #self.PointList < 2 then
---		return 0
---	end
-
---	local minSpatialDist = math.huge
---	local nearestPathDist = 0
-
---	for i = 1, #self.PointList - 1 do
---		local p1 = self.PointList[i]
---		local p2 = self.PointList[i + 1]
---		local dir = p2.Position - p1.Position
---		local dirLengthSq = dir:Dot(dir)
-
---		local segPathDist = p2.Distance - p1.Distance
---		if dirLengthSq > 0 and segPathDist > 0 then
---			local t = ((position - p1.Position):Dot(dir)) / dirLengthSq
---			t = math.clamp(t, 0, 1)
---			local nearestPoint = p1.Position + dir * t
---			local spatialDist = (position - nearestPoint).Magnitude
---			local pathDist = p1.Distance + t * segPathDist
-
---			if spatialDist < minSpatialDist then
---				minSpatialDist = spatialDist
---				nearestPathDist = pathDist
---			end
---		else
---			local distToP1 = (position - p1.Position).Magnitude
---			if distToP1 < minSpatialDist then
---				minSpatialDist = distToP1
---				nearestPathDist = p1.Distance
---			end
---		end
---	end
-
---	local distToStart = (position - self.PointList[1].Position).Magnitude
---	local distToEnd = (position - self.PointList[#self.PointList].Position).Magnitude
---	if distToStart < minSpatialDist then
---		minSpatialDist = distToStart
---		nearestPathDist = 0
---	end
---	if distToEnd < minSpatialDist then
---		minSpatialDist = distToEnd
---		nearestPathDist = self.Length
---	end
-
---	return nearestPathDist
---end
 
 return TrackRoute

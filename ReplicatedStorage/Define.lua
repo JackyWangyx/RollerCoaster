@@ -239,6 +239,10 @@ Define.Message = {
 
 -- 事件定义
 Define.Event = {
+	-- System
+	ShowUI = "ShowUI",
+	HideUI = "HideUI",
+	
 	-- Game
 	GameStartNewLoop = "GameStartNewLoop",
 	GameEnter = "GameEnter",
@@ -258,6 +262,9 @@ Define.Event = {
 	
 	-- Player
 	RefreshPlayerStatus = "RefreshPlayerStatus",
+	
+	-- Pet Loot
+	PetLoot = "PetLoot",
 	
 	-- Training
 	TrainingStart = "TrainingStart",

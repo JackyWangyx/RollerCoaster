@@ -150,7 +150,7 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 		Name = "Up",
 		PrefabList = {},
 		Angle = RollerCoasterDefine.TrackAngle,
-		StartOffset = position + Vector3.new(0, 0, 0),
+		StartOffset = position + RollerCoasterDefine.Game.UpTrackOffset,
 		Root = trackInfo.Start.Up,
 	}
 	
@@ -174,7 +174,7 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 		Name = "Down",
 		PrefabList = {},
 		Angle = RollerCoasterDefine.TrackAngle,
-		StartOffset = position + Vector3.new(-20, 0, 0),
+		StartOffset = position + RollerCoasterDefine.Game.DownTrackOffset,
 		Root = trackInfo.Start.Down,
 	}
 

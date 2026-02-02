@@ -1,9 +1,5 @@
 ﻿local GuideDefine = {}
 
-GuideDefine.State = {
-
-}
-
 GuideDefine.TargetMode = {
 	Node = 0,
 	Building = 1,
@@ -11,6 +7,10 @@ GuideDefine.TargetMode = {
 }
 
 GuideDefine.ArrowPrefab = "GuideArrow"
+GuideDefine.ArrowHeight = 5
+
+----------------------------------------------------------------------------------------
+-- Demo
 
 -- 引导配置模板
 local Template = {
@@ -36,6 +36,8 @@ local Template = {
 	}
 }
 
+----------------------------------------------------------------------------------------
+-- Cofig
 
 GuideDefine.GuideList = {
 	[1] = {
@@ -43,6 +45,28 @@ GuideDefine.GuideList = {
 		TipText = "Go to race",
 		TargetMode = GuideDefine.TargetMode.Building,
 		TargetBuilding = "BuildingTrackUpEntrance",
+	},
+	[2] = {
+		Key = "GuideStep_02_GoToPetLoot",
+		TipText = "Go to pet loot",
+		TargetMode = GuideDefine.TargetMode.Building,
+		TargetBuilding = "BuildingPetLoot1",
+	},
+	[3] = {
+		Key = "GuideStep_03_PetLoot",
+		TipText = "Click to loot",
+		TargetMode = GuideDefine.TargetMode.None,
+		ShowUIList = {
+			[1] = "UIPetLoot/MainFrame/LootFrame/Guide_PetLoot",
+		},
+	},
+	[4] = {
+		Key = "GuideStep_04_ClosePetLoot",
+		TipText = "Close pet loot",
+		TargetMode = GuideDefine.TargetMode.None,
+		ShowUIList = {
+			[1] = "UIPetLoot/MainFrame/LootFrame/Guide_Close",
+		},
 	},
 }
 

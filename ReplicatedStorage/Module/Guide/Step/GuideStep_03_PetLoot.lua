@@ -22,14 +22,12 @@ function GuideStepImpl:EnableImpl()
 		self:Complete()
 	end
 	
-	EventManager:Listen(EventManager.Define.GameStart, TriggerEvent)
+	EventManager:Listen(EventManager.Define.PetLoot, TriggerEvent)
 end
 
 function GuideStepImpl:DisableImpl()
-	EventManager:Remove(EventManager.Define.GameStart, TriggerEvent)
+	EventManager:Remove(EventManager.Define.PetLoot, TriggerEvent)
 	TriggerEvent = nil
 end
-
-
 
 return GuideStepImpl

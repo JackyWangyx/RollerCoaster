@@ -72,8 +72,9 @@ local function GetInstanceByPath(startInstance: Instance, path: string): Instanc
 	end
 
 	local current = startInstance
-	for part in string.gmatch(path, "[^.]+") do
-		current = current:FindFirstChild(part)
+	local pathArray = string.split(path, '/')
+	for index, subPath in pathArray do
+		current = current:FindFirstChild(subPath)
 		if not current then
 			return nil
 		end
@@ -85,25 +86,26 @@ end
 ----------------------------------------------------------------------------------------------------------------
 -- UI
 
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-
 function ResourcesManager:GetGuiByPath(path: string): Instance?
-	if not player then return nil end
-
+	local player = game.Players.LocalPlayer
 	local playerGui = player:WaitForChild("PlayerGui", 10)
 	if not playerGui then return nil end
 
-	return GetInstanceByPath(playerGui, path)
+	local showFolder = playerGui:FindFirstChild("Show")
+	local hideFolder = playerGui:FindFirstChild("Hide")
+	local result = GetInstanceByPath(showFolder, path)
+	if not result then
+		result = GetInstanceByPath(hideFolder, path)
+	end
+	
+	return result
 end
 
 ----------------------------------------------------------------------------------------------------------------
 -- Part
 
-local Workspace = game:GetService("Workspace")
-
 function ResourcesManager:GetPartByPath(path: string): BasePart?
-	local instance = GetInstanceByPath(Workspace, path)
+	local instance = GetInstanceByPath(game.Workspace, path)
 	return instance
 end
 

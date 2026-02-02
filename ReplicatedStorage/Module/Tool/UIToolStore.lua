@@ -49,7 +49,9 @@ function UIToolStore:RefreshItemList()
 		local showInfoList = {}
 		for _, info in ipairs(infoList) do
 			local data = ConfigManager:GetData("Tool", info.ID)
-			if data.CostRobux > 0 and not info.IsBuy then
+			local isRobuxTool = not Util:IsStrEmpty(data.ProductKey)
+			--print(isRobuxTool, data)
+			if not info.IsBuy and isRobuxTool then
 				continue
 			end
 			

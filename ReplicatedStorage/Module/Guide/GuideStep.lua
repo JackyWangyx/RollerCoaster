@@ -32,6 +32,8 @@ end
 
 function GuideStep:Init()
 	self:InitImpl()
+	
+	warn("Guide Init", self.Key)
 end
 
 function GuideStep:Update(deltaTime)
@@ -40,8 +42,8 @@ function GuideStep:Update(deltaTime)
 		local player = game.Players.LocalPlayer
 		local startPos = PlayerManager:GetPosition(player)
 		local endPos = self.TargetPos
-		startPos = Vector3.new(startPos.X, 1, startPos.Z)
-		endPos = Vector3.new(endPos.X, 1, endPos.Z)
+		startPos = Vector3.new(startPos.X, GuideDefine.ArrowHeight, startPos.Z)
+		endPos = Vector3.new(endPos.X, GuideDefine.ArrowHeight, endPos.Z)
 		
 		local parentCFrame = self.Arrow.CFrame
 		local startWorldCFrame = CFrame.new(startPos)
@@ -64,7 +66,7 @@ function GuideStep:Enable()
 	end)
 	
 	self:EnableImpl()
-	--print("Guide Start", self.Key)
+	warn("Guide Start", self.Key)
 end
 
 function GuideStep:Disable()
@@ -81,7 +83,8 @@ function GuideStep:Disable()
 	end
 	
 	self:DisableImpl()
-	--print("Guide End", self.Key)
+	
+	warn("Guide End", self.Key)
 end
 
 function GuideStep:SetTip(active)
@@ -94,7 +97,7 @@ function GuideStep:SetTip(active)
 			GuideTip = self.Config.TipText
 		}
 	else
-		local info = {
+		info = {
 			GuideTip = ""
 		}
 	end
@@ -135,6 +138,7 @@ function GuideStep:SetUI(active)
 	if not config.ShowUIList then return end
 	for _, uiPath in ipairs(config.ShowUIList) do
 		local ui = ResourcesManager:GetGuiByPath(uiPath)
+		print(uiPath, ui)
 		if ui then
 			if active then
 				ui.Visible = true
