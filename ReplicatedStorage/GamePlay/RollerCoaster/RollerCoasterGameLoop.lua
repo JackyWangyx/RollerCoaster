@@ -128,8 +128,8 @@ function RollerCoasterGameLoop:EnterDown()
 		
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
 	updateInfo.MoveSpeed = 0
-	updateInfo.MoveAcceleration = 0
-	updateInfo.MoveAccelerationDelta = RollerCoasterDefine.Game.SlideAccelerationDelta
+	updateInfo.SlideAcceleration = 0
+	updateInfo.SlideAccelerationDelta = RollerCoasterDefine.Game.SlideAccelerationDelta
 	updateInfo.MoveDistance = startDistance
 end
 
@@ -197,10 +197,10 @@ function RollerCoasterGameLoop:UpdateUp(deltaTime)
 			updateInfo.MoveDistance = upTrackRoute.Length
 			updateInfo.ArriveDistance = updateInfo.MoveDistance
 
-			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
 			local player = game.Players.LocalPlayer
 			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 			gameManager:Slide(player)
+			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
 		end
 	end
 end
@@ -208,8 +208,8 @@ end
 function RollerCoasterGameLoop:UpdateDown(deltaTime)
 	local downTrackRoute = RollerCoasterGameLoop.DownTrackRoute
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
-	updateInfo.MoveAcceleration = updateInfo.MoveAcceleration + updateInfo.MoveAccelerationDelta * deltaTime
-	updateInfo.MoveSpeed = updateInfo.MoveSpeed + updateInfo.MoveAcceleration * deltaTime
+	updateInfo.SlideAcceleration = updateInfo.SlideAcceleration + updateInfo.SlideAccelerationDelta * deltaTime
+	updateInfo.MoveSpeed = updateInfo.MoveSpeed + updateInfo.SlideAcceleration * deltaTime
 	updateInfo.MoveDistance = updateInfo.MoveDistance - deltaTime * updateInfo.MoveSpeed
 	if updateInfo.MoveDistance < 0 then
 		updateInfo.MoveDistance = 0

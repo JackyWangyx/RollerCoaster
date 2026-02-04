@@ -77,7 +77,7 @@ function Tool:Buy(player, param)
 	local info = packageList[id]
 	local data = ConfigManager:GetData("Tool", id)
 	-- 未解锁
-	if info.IsLock then
+	if info.IsLock and data.CostRobux <= 0 then
 		return {
 			Success = false,
 			Message = Define.Message.Locked
@@ -132,6 +132,7 @@ function Tool:Buy(player, param)
 		NetServer:RequireModule("Account"):SpendWins(player, {Value = data.CostWins })
 	end
 	
+	info.IsLock = false
 	info.IsBuy = true
 	
 	-- 有购买顺序配置，则解锁下一个可购买物品

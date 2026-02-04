@@ -1,6 +1,6 @@
 ﻿local RollerCoasterDefine = {}
 
-RollerCoasterDefine.TrackAngle = 0
+RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
 	SlideAccelerationDelta = 20,

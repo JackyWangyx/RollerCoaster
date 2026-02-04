@@ -27,13 +27,14 @@ function GuideStep.new(key, config, info)
 	
 	self:Init()
 	self.IsInit = true
+	
 	return self
 end
 
 function GuideStep:Init()
 	self:InitImpl()
 	
-	warn("Guide Init", self.Key)
+	--warn("Guide Init", self.Key)
 end
 
 function GuideStep:Update(deltaTime)
@@ -66,7 +67,8 @@ function GuideStep:Enable()
 	end)
 	
 	self:EnableImpl()
-	warn("Guide Start", self.Key)
+	
+	--warn("Guide Start", self.Key)
 end
 
 function GuideStep:Disable()
@@ -84,7 +86,7 @@ function GuideStep:Disable()
 	
 	self:DisableImpl()
 	
-	warn("Guide End", self.Key)
+	--warn("Guide End", self.Key)
 end
 
 function GuideStep:SetTip(active)
@@ -129,6 +131,8 @@ function GuideStep:SetPart(active)
 			else
 				Util:DeActiveObject(part)
 			end
+		else
+			warn("[Guide] Part not found :", partPath)
 		end
 	end
 end
@@ -138,13 +142,14 @@ function GuideStep:SetUI(active)
 	if not config.ShowUIList then return end
 	for _, uiPath in ipairs(config.ShowUIList) do
 		local ui = ResourcesManager:GetGuiByPath(uiPath)
-		print(uiPath, ui)
 		if ui then
 			if active then
 				ui.Visible = true
 			else
 				ui.Visible = false
 			end
+		else
+			warn("[Guide] UI not found :", uiPath)
 		end
 	end
 end
@@ -158,7 +163,7 @@ function GuideStep:Complete()
 	local guideManager = require(game.ReplicatedStorage.ScriptAlias.GuideManager)
 	guideManager:Complete(self.Key)
 	
-	print("Complete", self.Key)
+	--print("Complete", self.Key)
 end
 
 -----------------------------------------------------------------------------------------

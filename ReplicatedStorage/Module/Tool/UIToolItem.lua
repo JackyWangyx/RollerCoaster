@@ -4,6 +4,7 @@ local AttributeUtil = require(game.ReplicatedStorage.ScriptAlias.AttributeUtil)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local UIInfo = require(game.ReplicatedStorage.ScriptAlias.UIInfo)
 local UIButton = require(game.ReplicatedStorage.ScriptAlias.UIButton)
+local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 
 local UIToolItem = {}
 UIToolItem.__index = UIToolItem
@@ -18,6 +19,8 @@ function UIToolItem:Button_SelectItem(button, param)
 	local uiRoot = param.UIRoot
 	local index = param.Index
 	uiList:SelectItem(index)
+	
+	EventManager:Dispatch(EventManager.Define.SelectTool)
 end
 
 return UIToolItem

@@ -40,7 +40,7 @@ function UISignOnline:OnHide()
 end
 
 function UISignOnline:Update()
-	
+
 end
 
 function UISignOnline:ProcessInfoList(infoList)

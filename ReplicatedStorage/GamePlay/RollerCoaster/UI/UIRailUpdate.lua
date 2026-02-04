@@ -42,6 +42,7 @@ function UIRailUpdate:Button_Buy()
 	NetClient:Request("RollerCoaster", "UpgradeTrack", { Type = "Coin" }, function(result)
 		if result.Success then
 			UIRailUpdate:Refresh()
+			EventManager:Dispatch(EventManager.Define.RefreshTrack)
 		else
 			UIManager:ShowMessage(result.Message)
 		end
@@ -55,6 +56,7 @@ function UIRailUpdate:Button_BuyRobux()
 			NetClient:Request("RollerCoaster", "UpgradeTrack", { Type = "Robux" }, function(result)
 				if result.Success then
 					UIRailUpdate:Refresh()
+					EventManager:Dispatch(EventManager.Define.RefreshTrack)
 				else
 					UIManager:ShowMessage(result.Message)
 				end

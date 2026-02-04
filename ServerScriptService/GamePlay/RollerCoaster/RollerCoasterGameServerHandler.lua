@@ -50,9 +50,11 @@ function RollerCoasterGameServerHandler:Update(deltaTime)
 			if playerInfo.CurrentDistance > playerInfo.TrackInfo.UpTrack.Length then
 				playerInfo.CurrentDistance = playerInfo.TrackInfo.UpTrack.Length
 			end
-		elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then
-			playerInfo.MoveSpeed += playerInfo.SlideAcceleration * deltaTime
-			playerInfo.CurrentDistance -= playerInfo.MoveSpeed * deltaTime
+		elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then			
+			playerInfo.SlideAcceleration = playerInfo.SlideAcceleration + playerInfo.SlideAccelerationDelta * deltaTime
+			playerInfo.MoveSpeed = playerInfo.MoveSpeed + playerInfo.SlideAcceleration * deltaTime
+			playerInfo.CurrentDistance = playerInfo.CurrentDistance - deltaTime * playerInfo.MoveSpeed
+				
 			if playerInfo.CurrentDistance < 0 then
 				playerInfo.CurrentDistance = 0
 			end
@@ -182,7 +184,7 @@ function RollerCoasterGameServerHandler:Slide(player, param)
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	playerInfo.ArriveDistance = param.ArriveDistance
 	playerInfo.MoveSpeed = 0
-	
+	playerInfo.SlideAcceleration = 0
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Down
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Slide)
 	return true

@@ -1,7 +1,7 @@
 ﻿local TrackConfig = {}
 
 TrackConfig.Data = [[
-ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
+ID,Level,Length,Direction,Prefab,CostCoin,CostRobux,CostWin,ProductKey,Icon
 1,1,60,Up,Level/Rank02/Road_Up60Orange,500000,9,0,ProductRail60,rbxassetid://79782986370940
 2,2,60,Up,Level/Rank02/Road_Up60Red,520000,9,0,ProductRail60,rbxassetid://79782986370940
 3,3,60,Up,Level/Rank02/Road_Up60Purple,540000,9,0,ProductRail60,rbxassetid://79782986370940
@@ -16,7 +16,7 @@ ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
 12,12,60,Up,Level/Rank02/Road_Up60Light,780000,9,0,ProductRail60,rbxassetid://79782986370940
 13,13,60,Up,Level/Rank02/Road_Up60Green,810000,9,0,ProductRail60,rbxassetid://79782986370940
 14,14,60,Up,Level/Rank02/Road_Up60Yellow,840000,9,0,ProductRail60,rbxassetid://79782986370940
-15,15,60,Up,Level/Rank02/Road_Up60Orange,1000000,9,0,ProductRail60,rbxassetid://79782986370940
+15,15,60,Up,Level/Rank02/Road_Up60Orange,1000000,29,0,ProductRail60,rbxassetid://79782986370940
 16,16,100,Up,Level/Rank02/Road_Up100Red,1040000,29,0,ProductRail100,rbxassetid://79782986370940
 17,17,100,Up,Level/Rank02/Road_Up100Purple,1080000,29,0,ProductRail100,rbxassetid://79782986370940
 18,18,100,Up,Level/Rank02/Road_Up100Blue,1120000,29,0,ProductRail100,rbxassetid://79782986370940
@@ -30,7 +30,7 @@ ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
 26,26,100,Up,Level/Rank02/Road_Up100Light,1440000,29,0,ProductRail100,rbxassetid://79782986370940
 27,27,100,Up,Level/Rank02/Road_Up100Green,1480000,29,0,ProductRail100,rbxassetid://79782986370940
 28,28,100,Up,Level/Rank02/Road_Up100Yellow,1520000,29,0,ProductRail100,rbxassetid://79782986370940
-29,29,100,Up,Level/Rank02/Road_Up100Orange,3000000,29,0,ProductRail100,rbxassetid://79782986370940
+29,29,100,Up,Level/Rank02/Road_Up100Orange,3000000,59,0,ProductRail100,rbxassetid://79782986370940
 30,30,150,Up,Level/Rank02/Road_Up150Red,3120000,59,0,ProductRail150,rbxassetid://79782986370940
 31,31,150,Up,Level/Rank02/Road_Up150Purple,3240000,59,0,ProductRail150,rbxassetid://79782986370940
 32,32,150,Up,Level/Rank02/Road_Up150Blue,3360000,59,0,ProductRail150,rbxassetid://79782986370940
@@ -42,7 +42,7 @@ ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
 38,38,150,Up,Level/Rank02/Road_Up150Purple,4080000,59,0,ProductRail150,rbxassetid://79782986370940
 39,39,150,Up,Level/Rank02/Road_Up150Blue,4200000,59,0,ProductRail150,rbxassetid://79782986370940
 40,40,150,Up,Level/Rank02/Road_Up150Light,4320000,59,0,ProductRail150,rbxassetid://79782986370940
-41,41,150,Up,Level/Rank02/Road_Up150Green,8000000,59,0,ProductRail150,rbxassetid://79782986370940
+41,41,150,Up,Level/Rank02/Road_Up150Green,8000000,99,0,ProductRail150,rbxassetid://79782986370940
 42,42,230,Up,Level/Rank02/Road_Up230Yellow,8500000,99,0,ProductRail230,rbxassetid://79782986370940
 43,43,230,Up,Level/Rank02/Road_Up230Orange,9000000,99,0,ProductRail230,rbxassetid://79782986370940
 44,44,230,Up,Level/Rank02/Road_Up230Red,9500000,99,0,ProductRail230,rbxassetid://79782986370940
@@ -52,7 +52,7 @@ ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
 48,48,230,Up,Level/Rank02/Road_Up230Green,11500000,99,0,ProductRail230,rbxassetid://79782986370940
 49,49,230,Up,Level/Rank02/Road_Up230Yellow,12000000,99,0,ProductRail230,rbxassetid://79782986370940
 50,50,230,Up,Level/Rank02/Road_Up230Orange,12500000,99,0,ProductRail230,rbxassetid://79782986370940
-51,51,230,Up,Level/Rank02/Road_Up230Red,30000000,99,0,ProductRail230,rbxassetid://79782986370940
+51,51,230,Up,Level/Rank02/Road_Up230Red,30000000,149,0,ProductRail230,rbxassetid://79782986370940
 52,52,350,Up,Level/Rank02/Road_Up350Purple,31500000,149,0,ProductRail350,rbxassetid://79782986370940
 53,53,350,Up,Level/Rank02/Road_Up350Blue,33000000,149,0,ProductRail350,rbxassetid://79782986370940
 54,54,350,Up,Level/Rank02/Road_Up350Light,34500000,149,0,ProductRail350,rbxassetid://79782986370940
@@ -60,7 +60,7 @@ ID,Level,Length,Direction,Prefab,CostCoin,CostRoblox,CostWin,Productkey,Icon
 56,56,350,Up,Level/Rank02/Road_Up350Yellow,37500000,149,0,ProductRail350,rbxassetid://79782986370940
 57,57,350,Up,Level/Rank02/Road_Up350Orange,39000000,149,0,ProductRail350,rbxassetid://79782986370940
 58,58,350,Up,Level/Rank02/Road_Up350Red,40500000,149,0,ProductRail350,rbxassetid://79782986370940
-59,59,350,Up,Level/Rank02/Road_Up350Purple,60000000,149,0,ProductRail350,rbxassetid://79782986370940
+59,59,350,Up,Level/Rank02/Road_Up350Purple,60000000,199,0,ProductRail350,rbxassetid://79782986370940
 60,60,500,Up,Level/Rank02/Road_Up500Blue,70000000,199,0,ProductRail500,rbxassetid://79782986370940
 61,61,500,Up,Level/Rank02/Road_Up500Light,80000000,199,0,ProductRail500,rbxassetid://79782986370940
 62,62,500,Up,Level/Rank02/Road_Up500Green,80000000,199,0,ProductRail500,rbxassetid://79782986370940

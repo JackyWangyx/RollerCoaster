@@ -16,7 +16,7 @@ ID,Icon,Name,Description,Rarity,RewardType,RewardID,RewardCount,RequireTime
 12,rbxassetid://76662429306777,Spin,X2,3,LuckyWheel,1,2,3000
 13,rbxassetid://120879384686937,Prop,X1,4,Prop,1,1,3600
 14,rbxassetid://85925238276238,Coin,X100K,3,Coin,1,100000,5400
-15,rbxassetid://100896048702275,Pet,1,5,Pet,371,1,7200
+15,rbxassetid://100896048702275,Pet,100%,5,Pet,371,1,7200
 ]]
 
 return SignOnlineConfig

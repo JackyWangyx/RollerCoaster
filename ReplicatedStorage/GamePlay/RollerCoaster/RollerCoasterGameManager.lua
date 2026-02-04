@@ -33,6 +33,11 @@ function RollerCoasterGameManager:ArriveEnd(index)
 end
 
 function RollerCoasterGameManager:Slide(index)
+	if RollerCoasterGameLoop.GamePhase ~= RollerCoasterDefine.GamePhase.Up and 
+		RollerCoasterGameLoop.GamePhase ~=RollerCoasterDefine.GamePhase.ArriveEnd then
+		return
+	end
+	
 	local param = {
 		ArriveDistance = RollerCoasterGameLoop.UpdateInfo.ArriveDistance
 	}

@@ -119,6 +119,7 @@ function RollerCoaster:UpgradeTrack(player, param)
 	
 	themeInfo.TrackLevel += 1
 	EventManager:Dispatch(EventManager.Define.RefreshTrack, { Player = player })
+	--EventManager:DispatchToClient(player, EventManager.Define.RefreshTrack)
 	
 	return {
 		Success = true,

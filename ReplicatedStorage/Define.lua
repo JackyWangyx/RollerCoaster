@@ -287,7 +287,8 @@ Define.Event = {
 	
 	-- Tool
 	GetTool = "GetTool",
-	RefreshTool= "RefreshTool",
+	SelectTool = "SelectTool",
+	RefreshTool = "RefreshTool",
 	--EquipTool = "EquipTool",
 	--UnEquipTool = "UnEquipTool",
 	

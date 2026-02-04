@@ -27,7 +27,7 @@ ID,Name,BuyOrder,Rarity,Icon,ThemeKey,Prefab,HipHeight,GameHeight,WorkDistance,S
 23,Sandstorm,23,4,rbxassetid://135228471237090,World03,Tool/Tool23_Tethys,6.1,7.7,5.0,350,0,0,350,97500000,0,0,Car,nil,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
 24,Scarlet Striker,24,5,rbxassetid://90734626486157,World03,Tool/Tool24_Tyche,3.8,5.4,5.0,372,0,0,372,108000000,0,0,Car,nil,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
 25,Polar Rally,-1,6,rbxassetid://112426006469551,nil,Tool/ToolRB01_Haumea,3.8,5.4,3.8,95,0,0,241,0,149,0,Car,ProductStoreTool25,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
-26,Blue Flash,-1,6,rbxassetid://95802421628749,nil,Tool/ToolRB02_Rhode,3.5,5.1,3.5,200,0,0,257,0,369,0,Car,ProductStoreTool26,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
+26,Blue Flash,-1,6,rbxassetid://83590493102825,nil,Tool/ToolRB02_Rhode,3.5,5.1,3.5,200,0,0,257,0,369,0,Car,ProductStoreTool26,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
 27,Bone Ripper,-1,6,rbxassetid://119490106243582,nil,Tool/ToolRB03_Lyssa,4.8,6.4,4.8,280,0,0,241,0,199,0,Car,ProductStoreTool27,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
 28,Crimson Comet,-1,6,rbxassetid://93289318480833,nil,Tool/ToolRB04_Lelantos,3.1,4.7,3.1,600,0,0,257,0,399,0,Car,ProductStoreTool28,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,rbxassetid://2506281703,nil,1,0,1,10,0,0,0
 ]]
