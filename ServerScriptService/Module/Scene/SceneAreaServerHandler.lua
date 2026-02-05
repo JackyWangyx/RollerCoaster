@@ -69,15 +69,22 @@ function SceneAreaServerHandler:OnPlayerAdded(player, character)
 		areaInfo.Player = player
 		SceneAreaServerHandler:CreateArea(player, areaInfo)
 		
-		local rootPart = PlayerManager:GetHumanoidRootPart(player)
-		if rootPart then
-			rootPart.CFrame = CFrame.new(areaInfo.SpawnLocation.Position + Vector3.new(0, 5, 0))
-		end
+		SceneAreaServerHandler:ResetPlayerPos(player)
 
 		local themeRequest = require(game.ServerScriptService.ScriptAlias.Theme)
 		local currentThemeKey = themeRequest:GetCurrentTheme(player)
 		areaInfo.ThemeKey = currentThemeKey
 		SceneAreaServerHandler:BroadcastRefreshArea()
+	end
+end
+
+function SceneAreaServerHandler:ResetPlayerPos(player)
+	local areaInfo = SceneAreaServerHandler:GetAreaByPlayer(player)
+	if areaInfo then
+		local rootPart = PlayerManager:GetHumanoidRootPart(player)
+		if rootPart then
+			rootPart.CFrame = CFrame.new(areaInfo.SpawnLocation.Position + Vector3.new(0, 5, 0))
+		end
 	end
 end
 

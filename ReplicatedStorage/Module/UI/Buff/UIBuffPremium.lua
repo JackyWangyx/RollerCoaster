@@ -17,8 +17,8 @@ end
 
 function UIBuffPremium:Refresh()
 	NetClient:Request("RobloxPremium", "GetProperty", function(info)
-		if info and info.GetPowerFactor3 then
-			info.DisplayGetPowerFactor3 = tostring(math.round(info.GetPowerFactor3 * 100)).."%"
+		if info and info.MaxSpeedFactor3 then
+			info.DisplayMaxSpeedFactor3 = tostring(math.round(info.MaxSpeedFactor3 * 100)).."%"
 			UIInfo:SetInfo(UIBuffPremium.Root, info)
 		end
 	end)

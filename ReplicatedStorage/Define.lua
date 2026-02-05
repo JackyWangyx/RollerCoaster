@@ -3,6 +3,8 @@
 Define.Version = "2025.12.03.2"
 Define.Project = "RollerCoaster"
 
+-----------------------------------------------------------------------------------
+-- 测试
 Define.Test = {
 	TestBuild = false,
 	-- 测试签到首次登陆日期
@@ -35,15 +37,6 @@ Define.DataSourceMode = {
 	Theme = 2,
 }
 
-Define.Activity = {
-	Christmas2025 = {
-		Name = "Christmas",
-		EggPrefab = "Egg/Egg1225",
-		StartDate = { year = 2025, month = 12, day = 15 },
-		EndDate = { year = 2026, month = 1, day = 15 },
-	},
-}
-
 Define.Camera = {
 	ZoomMinDistance = 20,
 	ZoomMaxDistance = 100,
@@ -67,7 +60,8 @@ Define.TradePlayerState = {
 	Busy = 3,
 }
 
--- 游戏参数
+-----------------------------------------------------------------------------------
+-- 任务 / 赛季 / 活动
 Define.Quest = {
 	SeasonKey = "Season_01",
 	DailyQuestCount = 3,
@@ -79,6 +73,17 @@ Define.Quest = {
 	AdditionalPetEquip = 1,
 }
 
+Define.Activity = {
+	Christmas2025 = {
+		Name = "Christmas",
+		EggPrefab = "Egg/Egg1225",
+		StartDate = { year = 2025, month = 12, day = 15 },
+		EndDate = { year = 2026, month = 1, day = 15 },
+	},
+}
+
+-----------------------------------------------------------------------------------
+-- 游戏参数
 Define.Game = {
 	-- Game
 	GamePlaceID = 136755412141115,
@@ -149,6 +154,7 @@ Define.Game = {
 	LikePackageID = 4,
 }
 
+-----------------------------------------------------------------------------------
 Define.GamePhase = {
 	Ready = 0,
 	Start = 1,
@@ -168,6 +174,7 @@ Define.Condition = {
 	TradeUnlock = "TradeUnlock",
 }
 
+-----------------------------------------------------------------------------------
 -- 通知消息内容定义
 Define.Message = {
 	-- IAP
@@ -237,6 +244,7 @@ Define.Message = {
 	HasSeasonPass = "You have obtained the season pass.",
 }
 
+-----------------------------------------------------------------------------------
 -- 事件定义
 Define.Event = {
 	-- System
@@ -368,6 +376,7 @@ Define.Event = {
 	QuestUnlockLevel = "QuestUnlockLevel",
 }
 
+-----------------------------------------------------------------------------------
 -- Analystics 事件定义
 Define.Analytics = {
 	PlayerLogin = "PlayerLogin",
@@ -388,6 +397,7 @@ Define.Analytics = {
 	CompleteQuest = "CompleteQuest",
 }
 
+-----------------------------------------------------------------------------------
 -- 游戏记录 Key 定义
 Define.PlayerRecord = {
 	MaxTrainingPower = "MaxTrainingPower",				-- 最大获取训练值
@@ -410,6 +420,8 @@ Define.PlayerRecord = {
 	TotalUnlockLevel = "TotalUnlockLevel",
 }
 
+-----------------------------------------------------------------------------------
+-- 排行榜
 Define.RankList = {
 	TotalGetPower = "TotalGetPower",
 	TotalGetCoin = "TotalGetCoin",
@@ -418,6 +430,8 @@ Define.RankList = {
 	TotalClick = "TotalClick",
 }
 
+-----------------------------------------------------------------------------------
+-- 玩家属性
 Define.PlayerProperty = {
 	SPEED = "Speed",
 	MAX_SPEED_FACTOR = "MaxSpeedFactor",
@@ -436,6 +450,8 @@ Define.PlayerProperty = {
 	LUCKY_PET_UPGRADE = "LuckyPetUpgrade",
 }
 
+-----------------------------------------------------------------------------------
+-- 音乐 / 音效
 Define.Sound = {
 	PlaySfxInterval = 0.1,
 	BGM = "BackgroundMusic",

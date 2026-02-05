@@ -14,7 +14,7 @@ local Friend = {}
 function Friend:GetProperty(player)
 	local count = Friend:GetOnlineCount(player)
 	local property = {
-		GetPowerFactor3 = count * Define.Game.BuffInviteValue
+		MaxSpeedFactor3 = count * Define.Game.BuffInviteValue
 	}
 	
 	return property

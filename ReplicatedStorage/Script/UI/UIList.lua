@@ -80,6 +80,7 @@ function UIList:ForechItem(uiPart, itemPrefabName, requireCount, func)
 
 					UIList:RefreshItem(item)
 					item.Visible = true
+					item.ZIndex = index
 					table.insert(itemList, item)
 				else
 					-- 删除多余的节点
@@ -95,10 +96,12 @@ function UIList:ForechItem(uiPart, itemPrefabName, requireCount, func)
 
 					UIList:RefreshItem(item)
 					item.Visible = true
+					item.ZIndex = index
 					table.insert(itemList, item)
 				end
 			end
 		end
+		
 		return itemList
 	else
 		-- 未指定预制，则重新处理现有列表
@@ -111,10 +114,12 @@ function UIList:ForechItem(uiPart, itemPrefabName, requireCount, func)
 					func(index, item)
 					UIList:RefreshItem(item)
 					item.Visible = true
+					item.ZIndex = index
 					table.insert(itemList, item)
 				end
-			end
+			end	
 		end
+		
 		return itemList
 	end
 end

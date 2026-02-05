@@ -184,6 +184,33 @@ function IAPHandler:BuyTrail(player, param)
 end
 
 ----------------------------------------------------------------------------
+-- RollerCoaster Track (Robux)
+
+function IAPHandler:ProductRail60(player, param)
+	return true
+end
+
+function IAPHandler:ProductRail100(player, param)
+	return true
+end
+
+function IAPHandler:ProductRail150(player, param)
+	return true
+end
+
+function IAPHandler:ProductRail230(player, param)
+	return true
+end
+
+function IAPHandler:ProductRail350(player, param)
+	return true
+end
+
+function IAPHandler:ProductRail500(player, param)
+	return true
+end
+
+----------------------------------------------------------------------------
 -- Account Coin
 
 function IAPHandler:Coin300K(player, param)
@@ -364,6 +391,12 @@ end
 
 -- Win X2
 function IAPHandler:WinX2(player ,param)
+	EventManager:Dispatch(EventManager.Define.RefreshPlayerProperty, player)
+	return true
+end
+
+-- Coin X2
+function IAPHandler:CoinX2(player ,param)
 	EventManager:Dispatch(EventManager.Define.RefreshPlayerProperty, player)
 	return true
 end

@@ -16,12 +16,12 @@ function RobloxPremium:GetProperty(player)
 	if isPremium then
 		return {
 			IsPremium = true,
-			GetPowerFactor3 = Define.Game.BuffPremiumValue,
+			MaxSpeedFactor3 = Define.Game.BuffPremiumValue,
 		}
 	else
 		return {
 			IsPremium = false,
-			GetPowerFactor3 = 0,
+			MaxSpeedFactor3 = 0,
 		}
 	end
 end

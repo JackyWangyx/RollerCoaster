@@ -8,7 +8,7 @@ ID,ProductID,ProductKey,Type,Unnamed: 4
 4,1670006774,SecretHunter,GamePass,nil
 5,1669487479,SuperLuck,GamePass,nil
 6,1669879062,UltraLuck,GamePass,nil
-7,1669908945,GetCoinX2,GamePass,nil
+7,1669908945,CoinX2,GamePass,nil
 8,1670126834,WinX2,GamePass,nil
 9,1669645165,MaxSpeedX2,GamePass,nil
 10,1669749005,AutoPlay,GamePass, 

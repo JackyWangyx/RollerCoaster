@@ -113,18 +113,31 @@ end
 
 function UIRollerCoasterGameInfo:GetRankList(updateGameInfo)
 	local result = {}
-	local player = game.Players.LocalPlayer
-	for _, playerInfo in ipairs(updateGameInfo) do
-		local playerID = playerInfo.PlayerID 
-		local player = PlayerManager:GetPlayerById(playerID)
-		local rankInfo = {
-			UserID = playerID,
-			Distance = playerInfo.Distance,
-			Progress = 1 - playerInfo.Progress,
-			IsSelf = playerID == player.UserId,
-		}
+	local localPlayer = game.Players.LocalPlayer
+	local selfInfo = nil
 
-		table.insert(result, rankInfo)
+	for _, playerInfo in ipairs(updateGameInfo) do
+		local playerID = playerInfo.PlayerID
+		local player = PlayerManager:GetPlayerById(playerID)
+
+		if player then
+			local rankInfo = {
+				UserID = playerID,
+				Distance = playerInfo.Distance,
+				Progress = 1 - playerInfo.Progress,
+				IsSelf = playerID == localPlayer.UserId,
+			}
+
+			if rankInfo.IsSelf then
+				selfInfo = rankInfo
+			else
+				table.insert(result, rankInfo)
+			end
+		end
+	end
+
+	if selfInfo then
+		table.insert(result, selfInfo)
 	end
 
 	return result

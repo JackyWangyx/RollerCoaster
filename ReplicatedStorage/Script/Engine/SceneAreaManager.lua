@@ -88,9 +88,9 @@ function SceneAreaManager:SwitchTheme(areaIndex, themeKey)
 		end
 	end
 
-	if not find and #areaInfo.ThemeList > 0 then
-		Util:ActiveObject(areaInfo.ThemeList[1].Theme)
-	end
+	--if not find and #areaInfo.ThemeList > 0 then
+	--	Util:ActiveObject(areaInfo.ThemeList[1].Theme)
+	--end
 end
 
 return SceneAreaManager

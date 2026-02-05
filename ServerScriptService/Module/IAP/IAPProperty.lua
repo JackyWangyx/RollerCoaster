@@ -12,6 +12,7 @@ local PropertyProductKeyList = {
 	"GetPowerX2",
 	"WinX2",
 	"MaxSpeedX2",
+	"CoinX2",
 }
 
 function IAPProperty:GetPropertyList(player)
@@ -69,7 +70,7 @@ end
 function IAPProperty:VIP()
 	return {
 		["GetCoinFactor3"] = 0.2,
-		["GetPowerFactor3"] = 0.2,
+		["GetWinFactor3"] = 0.2,
 		["MaxSpeedFactor3"] = 0.2,
 	}
 end
@@ -82,7 +83,7 @@ end
 
 function IAPProperty:WinX2()
 	return {
-		["GetCoinFactor3"] = 1,
+		["GetWinsFactor3"] = 1,
 	}
 end
 
@@ -91,5 +92,12 @@ function IAPProperty:MaxSpeedX2()
 		["MaxSpeedFactor3"] = 1,
 	}
 end
+
+function IAPProperty:CoinX2()
+	return {
+		["GetCoinFactor3"] = 1,
+	}
+end
+
 
 return IAPProperty

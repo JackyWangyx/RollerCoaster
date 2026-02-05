@@ -3,16 +3,27 @@
 RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
+	-- 下滑加速度的变化量
 	SlideAccelerationDelta = 20,
+	-- 赛道终点区域偏移量
 	TrackEndOffset = Vector3.new(10, 2, -50),
+	-- 落地特效延迟
 	DropEffectDelay = 0.35,
+	-- 落地相机震动参数
 	DropCameraShakeParam = {
 		Poweer = Vector3.new(0, 3, 0),
 		Duration = 1,
 		Count = 6
 	},
+	-- 上升赛道偏移量
 	UpTrackOffset = Vector3.zero,
+	-- 下落赛道偏移量
 	DownTrackOffset = Vector3.new(-20, 0, 0),
+	-- 下滑结束推出玩家参数
+	SlidePushPlayerParam = {
+		Direction = Vector3.new(0, 1, 2),
+		Power = 250,
+	}
 }
 
 RollerCoasterDefine.GamePhase = {

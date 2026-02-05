@@ -121,6 +121,7 @@ function RollerCoasterTrackServerHandler:RefreshTrack(player)
 	for player, playerInfo in pairs(playerCache) do
 		if playerInfo.TrackIndex == trackIndex then
 			gameServerHandler:Exit(player)
+			SceneAreaServerHandler:ResetPlayerPos(player)
 		end
 	end
 	

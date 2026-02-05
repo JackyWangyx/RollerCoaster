@@ -114,7 +114,7 @@ function IAPClient:OnPurchase(productID, success, message)
 	end
 		
 	if not success then
-		print("[Client] Purchased "..iapData.ProductKey.." failed! "..message)
+		warn("[Client] Purchased "..iapData.ProductKey.." failed! "..message)
 	end
 end
 

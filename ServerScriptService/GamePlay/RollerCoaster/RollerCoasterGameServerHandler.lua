@@ -43,8 +43,8 @@ function RollerCoasterGameServerHandler:GetPlayerCache()
 end
 
 function RollerCoasterGameServerHandler:Update(deltaTime)
-	local playerList = table.clone(PlayerCache)
-	for player, playerInfo in pairs(playerList) do
+	local playerCache = table.clone(PlayerCache)
+	for player, playerInfo in pairs(playerCache) do
 		if playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Up then
 			playerInfo.CurrentDistance += playerInfo.MoveSpeed * deltaTime
 			if playerInfo.CurrentDistance > playerInfo.TrackInfo.UpTrack.Length then
@@ -64,9 +64,9 @@ function RollerCoasterGameServerHandler:Update(deltaTime)
 	local brocadcastInfo = {}
 	
 	local onlinePlayerList = game.Players:GetPlayers()
-	for index, player in pairs(onlinePlayerList) do
+	for index, player in ipairs(onlinePlayerList) do
 		local playerID = player.UserId
-		local playerInfo = playerList[player]
+		local playerInfo = playerCache[player]
 		if playerInfo then
 			local distance = math.round(playerInfo.CurrentDistance)
 			local length = math.round(playerInfo.Length)
