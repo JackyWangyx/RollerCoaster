@@ -1,6 +1,7 @@
 ﻿local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
+local PlayerMove = require(game.ReplicatedStorage.ScriptAlias.PlayerMove)
 local UpdatorManager = require(game.ReplicatedStorage.ScriptAlias.UpdatorManager)
 
 local NetServer = require(game.ServerScriptService.ScriptAlias.NetServer)
@@ -45,18 +46,20 @@ end
 function RollerCoasterGameServerHandler:Update(deltaTime)
 	local playerCache = table.clone(PlayerCache)
 	for player, playerInfo in pairs(playerCache) do
-		if playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Up then
-			playerInfo.CurrentDistance += playerInfo.MoveSpeed * deltaTime
-			if playerInfo.CurrentDistance > playerInfo.TrackInfo.UpTrack.Length then
-				playerInfo.CurrentDistance = playerInfo.TrackInfo.UpTrack.Length
-			end
-		elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then			
-			playerInfo.SlideAcceleration = playerInfo.SlideAcceleration + playerInfo.SlideAccelerationDelta * deltaTime
-			playerInfo.MoveSpeed = playerInfo.MoveSpeed + playerInfo.SlideAcceleration * deltaTime
-			playerInfo.CurrentDistance = playerInfo.CurrentDistance - deltaTime * playerInfo.MoveSpeed
-				
-			if playerInfo.CurrentDistance < 0 then
-				playerInfo.CurrentDistance = 0
+		if playerInfo.TrackInfo.UpTrack and playerInfo.TrackInfo.DownTrack then
+			if playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Up then
+				playerInfo.CurrentDistance += playerInfo.MoveSpeed * deltaTime
+				if playerInfo.CurrentDistance > playerInfo.TrackInfo.UpTrack.Length then
+					playerInfo.CurrentDistance = playerInfo.TrackInfo.UpTrack.Length
+				end
+			elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then			
+				playerInfo.SlideAcceleration = playerInfo.SlideAcceleration + playerInfo.SlideAccelerationDelta * deltaTime
+				playerInfo.MoveSpeed = playerInfo.MoveSpeed + playerInfo.SlideAcceleration * deltaTime
+				playerInfo.CurrentDistance = playerInfo.CurrentDistance - deltaTime * playerInfo.MoveSpeed
+
+				if playerInfo.CurrentDistance < 0 then
+					playerInfo.CurrentDistance = 0
+				end
 			end
 		end
 	end
@@ -156,14 +159,8 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 		SlideAccelerationDelta = RollerCoasterDefine.Game.SlideAccelerationDelta,
 		GamePhase = RollerCoasterDefine.GamePhase.Up,
 	}
-	
-	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	if rootPart then
-		rootPart:SetNetworkOwner(player)
-		local s = rootPart:GetNetworkOwner()
-	end
 
-	PlayerManager:DisablePhysic(player)
+	PlayerMove:Enable(player)
 
 	PlayerCache[player] = playerInfo
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Enter, gameInitParam)
@@ -174,6 +171,8 @@ function RollerCoasterGameServerHandler:ArriveEnd(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.ArriveEnd
+	
+	PlayerMove:Disable(player)
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.ArriveEnd)
 	return true
 end
@@ -181,10 +180,15 @@ end
 function RollerCoasterGameServerHandler:Slide(player, param)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
+	
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	playerInfo.ArriveDistance = param.ArriveDistance
 	playerInfo.MoveSpeed = 0
 	playerInfo.SlideAcceleration = 0
+	if playerInfo.GamePhase == RollerCoasterDefine.GamePhase.ArriveEnd then
+		PlayerMove:Enable(player)
+	end
+	
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Down
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Slide)
 	return true
@@ -197,6 +201,7 @@ function RollerCoasterGameServerHandler:Exit(player)
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Idle
 	PlayerCache[player] = nil
 	
+	PlayerMove:Disable(player)
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Exit)
 	return true
 end

@@ -1,4 +1,5 @@
 ﻿local SceneManager = require(game.ReplicatedStorage.ScriptAlias.SceneManager)
+local SceneAreaManager = require(game.ReplicatedStorage.ScriptAlias.SceneAreaManager)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
@@ -7,11 +8,14 @@ local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 local UTween = require(game.ReplicatedStorage.ScriptAlias.UTween)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local CameraManager = require(game.ReplicatedStorage.ScriptAlias.CameraManager)
+local PlayerMove = require(game.ReplicatedStorage.ScriptAlias.PlayerMove)
 
 local TrackCreator = require(game.ReplicatedStorage.ScriptAlias.TrackCreator)
 local TrackRoute = require(game.ReplicatedStorage.ScriptAlias.TrackRoute)
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 local RollerCoasterAutoPlay = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterAutoPlay)
+
+local Debris = game:GetService("Debris")
 
 local RollerCoasterGameLoop = {}
 
@@ -25,16 +29,26 @@ RollerCoasterGameLoop.UpdateInfo = {}
 RollerCoasterGameLoop.IsCompleteGame = false
 
 function RollerCoasterGameLoop:Init()
-	UpdateManager:Heartbeat(function(deltaTime)
+	UpdateManager:RenderStepped(function(deltaTime)
 		RollerCoasterGameLoop:Update(deltaTime)
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.Enter, function(gameInitParam)
-		RollerCoasterGameLoop:EnterUp(gameInitParam)
+		RollerCoasterGameLoop.GameInitParam = gameInitParam
+		RollerCoasterGameLoop:EnterUp()
+		
+		local areaInfo = SceneAreaManager.AreaInfoList[RollerCoasterGameLoop.GameInitParam.TrackIndex]
+		Util:DeActiveObject(areaInfo.ExitCollide)
+		Util:DeActiveObject(areaInfo.DownCollide)
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.ArriveEnd, function()
 		RollerCoasterGameLoop:EnterTop()
+
+		task.delay(RollerCoasterDefine.Game.DropEffectDelay, function()
+			local areaInfo = SceneAreaManager.AreaInfoList[RollerCoasterGameLoop.GameInitParam.TrackIndex]
+			Util:ActiveObject(areaInfo.DownCollide)
+		end)	
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.Slide, function()
@@ -43,6 +57,15 @@ function RollerCoasterGameLoop:Init()
 	
 	EventManager:Listen(RollerCoasterDefine.Event.Exit, function()
 		RollerCoasterGameLoop:EnterFinish()
+		
+		task.delay(RollerCoasterDefine.Game.DropEffectDelay, function()
+			local areaInfo = SceneAreaManager.AreaInfoList[RollerCoasterGameLoop.GameInitParam.TrackIndex]
+			Util:ActiveObject(areaInfo.ExitCollide)
+		end)	
+	end)
+	
+	EventManager:Listen(RollerCoasterDefine.Event.Reset, function()
+		SceneAreaManager:ResetPlayerPos(game.Players.LocalPlayer)
 	end)
 	
 	EventManager:Listen(RollerCoasterDefine.Event.LogGameProperty, function()
@@ -51,15 +74,15 @@ function RollerCoasterGameLoop:Init()
 end
 
 function RollerCoasterGameLoop:LogGameProperty()
-	print(RollerCoasterGameLoop.GameInitParam, RollerCoasterGameLoop.UpdateInfo)
+	warn(RollerCoasterGameLoop.GameInitParam, RollerCoasterGameLoop.UpdateInfo)
 end
 
 ---------------------------------------------------------------------------------------------------------
 -- Phase
 
-function RollerCoasterGameLoop:EnterUp(gameInitParam)
+function RollerCoasterGameLoop:EnterUp()
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Up
-	RollerCoasterGameLoop.GameInitParam = gameInitParam
+	local gameInitParam = RollerCoasterGameLoop.GameInitParam
 	RollerCoasterGameLoop.IsCompleteGame = false
 
 	-- Create Track
@@ -86,7 +109,6 @@ function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	-- Init Status
 	local player = game.Players.LocalPlayer
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	PlayerManager:DisableControl(player)
 	
 	RollerCoasterGameLoop.UpdateInfo = {
 		Player = player,
@@ -98,7 +120,8 @@ function RollerCoasterGameLoop:EnterUp(gameInitParam)
 	}
 	
 	RollerCoasterGameLoop:SetPlayerPosByDistance(RollerCoasterGameLoop.UpTrackRoute, 0)
-	RollerCoasterGameLoop:DisableGravity(player)
+
+	PlayerMove:Enable(player)
 end
 
 function RollerCoasterGameLoop:EnterTop()
@@ -117,11 +140,10 @@ end
 function RollerCoasterGameLoop:EnterDown()
 	local player = game.Players.LocalPlayer
 	if RollerCoasterGameLoop.GamePhase == RollerCoasterDefine.GamePhase.ArriveEnd then
-		RollerCoasterGameLoop:DisableGravity(player)
+		PlayerMove:Enable(player)
 	end
 	
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Down
-	--local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	local startDistance = RollerCoasterGameLoop.UpdateInfo.MoveDistance
 	local startPos = RollerCoasterGameLoop.UpTrackRoute:GetPointByDistance(startDistance).Position
 	startDistance = RollerCoasterGameLoop.DownTrackRoute:GetNearestPathDistance(startPos)
@@ -137,14 +159,18 @@ function RollerCoasterGameLoop:EnterFinish()
 	RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
 	
 	local player = game.Players.LocalPlayer
-	PlayerManager:EnableControl(player)
-	RollerCoasterGameLoop:EnableGravity(player)
+	PlayerMove:Disable(player)
 end
 
 ---------------------------------------------------------------------------------------------------------
 -- Update
 
 function RollerCoasterGameLoop:SetPlayerPosByDistance(trackRoute, distance, faceBackward)
+	local targetPart = PlayerMove.TargetPart
+	if not targetPart then
+		return
+	end
+
 	faceBackward = faceBackward or false
 	local posInfo = trackRoute:GetPointByDistance(distance)
 	local pos = posInfo.Position
@@ -154,10 +180,10 @@ function RollerCoasterGameLoop:SetPlayerPosByDistance(trackRoute, distance, face
 		rot = rot * CFrame.Angles(0, math.pi, 0)
 	end
 
-	local rootPart = RollerCoasterGameLoop.UpdateInfo.RootPart
 	local offsetY = RollerCoasterGameLoop.GameInitParam.MoveHeight
 	local newPos = pos + (rot.UpVector * offsetY)
-	rootPart.CFrame = CFrame.new(newPos) * rot
+	local resultCFrame = CFrame.new(newPos) * rot
+	targetPart.CFrame = resultCFrame
 end
 
 function RollerCoasterGameLoop:Update(deltaTime)
@@ -188,10 +214,9 @@ function RollerCoasterGameLoop:UpdateUp(deltaTime)
 			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 			gameManager:ArriveEnd(player)	
 
-			PlayerManager:EnablePhysic(player)
-			PlayerManager:EnableControl(player)
-			RollerCoasterGameLoop:EnableGravity(player)
-			RollerCoasterGameLoop:PushPlayer(player, Vector3.new(0, 1, -2).Unit * 100, 100)
+			PlayerMove:Disable(player)
+			local pushParam = RollerCoasterDefine.Game.ArriveEndPushPlayerParam
+			RollerCoasterGameLoop:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power)
 		else
 			-- 未到达顶端
 			updateInfo.MoveDistance = upTrackRoute.Length
@@ -232,17 +257,8 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 		local player = game.Players.LocalPlayer
 		local rootPart = PlayerManager:GetHumanoidRootPart(player)
 		if player and rootPart then
-			local character = player.Character
-			for _, part in pairs(character:GetChildren()) do
-				if part:IsA("BasePart") then
-					part.AssemblyLinearVelocity = Vector3.zero
-					part.AssemblyAngularVelocity = Vector3.zero
-				end
-			end
+			PlayerMove:Disable(player)
 			
-			PlayerManager:EnablePhysic(player)
-			PlayerManager:EnableControl(player)
-			RollerCoasterGameLoop:EnableGravity(player)
 			local pushParam = RollerCoasterDefine.Game.SlidePushPlayerParam
 			RollerCoasterGameLoop:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power)
 			task.delay(RollerCoasterDefine.Game.DropEffectDelay, function()
@@ -252,8 +268,6 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 				rootPart.AssemblyLinearVelocity = Vector3.zero
 				rootPart.AssemblyAngularVelocity = Vector3.zero
 				
-				--local param = RollerCoasterDefine.Game.DropCameraShakeParam
-				--CameraManager:ShakeCamera(param.Poweer, param.Duration, param.Count)
 				CameraManager:ShakeCamera()
 			end)
 		end
@@ -262,52 +276,28 @@ end
 
 function RollerCoasterGameLoop:PushPlayer(player, direction, power)
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
+	local humanoid = PlayerManager:GetHumanoid(player)
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
+	
 	local fromPos = rootPart.CFrame.Position
-	--local lookVector = rootPart.CFrame.LookVector
 	local toPos = fromPos + direction
 	local targetDirection = (toPos - fromPos).Unit
 	local newCFrame = CFrame.new(Vector3.zero, targetDirection)
 	rootPart.CFrame = CFrame.new(fromPos) * newCFrame
 
-	rootPart.AssemblyLinearVelocity = targetDirection * power
-	rootPart.AssemblyAngularVelocity = Vector3.zero
-end
+	local bodyVel = Instance.new("BodyVelocity")
+	bodyVel.MaxForce = Vector3.new(math.huge, 0, math.huge)  -- 只推 X/Z，重力自由（完美抛物线）
+	bodyVel.Velocity = targetDirection * power
+	bodyVel.Parent = rootPart
 
--- Gravity
-
-local AttachPartList = {}
-
-function RollerCoasterGameLoop:DisableGravity(player)
-	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	if rootPart then
-		local att = Instance.new("Attachment")
-		att.Parent = rootPart
-		local vf = Instance.new("VectorForce")
-		vf.Attachment0 = att
-		vf.RelativeTo = Enum.ActuatorRelativeTo.World
-		vf.ApplyAtCenterOfMass = true
-
-		local mass = rootPart.AssemblyMass
-		vf.Force = Vector3.new(0, mass * workspace.Gravity, 0)
-		vf.Parent = rootPart
-
-		table.insert(AttachPartList, att)
-		table.insert(AttachPartList, vf)
-	end
-end
-
-function RollerCoasterGameLoop:EnableGravity(player)
-	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	if rootPart then
-		rootPart.AssemblyLinearVelocity = Vector3.zero
-		rootPart.AssemblyAngularVelocity = Vector3.zero
-	end
-	
-	for _, part in ipairs(AttachPartList) do
-		part:Destroy()
-	end
-	
-	AttachPartList = {}
+	Debris:AddItem(bodyVel, RollerCoasterDefine.Game.DropEffectDelay)
+	task.delay(3, function()
+		if rootPart and rootPart.Parent and humanoid and humanoid.Parent then
+			humanoid.PlatformStand = false
+			humanoid:ChangeState(Enum.HumanoidStateType.Running)
+		end
+	end)
 end
 
 return RollerCoasterGameLoop

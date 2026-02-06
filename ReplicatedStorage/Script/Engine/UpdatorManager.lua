@@ -81,7 +81,7 @@ function UpdatorManager:Init()
 	IsRunning = true
 
 	if IsClient then
-		RenderConnection = RunService.RenderStepped:Connect(function(dt)
+		RenderConnection = RunService:BindToRenderStep("RenderStepLogic", Enum.RenderPriority.Camera.Value - 1, function(dt)
 			UpdatorManager:RenderSteppedImpl(dt)
 		end)
 	end

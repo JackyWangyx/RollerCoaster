@@ -115,16 +115,6 @@ end
 
 function RollerCoasterTrackServerHandler:RefreshTrack(player)
 	local trackInfo = RollerCoasterTrackServerHandler:GetTrackByPlayer(player)
-	local trackIndex = trackInfo.Index
-	local gameServerHandler = require(game.ServerScriptService.ScriptAlias.RollerCoasterGameServerHandler)
-	local playerCache = gameServerHandler:GetPlayerCache()
-	for player, playerInfo in pairs(playerCache) do
-		if playerInfo.TrackIndex == trackIndex then
-			gameServerHandler:Exit(player)
-			SceneAreaServerHandler:ResetPlayerPos(player)
-		end
-	end
-	
 	RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
 	RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 end
@@ -195,13 +185,23 @@ function RollerCoasterTrackServerHandler:CreateTrack(trackInfo)
 	
 	-- End
 	
-	for _, trackEnd in ipairs(trackInfo.EndList) do
-		local endPos = downTrack.TrackRoute:GetPointByFactor(1).Position + RollerCoasterDefine.Game.TrackEndOffset
-		trackEnd:PivotTo(CFrame.new(endPos))
-	end
+	--for _, trackEnd in ipairs(trackInfo.EndList) do
+	--	local endPos = downTrack.TrackRoute:GetPointByFactor(1).Position + RollerCoasterDefine.Game.TrackEndOffset
+	--	trackEnd:PivotTo(CFrame.new(endPos))
+	--end
 end
 
 function RollerCoasterTrackServerHandler:ClearTrack(trackInfo)
+	local trackIndex = trackInfo.Index
+	local gameServerHandler = require(game.ServerScriptService.ScriptAlias.RollerCoasterGameServerHandler)
+	local playerCache = gameServerHandler:GetPlayerCache()
+	for player, playerInfo in pairs(playerCache) do
+		if playerInfo.TrackIndex == trackIndex then
+			gameServerHandler:Exit(player)
+			EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Reset)
+		end
+	end
+
 	if trackInfo.UpTrack then
 		TrackCreator:Clear(trackInfo.UpTrack)
 		trackInfo.UpTrack = nil

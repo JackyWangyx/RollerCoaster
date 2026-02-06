@@ -4,6 +4,7 @@ local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local Building = require(game.ReplicatedStorage.ScriptAlias.Building)
+local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 
 local Define = require(game.ReplicatedStorage.Define)
 
@@ -19,7 +20,11 @@ function BuildingToolIAP:Handle(buildingPart, opts, toolID)
 		NetClient:Request("Tool", "CheckExist", { ID = toolID }, function(isExist)
 			if not isExist then
 				IAPClient:Purchase(productKey, function(success)
-					--BuildingToolIAP:Refresh(buildingPart, toolID)
+					if success then
+						NetClient:Request("Tool", "Equip", {ID = toolID }, function()
+							EventManager:Dispatch(EventManager.Define.RefreshTool)
+						end)
+					end
 				end)
 			end
 		end)

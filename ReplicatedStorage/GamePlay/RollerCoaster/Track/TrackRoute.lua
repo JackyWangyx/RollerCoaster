@@ -79,21 +79,18 @@ end
 
 function TrackRoute:GetPointByDistance(distance)
 	distance = math.clamp(distance, 0, self.Length)
-	
 	if distance <= 1e-6 then
 		return {
 			Position = self.PointList[1].Position,
 			Rotation = self.PointList[1].Rotation,
 		}
 	end
-	
 	if distance >= self.Length then
 		return {
 			Position = self.PointList[#self.PointList].Position,
 			Rotation = self.PointList[#self.PointList].Rotation,
 		}
 	end
-	
 	for i = 1, #self.PointList - 1 do
 		local p1 = self.PointList[i]
 		local p2 = self.PointList[i + 1]
@@ -105,35 +102,24 @@ function TrackRoute:GetPointByDistance(distance)
 					Rotation = p1.Rotation,
 				}
 			end
-			
 			local alpha = math.clamp((distance - p1.Distance) / segDist, 0, 1)
 
 			local pos = p1.Position:Lerp(p2.Position, alpha)
+			local rot = p1.Rotation:Lerp(p2.Rotation, alpha)
 
-			local rx1, ry1, rz1 = p1.Rotation:ToOrientation()
-			local rx2, ry2, rz2 = p2.Rotation:ToOrientation()
-
-			local rx = rx1 + (rx2 - rx1) * alpha
-			local ry = ry1 + (ry2 - ry1) * alpha
-			local rz = rz1 + (rz2 - rz1) * alpha
-
-			ry = (ry + math.pi) % (math.pi*2) - math.pi
-			local rot = CFrame.fromOrientation(rx, ry, rz)
-
-			if isVectorNaN(pos) or isVectorNaN(rot) then
+			if isVectorNaN(pos) or isVectorNaN(rot) then 
 				return {
 					Position = p1.Position,
 					Rotation = p1.Rotation,
 				}
 			end
-			
+
 			return {
 				Position = pos,
 				Rotation = rot,
 			}
 		end
 	end
-
 	return {
 		Position = self.PointList[#self.PointList].Position,
 		Rotation = self.PointList[#self.PointList].Rotation,

@@ -27,6 +27,7 @@ local isEntering = false
 function RollerCoasterGameManager:Enter(index)
 	if isEntering then return end
 	isEntering = true
+	
 	NetClient:Request("RollerCoaster", "Enter", { Index = index }, function(success)
 		if success then
 			EventManager:Dispatch(EventManager.Define.GameStart)
@@ -55,7 +56,7 @@ end
 
 function RollerCoasterGameManager:Exit(index)
 	NetClient:Request("RollerCoaster", "Exit", function()
-		--EventManager:Dispatch(EventManager.Define.GameFinish)
+		EventManager:Dispatch(EventManager.Define.GameFinish)
 	end)
 end
 

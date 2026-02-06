@@ -207,6 +207,7 @@ end
 
 function PlayerManager:GetCharacter(player, timeout)
 	timeout = timeout or 3
+	if not player then return nil end
 	if player.Character then
 		return player.Character
 	end
@@ -531,6 +532,8 @@ function PlayerManager:EnablePhysic(player)
 	humanoidRootPartt.CanTouch = true
 	humanoidRootPartt.CanCollide = true
 	humanoidRootPartt.Anchored  = false
+	humanoidRootPartt.AssemblyLinearVelocity = Vector3.zero
+	humanoidRootPartt.AssemblyAngularVelocity = Vector3.zero
 end
 
 function PlayerManager:EnableAnchored(player)

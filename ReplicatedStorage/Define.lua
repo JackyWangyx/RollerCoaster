@@ -86,10 +86,10 @@ Define.Activity = {
 -- 游戏参数
 Define.Game = {
 	-- Game
-	GamePlaceID = 136755412141115,
-	OfficalGroupID = 765477086,
+	GamePlaceID = 90478150465243,
+	OfficalGroupID = 936613609,   ----online
 	--OfficalGroupID = 557943437, ---devtest
-	LevelCount = 2,
+	LevelCount = 1,
 	TrackCount =  5,
 	ViewSizeBefore = 3000,
 	ViewSizeAfter = 3000,

@@ -2,6 +2,7 @@
 local SceneManager = require(game.ReplicatedStorage.ScriptAlias.SceneManager)
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
+local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 
 local SceneAreaManager = {}
 
@@ -21,6 +22,9 @@ function SceneAreaManager:Init()
 			PlayerID = nil,
 			Index = areaIndex,
 			Area = area,
+			ExitCollide = area:FindFirstChild("ExitCollide"),
+			DownCollide = area:FindFirstChild("DownCollide"),
+			SpawnLocation = area:FindFirstChild("SpawnLocation"),		
 			ThemeKey = nil,
 			ThemeList = {},
 		}
@@ -70,7 +74,25 @@ function SceneAreaManager:RefreshServerAreaInfo(serverAreaInfoList)
 		local areaInfo = SceneAreaManager.AreaInfoList[areaIndex]
 		if serverAreaInfo.ThemeKey ~= areaInfo.ThemeKey then
 			areaInfo.ThemeKey = serverAreaInfo.ThemeKey
+			areaInfo.ThemeIndex = 1
+			for themeIndex, themeInfo in ipairs(areaInfo.ThemeList) do
+				if themeInfo.ThemeKey == serverAreaInfo.ThemeKey then
+					areaInfo.ThemeIndex = themeIndex
+					break
+				end
+			end
+			
 			SceneAreaManager:SwitchTheme(areaIndex, serverAreaInfo.ThemeKey)
+		end
+	end
+end
+
+function SceneAreaManager:ResetPlayerPos(player)
+	local areaInfo = SceneAreaManager.AreaInfoList[SceneAreaManager.CurrentAreaIndex]
+	if areaInfo then
+		local rootPart = PlayerManager:GetHumanoidRootPart(player)
+		if rootPart then
+			rootPart.CFrame = CFrame.new(areaInfo.SpawnLocation.Position + Vector3.new(0, 5, 0))
 		end
 	end
 end
