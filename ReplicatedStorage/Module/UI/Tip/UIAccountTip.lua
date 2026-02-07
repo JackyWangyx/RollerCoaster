@@ -18,7 +18,7 @@ UIAccountTip.UIGetPowerTip = nil
 function UIAccountTip:Init(root)
 	UIAccountTip.UIRoot = root
 	
-	UIAccountTip.UICoinTarget = Util:GetChildByName(UIAccountTip.UIRoot, "UICoinTarget", true)
+	UIAccountTip.UICoinTarget = Util:GetChildByName(UIAccountTip.UIRoot, "UICoinTargetIcon", true)
 	UIAccountTip.UIGetCoinTip = Util:GetChildByName(UIAccountTip.UIRoot, "UIGetCoinTip", true)
 	if UIAccountTip.UIGetCoinTip then
 		UIAccountTip.UIGetCoinTip.Visible = false
@@ -27,7 +27,7 @@ function UIAccountTip:Init(root)
 		end)
 	end
 
-	UIAccountTip.UIWinsTarget = Util:GetChildByName(UIAccountTip.UIRoot, "UIWinsTarget", true)
+	UIAccountTip.UIWinsTarget = Util:GetChildByName(UIAccountTip.UIRoot, "UIWinsTargetIcon", true)
 	UIAccountTip.UIGetWinsTip = Util:GetChildByName(UIAccountTip.UIRoot, "UIGetWinsTip", true)
 	if UIAccountTip.UIGetWinsTip then
 		UIAccountTip.UIGetWinsTip.Visible = false

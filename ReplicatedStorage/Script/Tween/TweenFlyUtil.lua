@@ -85,9 +85,9 @@ function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 		particleCount = 30
 		if type(value) == "number" then
 			if value < 30 then
-				particleCount = value
+				particleCount = value + 3
 			else
-				particleCount = math.random(10, 20)
+				particleCount = math.random(60, 80)
 			end
 		end
 	end
@@ -128,8 +128,8 @@ function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 			if flyMode == "Multiple" then
 				local angle = math.random() * math.pi * 2
 				-- 爆炸半径依然需要适配屏幕大小，否则在手机上会炸太远
-				local minRad = 240 * scaleFactor
-				local maxRad = 600 * scaleFactor
+				local minRad = 160 * scaleFactor
+				local maxRad = 400 * scaleFactor
 				local radius = math.random(minRad, maxRad)
 				local offsetX = math.cos(angle) * radius
 				local offsetY = math.sin(angle) * radius
@@ -143,7 +143,7 @@ function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 				-- 【动画】Scale 从 0 变到 1
 				-- 这里的 1 代表“还原为 Template 的原始大小”
 				local appearTween = TweenService:Create(uiScale, TweenInfo.new(explodeTime * 0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-					Scale = 1.5
+					Scale = 2.0
 				})
 				explodeTween:Play()
 				appearTween:Play()

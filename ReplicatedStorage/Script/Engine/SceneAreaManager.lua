@@ -22,11 +22,14 @@ function SceneAreaManager:Init()
 			PlayerID = nil,
 			Index = areaIndex,
 			Area = area,
-			ExitCollide = area:FindFirstChild("ExitCollide"),
-			DownCollide = area:FindFirstChild("DownCollide"),
+			OnlySelf = area:FindFirstChild("OnlySelf"),
 			SpawnLocation = area:FindFirstChild("SpawnLocation"),		
 			ThemeKey = nil,
 			ThemeList = {},
+			
+			-- Additional
+			ExitCollide = area:FindFirstChild("ExitCollide"),
+			DownCollide = area:FindFirstChild("DownCollide"),
 		}
 
 		local themeRoot = area:FindFirstChild("Theme")
@@ -59,7 +62,6 @@ end
 function SceneAreaManager:InitSelfAreaIndex()
 	local player = game.Players.LocalPlayer
 	for areaIndex, serverAreaInfo in ipairs(SceneAreaManager.ServerAeraInfoList) do
-		local areaInfo = SceneAreaManager.AreaInfoList[areaIndex]
 		if serverAreaInfo.PlayerID == player.UserId then
 			SceneAreaManager.CurrentAreaIndex = areaIndex
 			SceneAreaManager.CurrentThemeKey = serverAreaInfo.ThemeKey
@@ -83,6 +85,12 @@ function SceneAreaManager:RefreshServerAreaInfo(serverAreaInfoList)
 			end
 			
 			SceneAreaManager:SwitchTheme(areaIndex, serverAreaInfo.ThemeKey)
+		end
+		
+		if areaIndex == SceneAreaManager.CurrentAreaIndex then
+			Util:ActiveObject(areaInfo.OnlySelf)
+		else
+			Util:DeActiveObject(areaInfo.OnlySelf)
 		end
 	end
 end

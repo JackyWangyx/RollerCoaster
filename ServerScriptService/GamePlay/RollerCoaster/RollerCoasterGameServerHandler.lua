@@ -118,7 +118,7 @@ function RollerCoasterGameServerHandler:Enter(player, param)
 	}
 	
 	local themeKey = trackInfo.ThemeKey
-	local gameThemeInfo = RollerCoasterRequest:GetThemeInfo(player, { ThemeKey = themeKey })
+	local gameThemeInfo = RollerCoasterRequest:GetThemeInfo(trackInfo.Player, { ThemeKey = themeKey })
 	local themeData = ConfigManager:SearchData("Theme", "ThemeKey", themeKey)
 	gameInitParam.UpSegmentNameList = upSegmentNameList
 	gameInitParam.DownSegmentNameList = downSegmentNameList
@@ -210,6 +210,7 @@ function RollerCoasterGameServerHandler:GetWins(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
 	if playerInfo.IsGetWins then return false end
+	
 	local getWinsFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_WINS_FACTOR)
 	local value = playerInfo.ThemeData.RewardWins * getWinsFactor
 	local accountRequest = require(game.ServerScriptService.ScriptAlias.Account)

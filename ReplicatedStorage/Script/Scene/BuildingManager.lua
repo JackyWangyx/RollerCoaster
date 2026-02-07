@@ -34,6 +34,14 @@ function BuildingManager:Init()
 				table.insert(BuildingManager.AreaBuildingPathList, areaBuildingPath)
 			end
 			
+			if areaInfo.OnlySelf then
+				local areaOnlySelfBuildingPath = areaInfo.OnlySelf:FindFirstChild("Building")
+				if areaOnlySelfBuildingPath then
+					BuildingManager:InitPath(areaOnlySelfBuildingPath,  Building.Mode.Area, areaIndex)
+					table.insert(BuildingManager.AreaBuildingPathList, areaOnlySelfBuildingPath)
+				end
+			end	
+			
 			for themeIndex, themeInfo in ipairs(areaInfo.ThemeList) do
 				local pathList = Util:GetAllChildByTypeAndName(themeInfo.Theme, "Folder", "Building", true)
 				for _, path in ipairs(pathList) do
