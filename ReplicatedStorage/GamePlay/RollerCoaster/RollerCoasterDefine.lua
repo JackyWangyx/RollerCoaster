@@ -4,9 +4,11 @@ RollerCoasterDefine.TrackAngle = 30
 
 RollerCoasterDefine.Game = {
 	-- 下滑加速度的变化量
-	SlideAccelerationDelta = 10,
+	SlideAccelerationDelta = 20,
+	-- 下滑最大速度，到达后停止加速
+	SlideMaxSpeed = 1000,
 	-- 赛道终点区域偏移量
-	--TrackEndOffset = Vector3.new(10, 2, -50),
+	--TrackEndOffset = Vector3.new(10,  2, -50),
 	-- 终点下滑阻挡碰撞偏移量
 	--DwonCollideOffset = Vector3.new(0 ,0, 0),
 	-- 落地特效延迟
@@ -29,7 +31,7 @@ RollerCoasterDefine.Game = {
 	-- 下滑结束推出玩家参数
 	SlidePushPlayerParam = {
 		Direction = Vector3.new(0, 0.5, 1),
-		Power = 80,
+		Power = 0,
 	}
 }
 

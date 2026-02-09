@@ -129,7 +129,7 @@ function RollerCoasterGameLoop:EnterTop()
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
 	
 	if RollerCoasterAutoPlay.Info.IsAutoGame then
-		task.wait()
+		task.wait(1)
 		local player = game.Players.LocalPlayer
 		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 		gameManager:GetWins(player)
@@ -201,14 +201,14 @@ function RollerCoasterGameLoop:UpdateUp(deltaTime)
 	updateInfo.MoveDistance = updateInfo.MoveDistance + deltaTime * updateInfo.MoveSpeed
 	updateInfo.ArriveDistance = updateInfo.MoveDistance
 	
-	RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
-	
 	if updateInfo.MoveDistance >= upTrackRoute.Length then
 		if RollerCoasterGameLoop.GameInitParam.IsTrackMaxLevel then
 			-- 到达顶端
 			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
 			updateInfo.MoveDistance = downTrackRoute.Length
 			updateInfo.ArriveDistance = updateInfo.MoveDistance
+
+			RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
 
 			local player = game.Players.LocalPlayer
 			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
@@ -222,11 +222,15 @@ function RollerCoasterGameLoop:UpdateUp(deltaTime)
 			updateInfo.MoveDistance = upTrackRoute.Length
 			updateInfo.ArriveDistance = updateInfo.MoveDistance
 
+			RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
+
 			local player = game.Players.LocalPlayer
 			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 			gameManager:Slide(player)
 			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
 		end
+	else
+		RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
 	end
 end
 
@@ -235,15 +239,17 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
 	updateInfo.SlideAcceleration = updateInfo.SlideAcceleration + updateInfo.SlideAccelerationDelta * deltaTime
 	updateInfo.MoveSpeed = updateInfo.MoveSpeed + updateInfo.SlideAcceleration * deltaTime
-	updateInfo.MoveDistance = updateInfo.MoveDistance - deltaTime * updateInfo.MoveSpeed
-	if updateInfo.MoveDistance < 0 then
-		updateInfo.MoveDistance = 0
+	if updateInfo.MoveSpeed > RollerCoasterDefine.Game.SlideMaxSpeed then
+		updateInfo.MoveSpeed = RollerCoasterDefine.Game.SlideMaxSpeed
 	end
 	
-	RollerCoasterGameLoop:SetPlayerPosByDistance(downTrackRoute, updateInfo.MoveDistance, true)
+	updateInfo.MoveDistance = updateInfo.MoveDistance - deltaTime * updateInfo.MoveSpeed
 	
 	if updateInfo.MoveDistance <= 0 then
 		RollerCoasterGameLoop.IsCompleteGame = true
+		updateInfo.MoveDistance = 0
+		
+		RollerCoasterGameLoop:SetPlayerPosByDistance(downTrackRoute, updateInfo.MoveDistance, true)
 		
 		local player = game.Players.LocalPlayer
 		local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
@@ -271,6 +277,8 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 				CameraManager:ShakeCamera()
 			end)
 		end
+	else
+		RollerCoasterGameLoop:SetPlayerPosByDistance(downTrackRoute, updateInfo.MoveDistance, true)
 	end
 end
 

@@ -55,6 +55,10 @@ function RollerCoasterGameServerHandler:Update(deltaTime)
 			elseif playerInfo.GamePhase == RollerCoasterDefine.GamePhase.Down then			
 				playerInfo.SlideAcceleration = playerInfo.SlideAcceleration + playerInfo.SlideAccelerationDelta * deltaTime
 				playerInfo.MoveSpeed = playerInfo.MoveSpeed + playerInfo.SlideAcceleration * deltaTime
+				if playerInfo.MoveSpeed > RollerCoasterDefine.Game.SlideMaxSpeed then
+					playerInfo.MoveSpeed = RollerCoasterDefine.Game.SlideMaxSpeed
+				end
+				
 				playerInfo.CurrentDistance = playerInfo.CurrentDistance - deltaTime * playerInfo.MoveSpeed
 
 				if playerInfo.CurrentDistance < 0 then

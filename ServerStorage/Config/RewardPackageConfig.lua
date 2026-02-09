@@ -6,11 +6,11 @@ ID,PackageID,Icon,Description,RewardType,RewardID,RewardCount
 2,1,rbxassetid://120879384686937,DoubleWins,Prop,2,1
 3,1,rbxassetid://84959116887125,DoubleSpeed,Prop,3,1
 4,1,rbxassetid://124158144966213,GoldHatch,Prop,4,1
-5,2,rbxassetid://94556420467895,DoublePower,Prop,1,1
+5,2,rbxassetid://94556420467895,DoubleCoins,Prop,1,1
 6,2,rbxassetid://120879384686937,DoubleWins,Prop,2,1
 7,2,rbxassetid://84959116887125,DoubleSpeed,Prop,3,1
 8,2,rbxassetid://76662429306777,LuckyWheel,LuckyWheel,1,1
-9,2,rbxassetid://127022518238132,100,Coin,1,100
+9,2,rbxassetid://127022518238132,1K,Coin,1,1000
 10,3,rbxassetid://94556420467895,DoubleCoins,Prop,1,2
 11,3,rbxassetid://120879384686937,DoubleWins,Prop,2,2
 12,3,rbxassetid://84959116887125,DoubleSpeed,Prop,3,2

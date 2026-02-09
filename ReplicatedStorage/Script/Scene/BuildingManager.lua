@@ -98,9 +98,15 @@ function BuildingManager:OnBuildingAdded(buildingPart, opts)
 	local buuldingInfo = {
 		Name = buildingName,
 		BuildingPart = buildingPart,
+		--Position = buildingPart.Position,
 		Options = opts,
 		AreaIndex = opts.AreaIndex
 	}
+	
+	if triggerPart then
+		buuldingInfo.TriggerPart = triggerPart
+		buuldingInfo.TriggerPos = triggerPart.Position
+	end 
 	
 	if buildingScriptFile then
 		local buildingScript = require(buildingScriptFile)
