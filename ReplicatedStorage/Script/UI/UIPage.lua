@@ -82,9 +82,11 @@ function UIPage:HandleInfo(uiRoot, uiScriot, cacheChildList)
 			local notifyName = string.match(part.Name, "_(.+)")
 			local notifyScriptName = "Notify"..notifyName
 			local notifyScriptFile = Util:GetChildByTypeAndName(game.ReplicatedStorage, "ModuleScript", notifyScriptName, true, ResourcesManager.ReplicatedStorageCache.Module)
-			local notifyScript = require(notifyScriptFile)
-			notifyScript:Handle(part)
-			UIEffect:HandlePart(part:FindFirstChild("Notify"), UIEffect.EffectType.Shake)
+			if notifyScriptFile then
+				local notifyScript = require(notifyScriptFile)
+				notifyScript:Handle(part)
+				UIEffect:HandlePart(part:FindFirstChild("Notify"), UIEffect.EffectType.Shake)
+			end	
 		end
 	end
 end

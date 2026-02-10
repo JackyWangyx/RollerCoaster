@@ -1,6 +1,6 @@
 ﻿local Define = {}
 
-Define.Version = "2025.12.03.2"
+Define.Version = "2026.02.09.1"
 Define.Project = "RollerCoaster"
 
 -----------------------------------------------------------------------------------

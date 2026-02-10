@@ -9,23 +9,12 @@ UINotify.RefreshType = {
 	ListenEvent = 2,
 }
 
-function UINotify:HandleEffect(targetPart)
-	--local notifyPart = targetPart:WaitForChild("Notify")
-	--if not notifyPart then
-	--	return
-	--end
-
-	--UIEffect:HandlePart(notifyPart, UIEffect.EffectType.Shake)
-end
-
 function UINotify:Handle(targetPart, checker, refreshType, refreshParam)
 	if not checker then return end
-	local notifyPart = targetPart:WaitForChild("Notify")
+	local notifyPart = targetPart:FindFirstChild("Notify")
 	if not notifyPart then
 		return
 	end
-	
-	UINotify:HandleEffect(targetPart)
 	
 	notifyPart.Visible = false
 	if refreshType == UINotify.RefreshType.AutoRefresh then

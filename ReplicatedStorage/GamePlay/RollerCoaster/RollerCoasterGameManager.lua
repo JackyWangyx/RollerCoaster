@@ -25,6 +25,8 @@ end
 local isEntering = false
 
 function RollerCoasterGameManager:Enter(index)
+	if RollerCoasterGameLoop.GamePhase ~= RollerCoasterDefine.GamePhase.Idle then return end 
+	
 	if isEntering then return end
 	isEntering = true
 	

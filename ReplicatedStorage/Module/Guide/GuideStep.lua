@@ -41,8 +41,13 @@ function GuideStep:Update(deltaTime)
 	if not self.IsInit then return end
 	if self.Config.TargetMode ~= GuideDefine.TargetMode.None and self.Arrow then
 		local player = game.Players.LocalPlayer
+		if not player then return end	
 		local startPos = PlayerManager:GetPosition(player)
+		if not startPos then return end
+		
 		local endPos = self.TargetPos
+		if not endPos then return end
+		
 		startPos = Vector3.new(startPos.X, GuideDefine.ArrowHeight, startPos.Z)
 		endPos = Vector3.new(endPos.X, GuideDefine.ArrowHeight, endPos.Z)
 		
