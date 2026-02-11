@@ -25,13 +25,13 @@ RollerCoasterDefine.Game = {
 	DownTrackOffset = Vector3.new(-20, 0, 0),
 	-- 到顶部推出玩家参数
 	ArriveEndPushPlayerParam = {
-		Direction = Vector3.new(0, 1, -2),
-		Power = 30,
+		Direction = Vector3.new(0, 0.1, -2),
+		Power = 50,
 	},
 	-- 下滑结束推出玩家参数
 	SlidePushPlayerParam = {
-		Direction = Vector3.new(0, 0.5, 1),
-		Power = 0,
+		Direction = Vector3.new(0, 1, 1),
+		Power = 100,
 	}
 }
 

@@ -215,8 +215,12 @@ function RollerCoasterGameLoop:UpdateUp(deltaTime)
 			gameManager:ArriveEnd(player)	
 
 			PlayerMove:Disable(player)
+			
+			local rootPart = PlayerManager:GetHumanoidRootPart(player)
+			print(rootPart.AssemblyLinearVelocity, rootPart.AssemblyAngularVelocity)
 			local pushParam = RollerCoasterDefine.Game.ArriveEndPushPlayerParam
 			RollerCoasterGameLoop:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power)
+			print(rootPart.AssemblyLinearVelocity, rootPart.AssemblyAngularVelocity)
 		else
 			-- 未到达顶端
 			updateInfo.MoveDistance = upTrackRoute.Length

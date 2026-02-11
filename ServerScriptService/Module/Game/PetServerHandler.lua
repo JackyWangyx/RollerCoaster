@@ -89,6 +89,7 @@ function PetServerHandler:Create(player)
 		attachmentPart.CanCollide = false
 		attachmentPart.CFrame = worldCFrame
 		attachmentPart.Parent = rootPart
+		attachmentPart:SetNetworkOwner(player)
 
 		local weld = Instance.new("WeldConstraint")
 		weld.Part0 = rootPart
@@ -99,6 +100,8 @@ function PetServerHandler:Create(player)
 		petWeld.Part0 = attachmentPart
 		petWeld.Part1 = pet.PrimaryPart
 		petWeld.Parent = pet.PrimaryPart
+
+		pet:PivotTo(rootPart.CFrame * relativeCFrame)
 
 		table.insert(attachmentList, attachmentPart)
 		

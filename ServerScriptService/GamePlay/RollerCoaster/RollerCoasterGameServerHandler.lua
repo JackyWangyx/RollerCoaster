@@ -213,6 +213,7 @@ end
 function RollerCoasterGameServerHandler:GetWins(player)
 	local playerInfo = PlayerCache[player]
 	if not playerInfo then return false end
+	if playerInfo.GamePhase ~= RollerCoasterDefine.GamePhase.ArriveEnd then return false end
 	if playerInfo.IsGetWins then return false end
 	
 	local getWinsFactor = PlayerProperty:GetGamePropertyValue(player, PlayerProperty.Define.GET_WINS_FACTOR)

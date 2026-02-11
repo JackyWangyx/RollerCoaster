@@ -7,12 +7,16 @@ local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 local PlayerMove = {}
 
 PlayerMove.TargetPart = nil
+PlayerMove.AlignPosition = nil
+PlayerMove.AlignOrientation = nil
+PlayerMove.IsClientActive = false
 
 function PlayerMove:Enable(player)
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	if not rootPart then return end
 	
 	if RunService:IsClient() then
+		if PlayerMove.IsClientActive then return end
 		-- RootPart的Attachment0（默认有RootRigAttachment，无需新建）
 		local attach0 = rootPart:FindFirstChild("RootRigAttachment") or Instance.new("Attachment")
 		if not attach0.Parent then
@@ -33,16 +37,16 @@ function PlayerMove:Enable(player)
 		local attach1 = Instance.new("Attachment")
 		attach1.Parent = targetPart
 
-		-- AlignPosition：位置对齐（无限力，Responsiveness高）
 		local alignPos = Instance.new("AlignPosition")
 		alignPos.Attachment0 = attach0
 		alignPos.Attachment1 = attach1
 		alignPos.MaxForce = math.huge
-		alignPos.MaxVelocity = math.huge  -- 高速支持
-		alignPos.Responsiveness = 2000000  -- 响应速度（越高越快，<200防抖）
+		alignPos.MaxVelocity = math.huge
+		alignPos.Responsiveness = 2000000
 		alignPos.Parent = rootPart
 
-		-- AlignOrientation：旋转对齐
+		PlayerMove.AlignPosition = alignPos
+
 		local alignOri = Instance.new("AlignOrientation")
 		alignOri.Attachment0 = attach0
 		alignOri.Attachment1 = attach1
@@ -51,9 +55,12 @@ function PlayerMove:Enable(player)
 		alignOri.Responsiveness = 2000000
 		alignOri.Parent = rootPart
 
+		PlayerMove.AlignOrientation = alignOri
+		
 		PlayerMove.TargetPart = targetPart
 		
 		PlayerManager:DisableControl(player)
+		PlayerMove.IsClientActive = true
 	else
 		rootPart.Anchored = false
 		rootPart:SetNetworkOwner(player)
@@ -68,11 +75,36 @@ function PlayerMove:Disable(player)
 	local rootPart = PlayerManager:GetHumanoidRootPart(player)
 	if not rootPart then return end
 
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
+	
 	if RunService:IsClient() then
-		for _, obj in pairs(rootPart:GetChildren()) do
-			if obj:IsA("AlignPosition") or obj:IsA("AlignOrientation") then
-				obj:Destroy()
-			end
+		if not PlayerMove.IsClientActive then return end
+	
+		--if PlayerMove.TargetPart then
+		--	PlayerMove.TargetPart.CFrame = rootPart.CFrame
+		--	RunService.Heartbeat:Wait()
+		--end
+	
+		if PlayerMove.AlignPosition then 
+			PlayerMove.AlignPosition.Responsiveness = 0
+			PlayerMove.AlignPosition.Enabled = false
+		end
+
+		if PlayerMove.AlignOrientation then 
+			PlayerMove.AlignOrientation.Responsiveness = 0
+			PlayerMove.AlignPosition.Enabled = false
+		end
+		
+		RunService.Heartbeat:Wait()
+		--rootPart.Anchored = true
+
+		if PlayerMove.AlignPosition then 
+			PlayerMove.AlignPosition:Destroy() 
+		end
+
+		if PlayerMove.AlignOrientation then 
+			PlayerMove.AlignOrientation:Destroy() 
 		end
 
 		if PlayerMove.TargetPart then 
@@ -80,12 +112,22 @@ function PlayerMove:Disable(player)
 			PlayerMove.TargetPart = nil
 		end
 		
+		RunService.Heartbeat:Wait()
+		rootPart.AssemblyLinearVelocity = Vector3.zero
+		rootPart.AssemblyAngularVelocity = Vector3.zero
+		
+		--rootPart.Anchored = false
+		
 		PlayerManager:EnableControl(player)
+		PlayerMove.IsClientActive = false
 	else
 		--rootPart:SetNetworkOwner(nil)
 		local humanoid = PlayerManager:GetHumanoid(player)
 		humanoid.PlatformStand = false
 	end
+	
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
 	
 	PlayerManager:EnablePhysic(player)
 end
