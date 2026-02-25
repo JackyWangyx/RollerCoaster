@@ -152,9 +152,6 @@ function UIPetLootResult:Open()
 	end
 	
 	UIManager.Enable = true
-
-	--UIManager:Hide("UIPetLootResult")
-	--UIManager:Show("UIPetLoot", UIPetLootResult.Param)
 end
 
 function UIPetLootResult:OpenOnce(petDataList, skipOpen, onDone)
@@ -254,7 +251,8 @@ function UIPetLootResult:Button_Continue()
 	if UIPetLootResult.Param.IsRewardLoot then
 		UIManager:Hide("UIPetLootResult")	
 	else
-		UIManager:ShowAndHideOther("UIPetLoot", UIPetLootResult.Param)
+		local param = table.clone(UIPetLootResult.Param)
+		UIManager:ShowAndHideOther("UIPetLoot", param)
 	end
 end
 

@@ -239,6 +239,7 @@ function UIPetLoot:OpenLootImpl(count, openAuto, times)
 	param.DeleteIDList = deleteIDList
 	param.IsRewardLoot = false
 	param.Times = times
+	
 	UIManager:ShowAndHideOther("PetLootResult", param)
 end
 

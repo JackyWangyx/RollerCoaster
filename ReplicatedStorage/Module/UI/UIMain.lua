@@ -10,7 +10,7 @@ local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local UIConditionChecker = require(game.ReplicatedStorage.ScriptAlias.UIConditionChecker)
 local ConditionUtil = require(game.ReplicatedStorage.ScriptAlias.ConditionUtil)
 local TweenUtil = require(game.ReplicatedStorage.ScriptAlias.TweenUtil)
-local UIAccountTip = require(game.ReplicatedStorage.ScriptAlias.UIAccountTip)
+local UIAccountInfo = require(game.ReplicatedStorage.ScriptAlias.UIAccountInfo)
 
 local UIGamePassState = require(game.ReplicatedStorage.ScriptAlias.UIGamePassState)
 local UIPropStateList = require(game.ReplicatedStorage.ScriptAlias.UIPropStateList)
@@ -57,7 +57,7 @@ function UIMain:Init(root)
 		UIConditionChecker:Handle(UIMain.TradeConditon, UIConditionChecker.Define.TradeUnlock, nil, nil, EventManager.Define.RefreshRebirth)
 	end
 	
-	UIAccountTip:Init(root)
+	UIAccountInfo:Init(root)
 	
 	EventManager:Listen(EventManager.Define.PetLootStart, function()
 		UIMain.MainFrame.Visible = false

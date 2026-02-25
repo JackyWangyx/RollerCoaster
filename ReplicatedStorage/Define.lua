@@ -32,34 +32,6 @@ Define.Test = {
 	EnablePropertyLog = false, -- 打印分类属性列表
 }
 
-Define.DataSourceMode = {
-	Default = 1,
-	Theme = 2,
-}
-
-Define.Camera = {
-	ZoomMinDistance = 20,
-	ZoomMaxDistance = 100,
-}
-
-Define.Data = {
-	GameRankSaveInterval = 300,
-	PlayerAutoSaveInterval = 300,
-}
-
-Define.TradeState = {
-	Prepare = 1,
-	Trading = 2,
-	Complete = 3,
-}
-
-Define.TradePlayerState = {
-	Disable = 0,
-	Idle = 1,
-	Wait = 2,
-	Busy = 3,
-}
-
 -----------------------------------------------------------------------------------
 -- 任务 / 赛季 / 活动
 Define.Quest = {
@@ -152,6 +124,45 @@ Define.Game = {
 	-- Reward Package
 	NewbiePackageID = 3,
 	LikePackageID = 4,
+}
+
+Define.Animation = {
+	RefreshAccountDelay = 1,
+}
+
+-----------------------------------------------------------------------------------
+Define.DataSourceMode = {
+	Default = 1,
+	Theme = 2,
+}
+
+Define.Camera = {
+	ZoomMinDistance = 20,
+	ZoomMaxDistance = 100,
+}
+
+Define.Data = {
+	GameRankSaveInterval = 300,
+	PlayerAutoSaveInterval = 300,
+}
+
+Define.TradeState = {
+	Prepare = 1,
+	Trading = 2,
+	Complete = 3,
+}
+
+Define.TradePlayerState = {
+	Disable = 0,
+	Idle = 1,
+	Wait = 2,
+	Busy = 3,
+}
+
+Define.IAPResult = {
+	Complete = 1,
+	Cancel = 2,
+	Failed = 3,
 }
 
 -----------------------------------------------------------------------------------

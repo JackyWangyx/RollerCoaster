@@ -9,6 +9,9 @@ local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local BigNumber = require(game.ReplicatedStorage.ScriptAlias.BigNumber)
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local UIEffect = require(game.ReplicatedStorage.ScriptAlias.UIEffect)
+local UIAccountInfo = require(game.ReplicatedStorage.ScriptAlias.UIAccountInfo)
+
+local Deifne = require(game.ReplicatedStorage.Define)
 
 local UIPage = {}
 
@@ -43,40 +46,10 @@ function UIPage:HandleInfo(uiRoot, uiScriot, cacheChildList)
 		ContentProvider:PreloadAsync(images)
 	end)
 
+	UIAccountInfo:Handle(uiRoot, cacheChildList)
+
 	-- Page Info
 	for _, part in ipairs(cacheChildList) do
-		-- Coin
-		if part.Name == "Text_Account_Coin" and part:IsA("TextLabel") then
-			NetClient:Request("Account", "GetCoin", function(result)
-				part.Text = BigNumber:Format(result)
-			end)
-
-			EventManager:Listen(EventManager.Define.RefreshCoin, function(value)
-				part.Text = BigNumber:Format(value)	
-			end)
-		end
-		
-		if part.Name == "Text_Account_Wins" and part:IsA("TextLabel") then
-			NetClient:Request("Account", "GetWins", function(result)
-				part.Text = BigNumber:Format(result)
-			end)
-
-			EventManager:Listen(EventManager.Define.RefreshWins, function(value)
-				part.Text = BigNumber:Format(value)	
-			end)
-		end
-		
-		-- Power
-		if part.Name == "Text_Property_Power" and part:IsA("TextLabel") then
-			NetClient:Request("Player", "GetPower", function(result)
-				part.Text = BigNumber:Format(result)
-			end)
-
-			EventManager:Listen(EventManager.Define.RefreshPower, function(value)
-				part.Text = BigNumber:Format(value)	
-			end)
-		end
-		
 		-- Notify
 		if Util:IsStrStartWith(part.Name, "Notify_") and part:IsA("ImageLabel") then
 			local notifyName = string.match(part.Name, "_(.+)")

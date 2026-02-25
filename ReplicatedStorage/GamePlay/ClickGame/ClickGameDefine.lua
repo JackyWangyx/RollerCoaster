@@ -5,8 +5,8 @@ local ClickGameDefine = {}
 function ClickGameDefine:C()
 end
 
-ClickGameDefine.SpawnIntervalMin = 1.5
-ClickGameDefine.SpawnIntervalMax = 2.5
+ClickGameDefine.SpawnIntervalMin = 3
+ClickGameDefine.SpawnIntervalMax = 5
 ClickGameDefine.SpawnCountLimit = 5
 ClickGameDefine.LifeTimeDuration = 2
 

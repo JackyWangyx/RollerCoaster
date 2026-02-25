@@ -2,6 +2,8 @@
 local ResourcesManager = require(game.ReplicatedStorage.ScriptAlias.ResourcesManager)
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local EventManager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
+local ClickGame = require(game.ReplicatedStorage.ScriptAlias.ClickGame)
+local SpeedLineEffect = require(game.ReplicatedStorage.ScriptAlias.SpeedLineEffect)
 
 local RollerCoasterGameLoop = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameLoop)
 local RollerCoasterAutoPlay = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterAutoPlay)
@@ -17,6 +19,9 @@ RollerCoasterGameManager.UpdateGameInfo = nil
 function RollerCoasterGameManager:Init()
 	RollerCoasterGameLoop:Init()
 	RollerCoasterAutoPlay:Init()
+	
+	ClickGame:Init()
+	SpeedLineEffect:Init()
 end
 
 ----------------------------------------------------------------------------------------------------------
@@ -54,11 +59,13 @@ function RollerCoasterGameManager:Slide(index)
 	}
 	
 	NetClient:Request("RollerCoaster", "Slide", param)
+	SpeedLineEffect:Enable()
 end
 
 function RollerCoasterGameManager:Exit(index)
 	NetClient:Request("RollerCoaster", "Exit", function()
 		EventManager:Dispatch(EventManager.Define.GameFinish)
+		SpeedLineEffect:Disable()
 	end)
 end
 

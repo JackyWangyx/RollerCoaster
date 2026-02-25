@@ -56,8 +56,13 @@ ID,ProductID,ProductKey,Type,Unnamed: 4
 52,3512651736,ProductStorePackage3,Product,nil
 53,3512651845,ProductStorePackage5,Product,nil
 54,3512651948,ProductStorePackage6,Product,nil
-55,3524859973,ProductStorePartnerRB01,Product,nil
-56,3524860096,ProductStorePartnerRB02,Product,nil
+55,3524859973,ProductStorePartner03,Product,nil
+56,3524860096,ProductStorePartner04,Product,nil
+57,3534813513,ProductStorePet171,Product,nil
+58,3534813654,ProductStorePet176,Product,nil
+59,3535343350,ProductStoreTool29,Product,nil
+60,3535343406,ProductStoreTool30,Product,nil
+61,1729256280,AutoClick,GamePass,nil
 ]]
 
 return IAPConfig

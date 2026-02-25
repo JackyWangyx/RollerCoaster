@@ -1,4 +1,5 @@
 ﻿local RunService = game:GetService("RunService")
+local Debris = game:GetService("Debris")
 
 local PlayerManager = require(game.ReplicatedStorage.ScriptAlias.PlayerManager)
 
@@ -130,6 +131,58 @@ function PlayerMove:Disable(player)
 	rootPart.AssemblyAngularVelocity = Vector3.zero
 	
 	PlayerManager:EnablePhysic(player)
+end
+
+function PlayerMove:PushPlayer(player, direction, power, delay)
+	local rootPart = PlayerManager:GetHumanoidRootPart(player)
+	local humanoid = PlayerManager:GetHumanoid(player)
+	if not rootPart or not humanoid then return end
+
+	-- 多清零（保险）
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
+
+	local fromPos = rootPart.CFrame.Position
+	local targetDirection = direction.Unit
+	local newCFrame = CFrame.new(fromPos, fromPos + targetDirection)
+
+	-- 关键：临时 Anchored 设置 CFrame（消除瞬移 velocity）
+	local wasAnchored = rootPart.Anchored
+	rootPart.Anchored = true
+	rootPart.CFrame = newCFrame
+	rootPart.Anchored = wasAnchored
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
+
+	if power > 0 then
+		-- 用 LinearVelocity（稳定抛物线，无飞出）
+		local attach = rootPart:FindFirstChild("RootRigAttachment") or Instance.new("Attachment", rootPart)
+		attach.Name = "RootRigAttachment"
+
+		local lv = Instance.new("LinearVelocity")
+		lv.Attachment0 = attach
+		lv.RelativeTo = Enum.ActuatorRelativeTo.World
+		lv.VectorVelocity = Vector3.new(targetDirection.X * power, 0, targetDirection.Z * power)  -- 只 XZ，重力自由
+		lv.MaxForce = math.huge
+		lv.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+		lv.Parent = rootPart
+
+		Debris:AddItem(lv, delay)
+	else
+		-- power=0：等一帧彻底稳定
+		RunService.Heartbeat:Wait()
+		rootPart.AssemblyLinearVelocity = Vector3.zero
+		rootPart.AssemblyAngularVelocity = Vector3.zero
+	end
+
+	-- 立即恢复（避状态切换 lag）
+	humanoid.PlatformStand = false
+	humanoid:ChangeState(Enum.HumanoidStateType.Running)
+
+	-- 最终清零
+	task.wait()
+	rootPart.AssemblyLinearVelocity = Vector3.zero
+	rootPart.AssemblyAngularVelocity = Vector3.zero
 end
 
 return PlayerMove

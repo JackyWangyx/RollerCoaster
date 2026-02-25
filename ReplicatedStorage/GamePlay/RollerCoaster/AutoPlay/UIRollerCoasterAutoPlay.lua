@@ -50,4 +50,23 @@ function UIRollerCoasterAutoPlay:SwitchAutoPlay()
 	end
 end
 
+function UIRollerCoasterAutoPlay:Button_AutoClick()
+	local info = RollerCoasterAutoPlay.Info
+	if info.IsAutoClick then
+		RollerCoasterAutoPlay:EndAutoClick()
+	else
+		IAPClient:CheckHasGamePass("AutoClick", function(isPurchase)
+			if isPurchase then
+				if not info.IsAutoClick then
+					RollerCoasterAutoPlay:StartAutoClick()
+				end
+			else
+				IAPClient:Purchase("AutoClick", function(success)
+					EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, info)
+				end)
+			end
+		end)
+	end
+end
+
 return UIRollerCoasterAutoPlay

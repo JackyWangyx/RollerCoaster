@@ -96,6 +96,7 @@ function  IAPServer:OnProcessReceipt(receiptInfo)
 			local prefix, middle, suffix = name:match("^(ProductStore)(%a+)(%d+)$")
 			return middle, suffix
 		end
+		
 		local storeName, id = extract_parts(productKey)
 		purchaseRequestInfo.Param = {}
 		purchaseRequestInfo.Param.StoreName = storeName
@@ -141,7 +142,7 @@ function  IAPServer:OnProcessReceipt(receiptInfo)
 	end
 	
 	NetServer:Broadcast(player, "IAP", "OnPurchase", { 
-		Success = processResult,
+		Result = Define.IAPResult.Complete,
 		Message = "Success",
 		ReceiptInfo = receiptInfo }
 	)
@@ -175,7 +176,7 @@ end
 
 function IAPServer:OnPurchaseFailed(player, receiptInfo, message)
 	NetServer:Broadcast(player, "IAP", "OnPurchase", { 
-		Success = false,
+		Result = Define.IAPResult.Failed,
 		Message = message,
 		ReceiptInfo = receiptInfo }
 	)

@@ -25,14 +25,16 @@ RollerCoasterDefine.Game = {
 	DownTrackOffset = Vector3.new(-20, 0, 0),
 	-- 到顶部推出玩家参数
 	ArriveEndPushPlayerParam = {
-		Direction = Vector3.new(0, 0.1, -2),
-		Power = 50,
+		Direction = Vector3.new(0, 1, -2),
+		Power = 100,
 	},
 	-- 下滑结束推出玩家参数
 	SlidePushPlayerParam = {
 		Direction = Vector3.new(0, 1, 1),
 		Power = 100,
-	}
+	},
+	-- 点击游戏获取金币系数
+	ClickGameGetCoinFactor = 0.5,
 }
 
 RollerCoasterDefine.GamePhase = {

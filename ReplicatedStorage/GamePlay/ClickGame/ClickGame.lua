@@ -38,7 +38,15 @@ function ClickGame:Init()
 		ClickGame:GameStart()
 	end)
 	
-	EvemtManager:Listen(EvemtManager.Define.GameLeave, function()
+	--EvemtManager:Listen(EvemtManager.Define.GameFinish, function()
+	--	ClickGame:GameEnd()
+	--end)
+	
+	EvemtManager:Listen("ArriveEnd", function()
+		ClickGame:GameEnd()
+	end)
+	
+	EvemtManager:Listen("Slide", function()
 		ClickGame:GameEnd()
 	end)
 	

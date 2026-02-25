@@ -1,12 +1,15 @@
 ﻿local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local GuiService = game:GetService("GuiService")
+local RunService = game:GetService("RunService")
 
 local NetClient = require(game.ReplicatedStorage.ScriptAlias.NetClient)
 local ConfigManager = require(game.ReplicatedStorage.ScriptAlias.ConfigManager)
 local Util = require(game.ReplicatedStorage.ScriptAlias.Util)
 local EventMnaager = require(game.ReplicatedStorage.ScriptAlias.EventManager)
 local UIManager = require(game.ReplicatedStorage.ScriptAlias.UIManager)
+
+local Define = require(game.ReplicatedStorage.Define)
 
 local IAPClient = {}
 
@@ -64,7 +67,7 @@ end
 -- 处理 取消支付
 function OnPurchaseProduct(player, productID, purchaseResult)
 	if not purchaseResult then
-		IAPClient:OnPurchase(productID, false, "Client cancel!")
+		IAPClient:OnPurchase(productID, Define.IAPResult.Cancel, "Client cancel!")
 	end
 end
 
@@ -90,17 +93,17 @@ function OnPurchaseGamePass(player, productID, purchaseResult)
 				EventMnaager:Dispatch(EventMnaager.Define.RefreshGamePass)
 			end		
 		end)
-		--local iapData = ConfigManager:SearchData("IAP", "ProductID", productID)
-		--local productKey = iapData.ProdcutKey
 	else
-		IAPClient:OnPurchase(productID, false, "Client cancel!")
+		IAPClient:OnPurchase(productID, Define.IAPResult.Cancel, "Client cancel!")
 	end
 end
 
 -- Server Callback
 -- 处理 购买成功 / 失败
-function IAPClient:OnPurchase(productID, success, message)
+function IAPClient:OnPurchase(productID, iapResult, message)
 	UIManager:Hide("UIWaitLoading")
+	
+	local success = iapResult == Define.IAPResult.Complete
 	local iapData = ConfigManager:SearchData("IAP", "ProductID", productID)
 	local callbackInfo = Util:ListFind(IAPClient.CallbackList, function(info) return info.ProductKey == iapData.ProductKey end)
 	if callbackInfo then
@@ -113,7 +116,11 @@ function IAPClient:OnPurchase(productID, success, message)
 		Util:ListRemove(IAPClient.RequestList, requestPram)
 	end
 		
-	if not success then
+	if iapResult == Define.IAPResult.Failed then
+		warn("[Client] Purchased "..iapData.ProductKey.." failed! "..message)
+	end
+	
+	if iapResult == Define.IAPResult.Cancel and RunService:IsStudio() then
 		warn("[Client] Purchased "..iapData.ProductKey.." failed! "..message)
 	end
 end
@@ -131,14 +138,29 @@ end
 function IAPClient:GetInfo(productKey)
 	local iapData = ConfigManager:SearchData("IAP", "ProductKey", productKey)
 	local productId = iapData.ProductID
-	local type = nil
+
+	local infoType = nil
 	if iapData.Type == "Prodcut" then
-		type = Enum.InfoType.Product
+		infoType = Enum.InfoType.Product
 	elseif iapData.Type == "GamePass" then
-		type = Enum.InfoType.GamePass
+		infoType = Enum.InfoType.GamePass
 	end
-	local info = MarketplaceService:GetProductInfo(productId, type)
-	return info
+
+	if not infoType then
+		warn("[Client] Invalid IAP type for productKey:", productKey)
+		return nil
+	end
+
+	local success, info = pcall(function()
+		return MarketplaceService:GetProductInfoAsync(productId, infoType)
+	end)
+
+	if success then
+		return info
+	else
+		warn("[Client] Failed to get product info for ID", productId, ":", info)
+		return nil
+	end
 end
 
 return IAPClient

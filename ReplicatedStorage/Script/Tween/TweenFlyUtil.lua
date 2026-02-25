@@ -46,6 +46,7 @@ local function makeBezierInParent(fromScreen: Vector2, toScreen: Vector2, parent
 end
 
 local function randomSpawnInCenter(container: GuiObject)
+	if not container then return Vector2.zero end
 	local screenSize = container.AbsoluteSize
 	local screenPos = container.AbsolutePosition
 	local minX = screenPos.X + screenSize.X * 0.4

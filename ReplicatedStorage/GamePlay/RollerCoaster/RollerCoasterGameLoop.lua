@@ -15,8 +15,6 @@ local TrackRoute = require(game.ReplicatedStorage.ScriptAlias.TrackRoute)
 local RollerCoasterDefine = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterDefine)
 local RollerCoasterAutoPlay = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterAutoPlay)
 
-local Debris = game:GetService("Debris")
-
 local RollerCoasterGameLoop = {}
 
 RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Idle
@@ -196,42 +194,48 @@ end
 
 function RollerCoasterGameLoop:UpdateUp(deltaTime)
 	local upTrackRoute = RollerCoasterGameLoop.UpTrackRoute
-	local downTrackRoute = RollerCoasterGameLoop.DownTrackRoute
 	local updateInfo = RollerCoasterGameLoop.UpdateInfo
+
 	updateInfo.MoveDistance = updateInfo.MoveDistance + deltaTime * updateInfo.MoveSpeed
 	updateInfo.ArriveDistance = updateInfo.MoveDistance
-	
-	if updateInfo.MoveDistance >= upTrackRoute.Length then
+
+	local targetPart = PlayerMove.TargetPart
+	if not targetPart then return end
+
+	local rootPart = updateInfo.RootPart
+	if not rootPart then return end
+
+	local endPosInfo = upTrackRoute:GetPointByDistance(upTrackRoute.Length)
+	local endPosition = endPosInfo.Position + (endPosInfo.Rotation.UpVector * RollerCoasterGameLoop.GameInitParam.MoveHeight)
+
+	local REACH_THRESHOLD = 1.5       -- 单位：Studs，建议 1.2 ~ 2.5，根据你的约束强度和速度调整
+	local VELOCITY_THRESHOLD = 8      -- studs/s，如果玩家还在快速向前冲，可以放宽
+
+	local isComplete = (updateInfo.MoveDistance >= upTrackRoute.Length)
+
+	if isComplete then
 		if RollerCoasterGameLoop.GameInitParam.IsTrackMaxLevel then
-			-- 到达顶端
-			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
-			updateInfo.MoveDistance = downTrackRoute.Length
-			updateInfo.ArriveDistance = updateInfo.MoveDistance
+			local distanceToEnd = (rootPart.Position - endPosition).Magnitude
+			local isReallyClose = distanceToEnd <= REACH_THRESHOLD
+			local isSlowEnough = rootPart.AssemblyLinearVelocity.Magnitude <= VELOCITY_THRESHOLD
 
-			RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
-
-			local player = game.Players.LocalPlayer
-			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
-			gameManager:ArriveEnd(player)	
-
-			PlayerMove:Disable(player)
-			
-			local rootPart = PlayerManager:GetHumanoidRootPart(player)
-			print(rootPart.AssemblyLinearVelocity, rootPart.AssemblyAngularVelocity)
-			local pushParam = RollerCoasterDefine.Game.ArriveEndPushPlayerParam
-			RollerCoasterGameLoop:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power)
-			print(rootPart.AssemblyLinearVelocity, rootPart.AssemblyAngularVelocity)
+			if isReallyClose and isSlowEnough then
+				local player = game.Players.LocalPlayer
+				local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
+				local pushParam = RollerCoasterDefine.Game.ArriveEndPushPlayerParam
+				
+				RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
+				PlayerMove:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power, RollerCoasterDefine.Game.DropEffectDelay)
+				gameManager:ArriveEnd(player)
+				PlayerMove:Disable(player)	
+			else
+				updateInfo.MoveDistance = upTrackRoute.Length
+				RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
+			end
 		else
-			-- 未到达顶端
-			updateInfo.MoveDistance = upTrackRoute.Length
-			updateInfo.ArriveDistance = updateInfo.MoveDistance
-
-			RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
-
 			local player = game.Players.LocalPlayer
 			local gameManager = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterGameManager)
 			gameManager:Slide(player)
-			RollerCoasterGameLoop.GamePhase = RollerCoasterDefine.GamePhase.Busy
 		end
 	else
 		RollerCoasterGameLoop:SetPlayerPosByDistance(upTrackRoute, updateInfo.MoveDistance)
@@ -270,7 +274,7 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 			PlayerMove:Disable(player)
 			
 			local pushParam = RollerCoasterDefine.Game.SlidePushPlayerParam
-			RollerCoasterGameLoop:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power)
+			PlayerMove:PushPlayer(player, pushParam.Direction.Unit, pushParam.Power, RollerCoasterDefine.Game.DropEffectDelay)
 			task.delay(RollerCoasterDefine.Game.DropEffectDelay, function()
 				local fxPrefab = ResourcesManager:Load("Fx/Fx_PlayerDrop")
 				Util:SpawnFxEmit(fxPrefab, rootPart.CFrame.Position, 20, 2)
@@ -284,32 +288,6 @@ function RollerCoasterGameLoop:UpdateDown(deltaTime)
 	else
 		RollerCoasterGameLoop:SetPlayerPosByDistance(downTrackRoute, updateInfo.MoveDistance, true)
 	end
-end
-
-function RollerCoasterGameLoop:PushPlayer(player, direction, power)
-	local rootPart = PlayerManager:GetHumanoidRootPart(player)
-	local humanoid = PlayerManager:GetHumanoid(player)
-	rootPart.AssemblyLinearVelocity = Vector3.zero
-	rootPart.AssemblyAngularVelocity = Vector3.zero
-	
-	local fromPos = rootPart.CFrame.Position
-	local toPos = fromPos + direction
-	local targetDirection = (toPos - fromPos).Unit
-	local newCFrame = CFrame.new(Vector3.zero, targetDirection)
-	rootPart.CFrame = CFrame.new(fromPos) * newCFrame
-
-	local bodyVel = Instance.new("BodyVelocity")
-	bodyVel.MaxForce = Vector3.new(math.huge, 0, math.huge)  -- 只推 X/Z，重力自由（完美抛物线）
-	bodyVel.Velocity = targetDirection * power
-	bodyVel.Parent = rootPart
-
-	Debris:AddItem(bodyVel, RollerCoasterDefine.Game.DropEffectDelay)
-	task.delay(3, function()
-		if rootPart and rootPart.Parent and humanoid and humanoid.Parent then
-			humanoid.PlatformStand = false
-			humanoid:ChangeState(Enum.HumanoidStateType.Running)
-		end
-	end)
 end
 
 return RollerCoasterGameLoop

@@ -25,28 +25,34 @@ end
 
 function PlayerLeaderStats:InitPlayerValue(player)
 	PlayerLeaderStats:RegisterValue(player, "🏆 Wins", function()
+		local value = NetServer:RequireModule("Account"):GetWins(player)
+		--local text = BigNumber:Format(value)
+		return value
+	end)
+	
+	PlayerLeaderStats:RegisterValue(player, "💰 Coin", function()
 		local value = NetServer:RequireModule("Account"):GetCoin(player)
 		--local text = BigNumber:Format(value)
 		return value
 	end)
 	
-	PlayerLeaderStats:RegisterValue(player, "⚡ Power", function()
-		local value =  PlayerProperty:GetPower(player)
-		--local text = BigNumber:Format(value)
-		return value
-	end)
+	--PlayerLeaderStats:RegisterValue(player, "⚡ Power", function()
+	--	local value =  PlayerProperty:GetPower(player)
+	--	--local text = BigNumber:Format(value)
+	--	return value
+	--end)
 	
-	PlayerLeaderStats:RegisterValue(player, "👆 Click", function()
-		local value =  NetServer:RequireModule("Record"):GetValue(player, { Key = Define.PlayerRecord.TotalClick })
-		--local text = BigNumber:Format(value)
-		return value
-	end)
+	--PlayerLeaderStats:RegisterValue(player, "👆 Click", function()
+	--	local value =  NetServer:RequireModule("Record"):GetValue(player, { Key = Define.PlayerRecord.TotalClick })
+	--	--local text = BigNumber:Format(value)
+	--	return value
+	--end)
 	
-	PlayerLeaderStats:RegisterValue(player, "🔄 Rebirth", function()
-		local value =  NetServer:RequireModule("Rebirth"):GetInfo(player).ID - 1
-		--local text = BigNumber:Format(value)
-		return value
-	end)
+	--PlayerLeaderStats:RegisterValue(player, "🔄 Rebirth", function()
+	--	local value =  NetServer:RequireModule("Rebirth"):GetInfo(player).ID - 1
+	--	--local text = BigNumber:Format(value)
+	--	return value
+	--end)
 end
 
 function PlayerLeaderStats:OnPlayerAdded(player)

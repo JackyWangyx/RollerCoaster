@@ -17,7 +17,7 @@ local RollerCoasterAutoPlay = {}
 
 RollerCoasterAutoPlay.Info = {
 	IsAutoGame = false,
-	--IsAutoClick = false,
+	IsAutoClick = false,
 }
 
 function RollerCoasterAutoPlay:Init()
@@ -71,6 +71,20 @@ end
 function RollerCoasterAutoPlay:EndAutoGame()
 	if not RollerCoasterAutoPlay.Info.IsAutoGame then return end
 	RollerCoasterAutoPlay.Info.IsAutoGame = false
+	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, RollerCoasterAutoPlay.Info)
+end
+
+-- Click
+
+function RollerCoasterAutoPlay:StartAutoClick()
+	if RollerCoasterAutoPlay.Info.IsAutoClick then	return end
+	RollerCoasterAutoPlay.Info.IsAutoClick = true
+	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, RollerCoasterAutoPlay.Info)
+end
+
+function RollerCoasterAutoPlay:EndAutoClick()
+	if not RollerCoasterAutoPlay.Info.IsAutoClick then	return end
+	RollerCoasterAutoPlay.Info.IsAutoClick = false
 	EventManager:Dispatch(EventManager.Define.RefreshAutoPlay, RollerCoasterAutoPlay.Info)
 end
 
