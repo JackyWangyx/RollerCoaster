@@ -20,6 +20,7 @@ local function lerp(a, b, t)
 end
 
 local function screenToParentOffset(screenPos: Vector2, parent: GuiObject)
+	if not parent then return screenPos end
 	local parentAbs = parent.AbsolutePosition
 	return screenPos - parentAbs
 end
@@ -83,12 +84,12 @@ function TweenFlyUtil:UIFlyToTarget(prefab, target, value, opts)
 	if flyMode == "Single" then
 		particleCount = 10
 	else
-		particleCount = 50
+		particleCount = 10
 		if type(value) == "number" then
-			if value < 50 then
+			if value < 10 then
 				particleCount = value + 3
 			else
-				particleCount = math.random(60, 80)
+				particleCount = math.random(20, 30)
 			end
 		end
 	end

@@ -382,29 +382,29 @@ ID,Name,Rarity,Icon,Prefab,Size,Indexable,World,MaxExistCoinFactor,GetCoinFactor
 378,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05_Large,Large,false,4,2.25,1,225%,nil
 379,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
 380,Tralalero Tralala,6,rbxassetid://130142716335793,PetNew/PetsRoblox/Brainrot05,nil,false,4,0,1,1X,nil
-381,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01,Tiny,true,5,0,6,6X,nil
-382,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Mid,Normal,false,5,0,7.2,7.2X,nil
-383,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Large,Large,false,5,0,9,9X,nil
+381,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01,Tiny,true,5,1,1,100%,nil
+382,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Mid,Normal,false,5,1.2,1,120%,nil
+383,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01_Large,Large,false,5,1.5,1,150%,nil
 384,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01,nil,false,5,0,1,1X,nil
 385,Ragekin,2,rbxassetid://107457012377726,PetNew/Season/Season01Pet01,nil,false,5,0,1,1X,nil
-386,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02,Tiny,true,5,0,6,6X,nil
-387,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02_Mid,Normal,false,5,0,7.2,7.2X,nil
-388,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02_Large,Large,false,5,0,9,9X,nil
+386,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02,Tiny,true,5,1.5,1,150%,nil
+387,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02_Mid,Normal,false,5,1.8,1,180%,nil
+388,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02_Large,Large,false,5,2.25,1,225%,nil
 389,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02,nil,false,5,0,1,1X,nil
 390,Blossom Wisp,3,rbxassetid://112122956502520,PetNew/Season/Season01Pet02,nil,false,5,0,1,1X,nil
-391,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03,Tiny,true,5,0,6,6X,nil
-392,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03_Mid,Normal,false,5,0,7.2,7.2X,nil
-393,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03_Large,Large,false,5,0,9,9X,nil
+391,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03,Tiny,true,5,2,1,200%,nil
+392,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03_Mid,Normal,false,5,2.4,1,240%,nil
+393,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03_Large,Large,false,5,3,1,300%,nil
 394,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03,nil,false,5,0,1,1X,nil
 395,Frostbite,4,rbxassetid://110869709499336,PetNew/Season/Season01Pet03,nil,false,5,0,1,1X,nil
-396,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04,Tiny,true,5,0,6,6X,nil
-397,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04_Mid,Normal,false,5,0,7.2,7.2X,nil
-398,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04_Large,Large,false,5,0,9,9X,nil
+396,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04,Tiny,true,5,2.5,1,250%,nil
+397,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04_Mid,Normal,false,5,3,1,300%,nil
+398,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04_Large,Large,false,5,3.75,1,375%,nil
 399,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04,nil,false,5,0,1,1X,nil
 400,Barrel Blitz,6,rbxassetid://134167782460094,PetNew/Season/Season01Pet04,nil,false,5,0,1,1X,nil
-401,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05,Tiny,false,5,1.5,6,6X,nil
-402,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05_Mid,Normal,false,5,2.25,7.2,7.2X,nil
-403,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05_Large,Large,true,5,3,9,9X,nil
+401,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05,Tiny,false,5,3,1,300%,nil
+402,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05_Mid,Normal,false,5,3.6,1,360%,nil
+403,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05_Large,Large,true,5,4.5,1,450%,nil
 404,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05,nil,false,5,0,1,1X,nil
 405,ToxiSkull,5,rbxassetid://125967433540956,PetNew/Season/Season01Pet05,nil,false,5,0,1,1X,nil
 406,Frost Cub,3,rbxassetid://91005074061121,PetNew/Christmas/ChristmasPet01,Tiny,true,5,0,6,6X,nil

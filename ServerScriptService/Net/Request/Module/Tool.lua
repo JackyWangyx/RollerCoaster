@@ -168,6 +168,8 @@ function Tool:Get(player, param)
 	local id = param.ID
 	local packageList = Tool:GetPackageList(player)
 	local info = packageList[id]
+	
+	info.IsLock = false
 	info.IsBuy = true
 	
 	PlayerRecord:AddValue(player, PlayerRecord.Define.TotalGetTool, 1)

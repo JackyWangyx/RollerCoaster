@@ -46,7 +46,7 @@ function ClickGame:Click(player, param)
 	local rewardCoin = themeData.RewardCoin
 	local gameGetCoinFactor = RollerCoasterDefine.Game.ClickGameGetCoinFactor
 	local value = math.round(click * getCoinFactor * rewardCoin * gameGetCoinFactor)
-	print(click, getCoinFactor, gameGetCoinFactor, value)
+	--print(click, getCoinFactor, gameGetCoinFactor, value)
 	AccountRequest:AddCoin(player, { Value = value })
 	
 	PlayerRecord:AddValue(player, Define.PlayerRecord.TotalClick, click)

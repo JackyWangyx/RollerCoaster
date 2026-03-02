@@ -1,6 +1,6 @@
 ﻿local Define = {}
 
-Define.Version = "2026.02.09.1"
+Define.Version = "2026.03.09.1"
 Define.Project = "RollerCoaster"
 
 -----------------------------------------------------------------------------------
@@ -8,7 +8,7 @@ Define.Project = "RollerCoaster"
 Define.Test = {
 	TestBuild = false,
 	-- 测试签到首次登陆日期
-	EnableSignLoginDate = false,
+	EnableSignLoginDate = true,
 	LoginDate = {
 		SignYear = 2025,
 		SignMonth = 12, 
@@ -20,8 +20,8 @@ Define.Test = {
 	-- 测试签到当前日期
 	EnableSignCurrentDate = false,
 	CurrentDate = {
-		SignYear = 2026,
-		SignMonth = 1,
+		SignYear = 2025,
+		SignMonth = 12,
 		SignDay = 16,
 		SignHour = 0,
 		SignMin = 0,
@@ -39,8 +39,8 @@ Define.Quest = {
 	DailyQuestCount = 3,
 	WeeklyQuestCount = 3,
 	SeasonPassProperty = {
-		GetPowerFactor3 = 0.5,
-		LuckyGetPetLegendary1 = 0.5,
+		GetCoinFactor3 = 0.5,
+		MaxSpeedFactor1 = 0.5,
 	},
 	AdditionalPetEquip = 1,
 }
@@ -385,6 +385,9 @@ Define.Event = {
 	QuestGetTool = "QuestGetTool",
 	QuestPetUpgrade = "QuestPetUpgrade",
 	QuestUnlockLevel = "QuestUnlockLevel",
+	
+	QuestUpgradeTrack = "QuestUpgradeTrack",
+	QuestSlide = "QuestSlide",
 }
 
 -----------------------------------------------------------------------------------

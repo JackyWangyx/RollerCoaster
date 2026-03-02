@@ -63,6 +63,9 @@ ID,ProductID,ProductKey,Type,Unnamed: 4
 59,3535343350,ProductStoreTool29,Product,nil
 60,3535343406,ProductStoreTool30,Product,nil
 61,1729256280,AutoClick,GamePass,nil
+62,3546628624,SeasonPass,Product,nil
+63,3546628793,SkipQuestSeason,Product,nil
+64,3546628902,UnlockAllSeasonQuest,Product,nil
 ]]
 
 return IAPConfig

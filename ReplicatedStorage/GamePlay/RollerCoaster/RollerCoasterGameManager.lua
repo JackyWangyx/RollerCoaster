@@ -27,20 +27,20 @@ end
 ----------------------------------------------------------------------------------------------------------
 -- Game Phase
 
-local isEntering = false
+local IsGaming = false
 
 function RollerCoasterGameManager:Enter(index)
 	if RollerCoasterGameLoop.GamePhase ~= RollerCoasterDefine.GamePhase.Idle then return end 
 	
-	if isEntering then return end
-	isEntering = true
+	if IsGaming then return end
+	IsGaming = true
 	
 	NetClient:Request("RollerCoaster", "Enter", { Index = index }, function(success)
 		if success then
 			EventManager:Dispatch(EventManager.Define.GameStart)
 		end
 		
-		isEntering = false
+		IsGaming = false
 	end)
 end
 

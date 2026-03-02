@@ -19,52 +19,56 @@ local hrp = character and character:FindFirstChild("HumanoidRootPart")
 if not (humanoid and hrp) then return end
 
 -- 克隆本地发射器（保留所有参数，只关掉开关）
-local emitters = {}
+local AllEmitters = {}
 local IdleEmitters = {}
 local GameEmitters = {}
 
-for _, att in ipairs(EffectIdleFolder:GetChildren()) do
-	if att:IsA("Attachment") then
-		for _, pe in ipairs(att:GetChildren()) do
-			if pe:IsA("ParticleEmitter") then
-				-- 模板永远关掉，别人不会看到
-				pe.Enabled = false
-				pe.Rate = 0
-				-- 本地副本
-				local clone = pe:Clone()
-				clone.Name = "LocalOnlyEmitter"
-				clone.Enabled = false
-				clone.Rate = 0
-				clone.Parent = att
-				table.insert(emitters, clone)
-				table.insert(IdleEmitters, clone)
+if EffectIdleFolder then
+	for _, att in ipairs(EffectIdleFolder:GetChildren()) do
+		if att:IsA("Attachment") then
+			for _, pe in ipairs(att:GetChildren()) do
+				if pe:IsA("ParticleEmitter") then
+					-- 模板永远关掉，别人不会看到
+					pe.Enabled = false
+					pe.Rate = 0
+					-- 本地副本
+					local clone = pe:Clone()
+					clone.Name = "LocalOnlyEmitter"
+					clone.Enabled = false
+					clone.Rate = 0
+					clone.Parent = att
+					table.insert(AllEmitters, clone)
+					table.insert(IdleEmitters, clone)
+				end
 			end
 		end
 	end
 end
 
-for _, att in ipairs(EffectGameFolder:GetChildren()) do
-	if att:IsA("Attachment") then
-		for _, pe in ipairs(att:GetChildren()) do
-			if pe:IsA("ParticleEmitter") then
-				-- 模板永远关掉，别人不会看到
-				pe.Enabled = false
-				pe.Rate = 0
-				-- 本地副本
-				local clone = pe:Clone()
-				clone.Name = "LocalOnlyEmitter"
-				clone.Enabled = false
-				clone.Rate = 0
-				clone.Parent = att
-				table.insert(emitters, clone)
-				table.insert(GameEmitters, clone)
+if EffectGameFolder then
+	for _, att in ipairs(EffectGameFolder:GetChildren()) do
+		if att:IsA("Attachment") then
+			for _, pe in ipairs(att:GetChildren()) do
+				if pe:IsA("ParticleEmitter") then
+					-- 模板永远关掉，别人不会看到
+					pe.Enabled = false
+					pe.Rate = 0
+					-- 本地副本
+					local clone = pe:Clone()
+					clone.Name = "LocalOnlyEmitter"
+					clone.Enabled = false
+					clone.Rate = 0
+					clone.Parent = att
+					table.insert(AllEmitters, clone)
+					table.insert(GameEmitters, clone)
+				end
 			end
 		end
 	end
 end
 
 local function setEmit(on)
-	for _, e in ipairs(emitters) do
+	for _, e in ipairs(AllEmitters) do
 		if on then
 			e.Enabled = true
 			e.Rate = RATE_MOVING

@@ -18,7 +18,7 @@ local UIBuffInfo = require(game.ReplicatedStorage.ScriptAlias.UIBuffInfo)
 
 --local RunnerGameManager = require(game.ReplicatedStorage.ScriptAlias.RunnerGameManager)
 local UIRollerCoasterGameInfo = require(game.ReplicatedStorage.ScriptAlias.UIRollerCoasterGameInfo)
-local UIAnimalEquip = require(game.ReplicatedStorage.ScriptAlias.UIAnimalEquip)
+--local UIAnimalEquip = require(game.ReplicatedStorage.ScriptAlias.UIAnimalEquip)
 local RollerCoasterAutoPlay = require(game.ReplicatedStorage.ScriptAlias.RollerCoasterAutoPlay)
 local UIRollerCoasterAutoPlay = require(game.ReplicatedStorage.ScriptAlias.UIRollerCoasterAutoPlay)
 
@@ -44,7 +44,7 @@ function UIMain:Init(root)
 	UIRollerCoasterGameInfo:Init(root)
 	UIRollerCoasterAutoPlay:Init(root)
 	
-	UIAnimalEquip:Init(root)
+	--UIAnimalEquip:Init(root)
 	UIBuffInfo:Init(root)
 	
 	UIMain.UIPropBuffFrame = Util:GetChildByName(UIMain.UIRoot, "UIPropBuffFrame", true, childList)

@@ -42,6 +42,7 @@ function GetDailyInfo(player, key)
 	end
 
 	if Define.Test.EnableSignLoginDate then
+		dailyInfo.FirstLoginDate = TimeUtil:GetNow()
 		local date = dailyInfo.FirstLoginDate
 		date.year = Define.Test.LoginDate.SignYear
 		date.month =  Define.Test.LoginDate.SignMonth

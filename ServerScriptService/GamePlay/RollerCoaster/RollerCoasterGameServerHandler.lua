@@ -195,6 +195,11 @@ function RollerCoasterGameServerHandler:Slide(player, param)
 	
 	playerInfo.GamePhase = RollerCoasterDefine.GamePhase.Down
 	EventManager:DispatchToClient(player, RollerCoasterDefine.Event.Slide)
+	EventManager:Dispatch(EventManager.Define.QuestSlide, {
+		Player = player,
+		Value = 1,
+	})
+	
 	return true
 end
 

@@ -75,7 +75,7 @@ local function Init()
 	PropServerHandler:Init()
 	TrainingHandler:Init()
 	AutoRebirthHandler:Init()
-	AnimalServerHandler:Init()
+	--AnimalServerHandler:Init()
 	PartnerServerHandler:Init()
 	
 	--RunnerGameHandler:Init()
